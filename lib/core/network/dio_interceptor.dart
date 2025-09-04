@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 
+import '../../common/logger.dart';
+
 class AppDioInterceptor extends Interceptor {
   Completer<String?>? _refreshTokenCompleter;
 
@@ -32,15 +34,15 @@ class AppDioInterceptor extends Interceptor {
     }
 
     try {
-      final String? token = await CacheService.instance.getAuthToken();
-      if (token != null) {
-        options.headers['Authorization'] = 'Bearer $token';
-        dLog.i("[Request] Token attached for '/$path'.");
-      } else {
-        dLog.w(
-          "[Request] No auth token found for protected route '/${options.path}'.",
-        );
-      }
+      // final String? token = await CacheService.instance.getAuthToken();
+      // if (token != null) {
+      //   options.headers['Authorization'] = 'Bearer $token';
+      //   dLog.i("[Request] Token attached for '/$path'.");
+      // } else {
+      //   dLog.w(
+      //     "[Request] No auth token found for protected route '/${options.path}'.",
+      //   );
+      // }
     } catch (e) {
       dLog.e('[Request] Error attaching token: $e');
     }
@@ -64,96 +66,96 @@ class AppDioInterceptor extends Interceptor {
     // Log the 401 detection
     dLog.w(" unauthorized for '/$path'. Initiating token refresh logic.");
 
-    final String? refreshToken = await CacheService.instance.getRefreshToken();
-    if (refreshToken == null || refreshToken.isEmpty) {
-      dLog.e('[Auth] No refresh token found. Logging out.');
-      // normalLogoutFromSessionExpiration();
-      return handler.reject(err);
-    }
+    // final String? refreshToken = await CacheService.instance.getRefreshToken();
+    // if (refreshToken == null || refreshToken.isEmpty) {
+    //   dLog.e('[Auth] No refresh token found. Logging out.');
+    //   // normalLogoutFromSessionExpiration();
+    //   return handler.reject(err);
+    // }
 
-    if (_refreshTokenCompleter == null) {
-      dLog.i('[Auth] No refresh in progress. Starting new token refresh.');
-      _refreshTokenCompleter = Completer<String?>();
-      _refreshToken()
-          .then((String? newToken) {
-            _refreshTokenCompleter!.complete(newToken);
-          })
-          .catchError((error) {
-            _refreshTokenCompleter!.completeError(error);
-          })
-          .whenComplete(() {
-            dLog.i(
-              '[Auth] Refresh operation finished. Unlocking for future requests.',
-            );
-            _refreshTokenCompleter = null; // Unlock
-          });
-    } else {
-      dLog.i(
-        '[Auth] Token refresh already in progress. Waiting for completion...',
-      );
-    }
+    // if (_refreshTokenCompleter == null) {
+    //   dLog.i('[Auth] No refresh in progress. Starting new token refresh.');
+    //   _refreshTokenCompleter = Completer<String?>();
+    //   _refreshToken()
+    //       .then((String? newToken) {
+    //         _refreshTokenCompleter!.complete(newToken);
+    //       })
+    //       .catchError((error) {
+    //         _refreshTokenCompleter!.completeError(error);
+    //       })
+    //       .whenComplete(() {
+    //         dLog.i(
+    //           '[Auth] Refresh operation finished. Unlocking for future requests.',
+    //         );
+    //         _refreshTokenCompleter = null; // Unlock
+    //       });
+    // } else {
+    //   dLog.i(
+    //     '[Auth] Token refresh already in progress. Waiting for completion...',
+    //   );
+    // }
 
     try {
       final String? newToken = await _refreshTokenCompleter!.future;
 
-      if (newToken == null) {
-        dLog.e('[Auth] Token refresh failed. Logging out user.');
-        DebugUtils.showDebugToast('Token refresh failed. Logging out user.');
-        normalLogoutFromSessionExpiration();
-        return handler.reject(_createSessionExpiredError(err.requestOptions));
-      }
+      // if (newToken == null) {
+      //   dLog.e('[Auth] Token refresh failed. Logging out user.');
+      //   DebugUtils.showDebugToast('Token refresh failed. Logging out user.');
+      //   normalLogoutFromSessionExpiration();
+      //   return handler.reject(_createSessionExpiredError(err.requestOptions));
+      // }
 
       dLog.i(
         "[Retry] Token refreshed successfully. Retrying original request to '/$path'.",
       );
 
-      final Response response = await _retryRequest(
-        err.requestOptions,
-        newToken,
-      );
-      return handler.resolve(response);
+      // final Response response = await _retryRequest(
+      //   err.requestOptions,
+      //   // newToken,
+      // );
+      // return handler.resolve(response);
     } catch (e) {
       dLog.e('[Retry] Error while awaiting token or retrying request: $e');
       return handler.reject(e is DioException ? e : err);
     }
   }
 
-  Future<String?> _refreshToken() async {
-    dLog.i('[Refresh] Attempting to get a new access token...');
-    final Dio dio = Dio();
-    const RetryOptions retry = RetryOptions(maxAttempts: 3);
+  // Future<String?> _refreshToken() async {
+  //   dLog.i('[Refresh] Attempting to get a new access token...');
+  //   final Dio dio = Dio();
+  //   const RetryOptions retry = RetryOptions(maxAttempts: 3);
 
-    try {
-      final String? refreshToken = await CacheService.instance
-          .getRefreshToken();
-      if (refreshToken == null) {
-        dLog.w('[Refresh] Cannot refresh, token is null in storage.');
-        return null;
-      }
+  //   try {
+  //     final String? refreshToken = await CacheService.instance
+  //         .getRefreshToken();
+  //     if (refreshToken == null) {
+  //       dLog.w('[Refresh] Cannot refresh, token is null in storage.');
+  //       return null;
+  //     }
 
-      final Response response = await retry.retry(
-        () => dio.post(
-          '${EnvConfig.instance.apiBaseUrl}Auth/RefreshToken',
-          data: <String, String>{'RefreshToken': refreshToken},
-        ),
-        retryIf: (Exception exception) =>
-            exception is DioException && _shouldRetry(exception),
-      );
+  //     final Response response = await retry.retry(
+  //       () => dio.post(
+  //         '${EnvConfig.instance.apiBaseUrl}Auth/RefreshToken',
+  //         data: <String, String>{'RefreshToken': refreshToken},
+  //       ),
+  //       retryIf: (Exception exception) =>
+  //           exception is DioException && _shouldRetry(exception),
+  //     );
 
-      await saveToken(response.data);
-      dLog.i('[Refresh] Successfully refreshed and saved new tokens.');
-      return response.data['AccessToken'];
-    } catch (e) {
-      dLog.e('[Refresh] CRITICAL: Exception during token refresh: $e');
-      if (e is DioException) {
-        dLog.e('[Refresh] CRITICAL:****: ${e.response?.data}');
-      }
-      DebugUtils.showDebugToast(
-        'Refresh request failed with status: ${e.toString()}',
-      );
-      return null;
-    }
-  }
+  //     await saveToken(response.data);
+  //     dLog.i('[Refresh] Successfully refreshed and saved new tokens.');
+  //     return response.data['AccessToken'];
+  //   } catch (e) {
+  //     dLog.e('[Refresh] CRITICAL: Exception during token refresh: $e');
+  //     if (e is DioException) {
+  //       dLog.e('[Refresh] CRITICAL:****: ${e.response?.data}');
+  //     }
+  //     DebugUtils.showDebugToast(
+  //       'Refresh request failed with status: ${e.toString()}',
+  //     );
+  //     return null;
+  //   }
+  // }
 
   Future<Response> _retryRequest(
     RequestOptions requestOptions,

@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:retry/retry.dart';
-import 'package:safari_yatri/core/errors/error_handler.dart';
-import 'package:safari_yatri/core/errors/failure.dart';
+
+import '../../common/error/error_handler.dart';
+import '../../common/error/failure.dart';
+
 
 class ApiService {
   final Dio _dio;
