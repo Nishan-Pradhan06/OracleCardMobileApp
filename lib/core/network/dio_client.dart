@@ -14,7 +14,6 @@ class DioClient {
     headers: <String, dynamic>{
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      // 'User-Agent': 'SafariYatriApi/1.0',
     },
   );
 

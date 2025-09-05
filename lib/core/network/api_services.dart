@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:retry/retry.dart';
 
 import '../../common/error/error_handler.dart';
 import '../../common/error/failure.dart';
