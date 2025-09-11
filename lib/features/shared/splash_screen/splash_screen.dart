@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
@@ -24,14 +25,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            CircularProgressIndicator(),
-            SizedBox(height: 20),
-            Text('Loading...', style: TextStyle(fontSize: 18)),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomRight,
+            colors: [Color(0xffE6E1FF), Color(0xffFFFFFF)],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SvgPicture.asset('assets/svg/splash_logo.svg', height: 200),
+
+              const Text('Loading...', style: TextStyle(fontSize: 18)),
+            ],
+          ),
         ),
       ),
     );
