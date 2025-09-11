@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
 
+import '../../../core/animations/loading_animation.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -38,8 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SvgPicture.asset('assets/svg/splash_logo.svg', height: 200),
-
-              const Text('Loading...', style: TextStyle(fontSize: 18)),
+              LoadingText(),
             ],
           ),
         ),
