@@ -11,6 +11,14 @@ class HomeScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Oracle Card App',
         titleAlignment: TitleAlignment.left,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications, color: Colors.black),
+            onPressed: () {
+              // Handle settings action
+            },
+          ),
+        ],
       ),
       body: CustomBackground(
         child: Column(
