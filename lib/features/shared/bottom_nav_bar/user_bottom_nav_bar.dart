@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../home/screen/home_screen.dart';
+import '../../journal/screen/journal_screen.dart';
+import '../../library/library_screen.dart';
+import '../../profile/screen/profile_screen.dart';
+import '../../sessions/screen/sessions_screen.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
@@ -15,10 +18,10 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    Center(child: Text('Journal Screen')),
-    Center(child: Text('Library Screen')),
-    Center(child: Text('Session Screen')),
-    Center(child: Text('Profile Screen')),
+    JournalScreen(),
+    LibraryScreen(),
+    SessionScreen(),
+    ProfileScreen(),
   ];
 
   @override

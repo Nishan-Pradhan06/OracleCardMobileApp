@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class LibraryScreen extends StatelessWidget {
+  const LibraryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Profile'),
+      appBar: CustomAppBar(title: 'Library'),
       body: CustomBackground(
         child: const Center(
           child: Text(
-            'Profile Screen',
+            'Library Screen',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
