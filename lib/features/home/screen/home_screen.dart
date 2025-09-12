@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/widgets/custom_appbar.dart';
 import '../../../core/widgets/custom_background.dart';
+import '../../../core/widgets/custom_chip.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,6 +19,7 @@ class HomeScreen extends StatelessWidget {
               // Handle settings action
             },
           ),
+          CustomChip(label: 'Premium', type: ChipType.premium),
         ],
       ),
       body: CustomBackground(
