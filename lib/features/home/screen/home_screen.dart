@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/widgets/custom_appbar.dart';
+import '../../../core/widgets/custom_background.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,14 +12,7 @@ class HomeScreen extends StatelessWidget {
         title: 'Oracle Card App',
         titleAlignment: TitleAlignment.left,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xffF9F7FF), Color(0xFFFFFFFF)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+      body: CustomBackground(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
