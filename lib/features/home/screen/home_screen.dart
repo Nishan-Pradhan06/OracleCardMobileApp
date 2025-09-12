@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/custom_appbar.dart';
 import '../../../core/widgets/custom_background.dart';
 import '../../../core/widgets/custom_chip.dart';
+import '../widgets/notification_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,12 +14,7 @@ class HomeScreen extends StatelessWidget {
         title: 'Oracle Card App',
         titleAlignment: TitleAlignment.left,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {
-              // Handle settings action
-            },
-          ),
+          NotificationIcon(hasNotification: true),
           CustomChip(label: 'Premium', type: ChipType.premium),
         ],
       ),
