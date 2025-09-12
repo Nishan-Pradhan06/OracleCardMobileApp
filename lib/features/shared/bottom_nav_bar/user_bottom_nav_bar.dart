@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../home/screen/home_screen.dart';
+
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
 
@@ -12,7 +14,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    Center(child: Text('Home Screen')),
+    HomeScreen(),
     Center(child: Text('Journal Screen')),
     Center(child: Text('Library Screen')),
     Center(child: Text('Session Screen')),
@@ -22,10 +24,12 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: Material(
         elevation: 8,
         child: BottomNavigationBar(
+          backgroundColor: Color(0xFFFFFFFF),
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (index) {
