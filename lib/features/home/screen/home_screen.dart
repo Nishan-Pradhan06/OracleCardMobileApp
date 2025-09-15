@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_appbar.dart';
 import '../../../core/widgets/custom_background.dart';
 import '../../../core/widgets/custom_chip.dart';
@@ -69,6 +72,13 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              CustomButton(
+                text: 'Login',
+                onPressed: () {
+                  log('print');
+                },
+                isDisabled: true,
               ),
             ],
           ),
