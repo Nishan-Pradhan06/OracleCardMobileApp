@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import '../../../core/widgets/custom_appbar.dart';
 import '../../../core/widgets/custom_chip.dart';
 import '../widgets/notification_widget.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           CustomChip(label: 'Premium', type: ChipType.premium),
         ],
       ),
-      body: Column(),
+      body: CustomBackground(child: Column()),
     );
   }
 }
