@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../home/screen/home_screen.dart';
 import '../../journal/screen/journal_screen.dart';
-import '../../library/library_screen.dart';
+import '../../library/screen/library_screen.dart';
 import '../../profile/screen/profile_screen.dart';
 import '../../sessions/screen/sessions_screen.dart';
 
