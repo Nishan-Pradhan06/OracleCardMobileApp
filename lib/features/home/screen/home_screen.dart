@@ -23,14 +23,61 @@ class HomeScreen extends StatelessWidget {
       body: CustomBackground(
         child: CustomPadding(
           child: Column(
+            spacing: 20,
             children: [
               CustomContainer(
                 isGradient: true,
-                child: Text(
-                  'Home Screen',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.headlineMedium?.copyWith(color: Colors.white),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 10,
+                    children: [
+                      Text(
+                        'Today\'s Oracle',
+                        style: Theme.of(context).textTheme.displaySmall
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        'Tap to reveal your message',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Random Pull'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              CustomContainer(
+                isGradient: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 10,
+                  children: [
+                    Text(
+                      'Today\'s Oracle',
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Tap to reveal your message',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text('Random Pull'),
+                    ),
+                  ],
                 ),
               ),
             ],

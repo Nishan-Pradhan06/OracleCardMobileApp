@@ -34,6 +34,14 @@ class CustomContainer extends StatelessWidget {
               )
             : null,
         color: isGradient ? null : backgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10, // softness
+            spreadRadius: 2, // how wide it spreads
+            offset: const Offset(0, 4), // moves shadow down
+          ),
+        ],
       ),
       child: Stack(
         children: [
