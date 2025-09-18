@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomContainer extends StatelessWidget {
   final Widget child;
@@ -6,6 +7,7 @@ class CustomContainer extends StatelessWidget {
   final double? height;
   final double? width;
   final Color backgroundColor;
+  final double svgSize;
 
   const CustomContainer({
     super.key,
@@ -14,12 +16,12 @@ class CustomContainer extends StatelessWidget {
     this.height,
     this.width,
     this.backgroundColor = Colors.white,
+    this.svgSize = 100,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
       height: height ?? MediaQuery.sizeOf(context).height / 4.5,
       width: width ?? MediaQuery.sizeOf(context).width,
       decoration: BoxDecoration(
@@ -33,7 +35,22 @@ class CustomContainer extends StatelessWidget {
             : null,
         color: isGradient ? null : backgroundColor,
       ),
-      child: child,
+      child: Stack(
+        children: [
+          // Main content
+          Padding(padding: const EdgeInsets.all(16.0), child: child),
+          if (isGradient)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: SvgPicture.asset(
+                'assets/svg/overlay.svg',
+                height: svgSize,
+                width: svgSize,
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
