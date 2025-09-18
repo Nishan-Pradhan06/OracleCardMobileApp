@@ -8,7 +8,8 @@ class CustomButton extends StatelessWidget {
   // Customization options
   final double? width;
   final double? height;
-  final Color? backgroundColor; // optional
+  final Color? backgroundColor; // optional single color
+  final Gradient? gradient; //New: support gradient
   final Color textColor;
   final double fontSize;
   final FontWeight fontWeight;
@@ -28,6 +29,7 @@ class CustomButton extends StatelessWidget {
     this.width,
     this.height,
     this.backgroundColor,
+    this.gradient,
     this.textColor = Colors.white,
     this.fontSize = 16,
     this.fontWeight = FontWeight.w600,
@@ -42,7 +44,6 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Default colors if not overridden
     const Color defaultEnabledColor = Color(0xFF6B48FF);
     const Color defaultDisabledColor = Color.fromARGB(87, 107, 70, 193);
 
@@ -55,51 +56,58 @@ class CustomButton extends StatelessWidget {
       child: SizedBox(
         width: width,
         height: height,
-        child: ElevatedButton(
-          onPressed: onPressed, // always active, AbsorbPointer will block taps
-          style: ElevatedButton.styleFrom(
-            backgroundColor: effectiveColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: borderRadius,
-              side: borderColor != null
-                  ? BorderSide(color: borderColor!, width: borderWidth)
-                  : BorderSide.none,
-            ),
-            padding: EdgeInsets.zero,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: gradient, // 🔥 Apply gradient if provided
+            color: gradient == null ? effectiveColor : null, // fallback color
+            borderRadius: borderRadius,
+            border: borderColor != null
+                ? Border.all(color: borderColor!, width: borderWidth)
+                : null,
           ),
-          child: Padding(
-            padding: padding,
-            child: isLoading
-                ? const SizedBox(
-                    height: 22,
-                    width: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.5,
-                      color: Colors.white,
-                    ),
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (leadingIcon != null) ...[
-                        leadingIcon!,
-                        const SizedBox(width: 8),
-                      ],
-                      Text(
-                        text,
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: fontSize,
-                          fontWeight: fontWeight,
-                        ),
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  Colors.transparent, // ✅ Transparent (for gradient)
+              shadowColor: Colors.transparent, // Remove elevation shadow
+              shape: RoundedRectangleBorder(borderRadius: borderRadius),
+              padding: EdgeInsets.zero,
+            ),
+            child: Padding(
+              padding: padding,
+              child: isLoading
+                  ? const SizedBox(
+                      height: 22,
+                      width: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        color: Colors.white,
                       ),
-                      if (trailingIcon != null) ...[
-                        const SizedBox(width: 8),
-                        trailingIcon!,
+                    )
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (leadingIcon != null) ...[
+                          leadingIcon!,
+                          const SizedBox(width: 8),
+                        ],
+                        Text(
+                          text,
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: fontSize,
+                            fontWeight: fontWeight,
+                          ),
+                        ),
+                        if (trailingIcon != null) ...[
+                          const SizedBox(width: 8),
+                          trailingIcon!,
+                        ],
                       ],
-                    ],
-                  ),
+                    ),
+            ),
           ),
         ),
       ),
