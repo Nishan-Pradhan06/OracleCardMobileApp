@@ -76,23 +76,41 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               CustomContainer(
+                height: MediaQuery.sizeOf(context).height / 3.6,
+                padding: EdgeInsetsGeometry.only(
+                  top: 20,
+                  left: 20,
+                  right: 20,
+                  // bottom: 10,
+                ),
                 isGradient: false,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 10,
                   children: [
                     Text(
-                      'Today\'s Oracle',
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      'Daily Guidance',
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     Text(
-                      'Tap to reveal your message',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                      'Your angels are watching over you today. Trust your intuition and follow your heart.',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 20,
+                        color: Color(0xFF333333).withValues(alpha: 0.7),
+                      ),
+                    ),
+                    Container(
+                      height: 70,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFFF5F5F5),
+                      ),
+                      child: Column(),
                     ),
                   ],
                 ),

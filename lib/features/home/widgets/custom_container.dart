@@ -8,6 +8,7 @@ class CustomContainer extends StatelessWidget {
   final double? width;
   final Color backgroundColor;
   final double svgSize;
+  final EdgeInsetsGeometry padding; // <-- added padding
 
   const CustomContainer({
     super.key,
@@ -17,6 +18,7 @@ class CustomContainer extends StatelessWidget {
     this.width,
     this.backgroundColor = Colors.white,
     this.svgSize = 100,
+    this.padding = const EdgeInsets.all(16), // default padding
   });
 
   @override
@@ -37,16 +39,18 @@ class CustomContainer extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10, // softness
-            spreadRadius: 2, // how wide it spreads
-            offset: const Offset(0, 4), // moves shadow down
+            blurRadius: 10,
+            spreadRadius: 2,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Stack(
         children: [
-          // Main content
-          Padding(padding: const EdgeInsets.all(16.0), child: child),
+          // Main content with customizable padding
+          Padding(padding: padding, child: child),
+
+          // Optional SVG overlay for gradient containers
           if (isGradient)
             Positioned(
               top: 0,
