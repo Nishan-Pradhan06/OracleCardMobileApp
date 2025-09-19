@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
-import '../../home/widgets/custom_container.dart';
+import '../../../core/widgets/custom_container.dart';
 
 class EntriesCardWidget extends StatelessWidget {
   final String dateTime;

@@ -7,7 +7,7 @@ import '../../../core/widgets/custom_chip.dart';
 import '../../../core/widgets/custom_padding.dart';
 import '../models/home_container_model.dart';
 import '../widgets/custom_card_button.dart';
-import '../widgets/custom_container.dart';
+import '../../../core/widgets/custom_container.dart';
 import '../widgets/home_container.dart';
 import '../widgets/notification_widget.dart';
 
