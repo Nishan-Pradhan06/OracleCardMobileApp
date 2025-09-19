@@ -11,6 +11,7 @@ class CustomContainer extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final List<Color>? gradientColors;
   final bool showSvgOverlay;
+  final String svgOverlayPath;
 
   const CustomContainer({
     super.key,
@@ -23,6 +24,7 @@ class CustomContainer extends StatelessWidget {
     this.padding = const EdgeInsets.all(16),
     this.gradientColors,
     this.showSvgOverlay = false,
+    this.svgOverlayPath = 'assets/svg/overlay.svg',
   });
 
   @override
@@ -38,10 +40,7 @@ class CustomContainer extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors:
                     gradientColors ??
-                    const [
-                      Color(0xFF6B48FF),
-                      Color(0xFF40C4FF),
-                    ], // default gradient
+                    const [Color(0xFF6B48FF), Color(0xFF40C4FF)],
               )
             : null,
         color: isGradient ? null : backgroundColor,
@@ -54,23 +53,27 @@ class CustomContainer extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
-        children: [
-          // Main content
-          Padding(padding: padding, child: child),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
+          children: [
+            // Main content
+            Padding(padding: padding, child: child),
 
-          // Optional SVG overlay (separate control)
-          if (showSvgOverlay)
-            Positioned(
-              top: 0,
-              right: 0,
-              child: SvgPicture.asset(
-                'assets/svg/overlay.svg',
-                height: svgSize,
-                width: svgSize,
+            // Optional SVG overlay
+            if (showSvgOverlay)
+              Positioned(
+                top: 0,
+                right: 0,
+                child: SvgPicture.asset(
+                  svgOverlayPath,
+                  height: svgSize,
+                  width: svgSize,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
