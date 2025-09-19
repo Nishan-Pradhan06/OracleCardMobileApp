@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
-import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_appbar.dart';
 import '../../../core/widgets/custom_chip.dart';
 import '../../../core/widgets/custom_padding.dart';
+import '../../../core/widgets/upgrade_premium_button_widget.dart';
 import '../models/home_container_model.dart';
 import '../widgets/custom_card_button.dart';
 import '../../../core/widgets/custom_container.dart';
@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 CustomContainer(
                   isGradient: true,
+                  showSvgOverlay: true,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -166,16 +167,7 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-
-                CustomButton(
-                  height: 50,
-                  width: double.infinity,
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
-                  ),
-                  text: 'Unlock Premium',
-                  onPressed: () {},
-                ),
+                UpgradePremiumButtonWidget(),
               ],
             ),
           ),

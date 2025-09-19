@@ -8,7 +8,9 @@ class CustomContainer extends StatelessWidget {
   final double? width;
   final Color backgroundColor;
   final double svgSize;
-  final EdgeInsetsGeometry padding; // <-- added padding
+  final EdgeInsetsGeometry padding;
+  final List<Color>? gradientColors;
+  final bool showSvgOverlay;
 
   const CustomContainer({
     super.key,
@@ -18,7 +20,9 @@ class CustomContainer extends StatelessWidget {
     this.width,
     this.backgroundColor = Colors.white,
     this.svgSize = 100,
-    this.padding = const EdgeInsets.all(16), // default padding
+    this.padding = const EdgeInsets.all(16),
+    this.gradientColors,
+    this.showSvgOverlay = false,
   });
 
   @override
@@ -29,10 +33,15 @@ class CustomContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: isGradient
-            ? const LinearGradient(
+            ? LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Color(0xFF6B48FF), Color(0xFF40C4FF)],
+                colors:
+                    gradientColors ??
+                    const [
+                      Color(0xFF6B48FF),
+                      Color(0xFF40C4FF),
+                    ], // default gradient
               )
             : null,
         color: isGradient ? null : backgroundColor,
@@ -47,11 +56,11 @@ class CustomContainer extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Main content with customizable padding
+          // Main content
           Padding(padding: padding, child: child),
 
-          // Optional SVG overlay for gradient containers
-          if (isGradient)
+          // Optional SVG overlay (separate control)
+          if (showSvgOverlay)
             Positioned(
               top: 0,
               right: 0,
