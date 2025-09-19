@@ -26,7 +26,6 @@ class JournalScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: CustomPadding(
             child: Column(
-              spacing: 10,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,7 +46,7 @@ class JournalScreen extends StatelessWidget {
                 ),
                 ListView.builder(
                   itemCount: entries.length,
-                  shrinkWrap: true,                  
+                  shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final entry = entries[index];
