@@ -12,6 +12,7 @@ class CustomContainer extends StatelessWidget {
   final List<Color>? gradientColors;
   final bool showSvgOverlay;
   final String svgOverlayPath;
+  final void Function()? onTap;
 
   const CustomContainer({
     super.key,
@@ -25,54 +26,58 @@ class CustomContainer extends StatelessWidget {
     this.gradientColors,
     this.showSvgOverlay = false,
     this.svgOverlayPath = 'assets/svg/overlay.svg',
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? MediaQuery.sizeOf(context).height / 4.5,
-      width: width ?? MediaQuery.sizeOf(context).width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: isGradient
-            ? LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors:
-                    gradientColors ??
-                    const [Color(0xFF6B48FF), Color(0xFF40C4FF)],
-              )
-            : null,
-        color: isGradient ? null : backgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 5,
-            spreadRadius: 0.2,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Stack(
-          children: [
-            // Main content
-            Padding(padding: padding, child: child),
-
-            // Optional SVG overlay
-            if (showSvgOverlay)
-              Positioned(
-                top: 0,
-                right: 0,
-                child: SvgPicture.asset(
-                  svgOverlayPath,
-                  height: svgSize,
-                  width: svgSize,
-                  fit: BoxFit.cover,
-                ),
-              ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height ?? MediaQuery.sizeOf(context).height / 4.5,
+        width: width ?? MediaQuery.sizeOf(context).width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: isGradient
+              ? LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors:
+                      gradientColors ??
+                      const [Color(0xFF6B48FF), Color(0xFF40C4FF)],
+                )
+              : null,
+          color: isGradient ? null : backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 5,
+              spreadRadius: 0.2,
+              offset: const Offset(0, 2),
+            ),
           ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Stack(
+            children: [
+              // Main content
+              Padding(padding: padding, child: child),
+
+              // Optional SVG overlay
+              if (showSvgOverlay)
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: SvgPicture.asset(
+                    svgOverlayPath,
+                    height: svgSize,
+                    width: svgSize,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
