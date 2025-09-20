@@ -8,4 +8,6 @@ class AppRoutesName {
   static const String userBottomNavBarRoute = 'userBottomNavBarRoute';
 
   //#--------------ADMIN ROUTES NAME-------------##
+  static const String adminBottomNavBarRoute = 'adminBottomNavBarRoute';
+  static const String adminDashboardRoute = 'adminDashboardRoute';
 }

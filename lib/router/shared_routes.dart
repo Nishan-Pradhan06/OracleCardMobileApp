@@ -3,7 +3,6 @@ import 'package:oracle_card_app/common/extension/extension.dart';
 import 'package:oracle_card_app/features/auth/screen/login_screen.dart';
 import 'package:oracle_card_app/features/auth/screen/signup_screen.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
-import '../features/shared/bottom_nav_bar/user_bottom_nav_bar.dart';
 import '../features/shared/splash_screen/splash_screen.dart';
 
 List<GoRoute> sharedAppRoutes = [
@@ -22,9 +21,5 @@ List<GoRoute> sharedAppRoutes = [
     name: AppRoutesName.signUpScreenRoute,
     builder: (context, state) => SignUpScreen(),
   ),
-  GoRoute(
-    path: AppRoutesName.userBottomNavBarRoute.path,
-    name: AppRoutesName.userBottomNavBarRoute,
-    builder: (context, state) => UserBottomNavBarScreen(),
-  ),
+  
 ];
