@@ -69,4 +69,13 @@ class InputValidator {
 
     return null;
   }
+
+  /// Checkbox validation
+  /// Pass the boolean value of the checkbox (true if checked)
+  static String? validateCheckbox(bool? value) {
+    if (value == null || !value) {
+      return 'You must accept the Terms of Service';
+    }
+    return null;
+  }
 }

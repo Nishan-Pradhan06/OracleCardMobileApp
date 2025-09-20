@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final Uri playStoreUrl = Uri.parse(
@@ -20,6 +21,7 @@ Future<void> urlLauncherWithFallback(BuildContext context, Uri url) async {
     log('Error launching URL: $e');
     if (context.mounted) {
       log(e.toString());
+      CustomToast.showError(e.toString());
 
       ///### -----------NEEDED TO ADD TOAST-------///#
     }

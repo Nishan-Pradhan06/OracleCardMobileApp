@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:oracle_card_app/core/helpers/textfield_validation_helpers.dart';
+import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
