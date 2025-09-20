@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CacheService {
+class CacheServices {
   static const String _tokenKey = 'auth_token';
 
   /// Save token
