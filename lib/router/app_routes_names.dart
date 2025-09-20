@@ -10,4 +10,5 @@ class AppRoutesName {
   //#--------------ADMIN ROUTES NAME-------------##
   static const String adminBottomNavBarRoute = 'adminBottomNavBarRoute';
   static const String adminDashboardRoute = 'adminDashboardRoute';
+  static const String adminDeckAndCardsRoute = 'adminDeckAndCardsRoute';
 }

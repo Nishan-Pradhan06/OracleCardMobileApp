@@ -8,8 +8,8 @@ class CustomButton extends StatelessWidget {
   // Customization options
   final double? width;
   final double? height;
-  final Color? backgroundColor; // optional single color
-  final Gradient? gradient; //New: support gradient
+  final Color? backgroundColor;
+  final Gradient? gradient;
   final Color textColor;
   final double fontSize;
   final FontWeight fontWeight;
@@ -20,6 +20,7 @@ class CustomButton extends StatelessWidget {
   final Color? borderColor;
   final double borderWidth;
   final bool isDisabled;
+  final List<BoxShadow>? boxShadow;
 
   const CustomButton({
     super.key,
@@ -40,6 +41,7 @@ class CustomButton extends StatelessWidget {
     this.borderColor,
     this.borderWidth = 0,
     this.isDisabled = false,
+    this.boxShadow,
   });
 
   @override
@@ -58,55 +60,62 @@ class CustomButton extends StatelessWidget {
         height: height,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            gradient: gradient, // 🔥 Apply gradient if provided
-            color: gradient == null ? effectiveColor : null, // fallback color
+            gradient: gradient,
+            color: gradient == null ? effectiveColor : null,
             borderRadius: borderRadius,
             border: borderColor != null
                 ? Border.all(color: borderColor!, width: borderWidth)
                 : null,
+            boxShadow: boxShadow,
           ),
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  Colors.transparent, // ✅ Transparent (for gradient)
-              shadowColor: Colors.transparent, // Remove elevation shadow
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
               shape: RoundedRectangleBorder(borderRadius: borderRadius),
               padding: EdgeInsets.zero,
+              minimumSize: Size(width ?? 0, height ?? 0),
             ),
-            child: Padding(
-              padding: padding,
-              child: isLoading
-                  ? const SizedBox(
-                      height: 22,
-                      width: 22,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
-                        color: Colors.white,
-                      ),
-                    )
-                  : Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (leadingIcon != null) ...[
-                          leadingIcon!,
-                          const SizedBox(width: 8),
-                        ],
-                        Text(
-                          text,
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: fontSize,
-                            fontWeight: fontWeight,
-                          ),
+            child: Align(
+              // ✅ ensures vertical + horizontal centering
+              alignment: Alignment.center,
+              child: Padding(
+                padding: padding,
+                child: isLoading
+                    ? const SizedBox(
+                        height: 22,
+                        width: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          color: Colors.white,
                         ),
-                        if (trailingIcon != null) ...[
-                          const SizedBox(width: 8),
-                          trailingIcon!,
+                      )
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment:
+                            CrossAxisAlignment.center, // ✅ fixes top alignment
+                        children: [
+                          if (leadingIcon != null) ...[
+                            leadingIcon!,
+                            const SizedBox(width: 8),
+                          ],
+                          Text(
+                            text,
+                            style: TextStyle(
+                              color: textColor,
+                              fontSize: fontSize,
+                              fontWeight: fontWeight,
+                            ),
+                          ),
+                          if (trailingIcon != null) ...[
+                            const SizedBox(width: 8),
+                            trailingIcon!,
+                          ],
                         ],
-                      ],
-                    ),
+                      ),
+              ),
             ),
           ),
         ),

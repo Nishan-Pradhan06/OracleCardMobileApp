@@ -14,6 +14,9 @@ class CustomContainer extends StatelessWidget {
   final String svgOverlayPath;
   final void Function()? onTap;
 
+  /// NEW: Wrap with IntrinsicHeight when true
+  final bool useIntrinsicHeight;
+
   const CustomContainer({
     super.key,
     required this.child,
@@ -27,14 +30,17 @@ class CustomContainer extends StatelessWidget {
     this.showSvgOverlay = false,
     this.svgOverlayPath = 'assets/svg/overlay.svg',
     this.onTap,
+    this.useIntrinsicHeight = false, // default off
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final container = GestureDetector(
       onTap: onTap,
       child: Container(
-        height: height ?? MediaQuery.sizeOf(context).height / 4.5,
+        height: useIntrinsicHeight
+            ? null // let IntrinsicHeight handle it
+            : (height ?? MediaQuery.sizeOf(context).height / 4.5),
         width: width ?? MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -81,5 +87,7 @@ class CustomContainer extends StatelessWidget {
         ),
       ),
     );
+
+    return useIntrinsicHeight ? IntrinsicHeight(child: container) : container;
   }
 }
