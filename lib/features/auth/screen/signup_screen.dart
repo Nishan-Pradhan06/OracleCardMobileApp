@@ -1,13 +1,15 @@
 import 'dart:developer';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:oracle_card_app/core/helpers/url_launcher_helper.dart';
 import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
-
 import '../../../core/helpers/time_zone_helper.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -24,6 +26,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  bool isChecked = false;
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +41,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _fullNameController.dispose();
     _timezoneController.dispose();
     super.dispose();
+  }
+
+  void _submitForm() {
+    final isFormValid = _formKey.currentState!.validate();
+    final isCheckboxValid = InputValidator.validateCheckbox(isChecked) == null;
+
+    if (!isCheckboxValid) {
+      CustomToast.showWarning('Please accept the Terms of Services');
+    }
+
+    if (isFormValid && isCheckboxValid) {
+      // Form + checkbox both valid
+      log(_emailController.text);
+      log(_passwordController.text);
+    }
   }
 
   @override
@@ -97,28 +116,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Row(
                           children: [
                             Checkbox(
-                              value: true,
-                              onChanged: (bool? value) {},
-                              materialTapTargetSize: MaterialTapTargetSize
-                                  .shrinkWrap, 
-                              visualDensity:
-                                  VisualDensity.compact, 
+                              activeColor: Color(0xFF6B46C1),
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value ?? false;
+                                });
+                              },
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
                             ),
 
-                            Expanded(
-                              child: Text('I accept the Terms of Services'),
+                            RichText(
+                              text: TextSpan(
+                                text: 'I accept the ',
+                                style: Theme.of(context).textTheme.bodySmall,
+                                children: [
+                                  TextSpan(
+                                    text: 'Terms of Services',
+                                    style: Theme.of(context).textTheme.bodySmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF6B46C1),
+                                        ),
+
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        urlLauncher(termAndServices);
+                                      },
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                         CustomButton(
                           width: double.infinity,
-                          text: 'Login',
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              log(_emailController.text);
-                              log(_passwordController.text);
-                            }
-                          },
+                          text: 'Sign Up',
+                          onPressed: _submitForm,
                         ),
                       ],
                     ),
