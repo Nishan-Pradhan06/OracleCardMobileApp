@@ -31,7 +31,7 @@ class AppDioInterceptor extends Interceptor {
 
     if (err.response?.statusCode == 401) {
       NavigationService navigationService = NavigationService();
-      navigationService.goNamed(AppRoutesName.loginScreen);
+      navigationService.goNamed(AppRoutesName.loginScreenRoute);
     }
     return handler.next(err);
   }

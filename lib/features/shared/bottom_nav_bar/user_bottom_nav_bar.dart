@@ -6,14 +6,14 @@ import '../../library/screen/library_screen.dart';
 import '../../profile/screen/profile_screen.dart';
 import '../../sessions/screen/sessions_screen.dart';
 
-class BottomNavBarScreen extends StatefulWidget {
-  const BottomNavBarScreen({super.key});
+class UserBottomNavBarScreen extends StatefulWidget {
+  const UserBottomNavBarScreen({super.key});
 
   @override
-  State<BottomNavBarScreen> createState() => _BottomNavBarScreenState();
+  State<UserBottomNavBarScreen> createState() => _UserBottomNavBarScreenState();
 }
 
-class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
+class _UserBottomNavBarScreenState extends State<UserBottomNavBarScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [

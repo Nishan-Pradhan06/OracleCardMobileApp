@@ -10,6 +10,6 @@ final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(
 );
 final appRoute = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: AppRoutesName.splashScreen.path,
+  initialLocation: AppRoutesName.splashScreenRoute.path,
   routes: [...sharedAppRoutes, ...userAppRoutes],
 );
