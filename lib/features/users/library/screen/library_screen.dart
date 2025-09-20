@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
-import '../../../core/widgets/custom_appbar.dart';
-import '../../../core/widgets/custom_background.dart';
-import '../../../core/widgets/custom_chip.dart';
-import '../../../core/widgets/heading_widget.dart';
+import '../../../../core/widgets/custom_appbar.dart';
+import '../../../../core/widgets/custom_background.dart';
+import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/heading_widget.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../widgets/library_card_widget.dart';
 

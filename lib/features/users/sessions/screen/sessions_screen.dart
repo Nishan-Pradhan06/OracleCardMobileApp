@@ -5,7 +5,7 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/heading_widget.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
 
-import '../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/custom_chip.dart';
 import '../../home/widgets/notification_widget.dart';
 
 class SessionScreen extends StatelessWidget {

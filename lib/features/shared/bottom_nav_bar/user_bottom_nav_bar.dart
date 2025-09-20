@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../home/screen/home_screen.dart';
-import '../../journal/screen/journal_screen.dart';
-import '../../library/screen/library_screen.dart';
-import '../../profile/screen/profile_screen.dart';
-import '../../sessions/screen/sessions_screen.dart';
+import '../../users/home/screen/home_screen.dart';
+import '../../users/journal/screen/journal_screen.dart';
+import '../../users/library/screen/library_screen.dart';
+import '../../users/profile/screen/profile_screen.dart';
+import '../../users/sessions/screen/sessions_screen.dart';
 
 class UserBottomNavBarScreen extends StatefulWidget {
   const UserBottomNavBarScreen({super.key});
