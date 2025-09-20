@@ -4,6 +4,12 @@ class InputValidator {
       return 'Enter your name';
     } else if (value.trim().length < 3) {
       return 'Name must be at least 3 characters';
+    } else if (value.trim().length > 50) {
+      return 'Name must not exceed 50 characters';
+    } else if (!RegExp(r"^[a-zA-Z\s]+$").hasMatch(value.trim())) {
+      return 'Name can only contain letters and spaces';
+    } else if (RegExp(r"\s{2,}").hasMatch(value.trim())) {
+      return 'Name cannot contain multiple spaces in a row';
     }
     return null;
   }
