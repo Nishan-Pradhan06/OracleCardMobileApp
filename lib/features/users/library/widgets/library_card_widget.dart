@@ -17,6 +17,7 @@ class LibraryCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomContainer(
       svgOverlayPath: 'assets/svg/library_overlay.svg',
+      useIntrinsicHeight: true,
       showSvgOverlay: true,
       child: Column(
         spacing: 10,

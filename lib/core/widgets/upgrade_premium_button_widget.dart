@@ -35,7 +35,7 @@ class UpgradePremiumButtonWidget extends StatelessWidget {
             ),
 
             CustomButton(
-              height: 40,
+              height: 45,
               backgroundColor: Colors.white,
               width: 140,
               textColor: Color(0xFFFF7E5F),

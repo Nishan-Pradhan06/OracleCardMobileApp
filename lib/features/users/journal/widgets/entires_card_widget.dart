@@ -21,6 +21,7 @@ class EntriesCardWidget extends StatelessWidget {
       vertical: 10,
       child: CustomContainer(
         height: MediaQuery.sizeOf(context).height / 6.5,
+        useIntrinsicHeight: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

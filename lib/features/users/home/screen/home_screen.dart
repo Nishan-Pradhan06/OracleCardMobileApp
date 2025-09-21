@@ -34,6 +34,7 @@ class HomeScreen extends StatelessWidget {
                 CustomContainer(
                   isGradient: true,
                   showSvgOverlay: true,
+                  useIntrinsicHeight: true,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -78,12 +79,13 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 CustomContainer(
-                  height: MediaQuery.sizeOf(context).height / 3.6,
+                  height: MediaQuery.sizeOf(context).height / 3.8,
+                  useIntrinsicHeight: true,
                   padding: EdgeInsetsGeometry.only(
                     top: 20,
                     left: 20,
                     right: 20,
-                    // bottom: 10,
+                    bottom: 10,
                   ),
                   isGradient: false,
                   child: Column(
