@@ -73,6 +73,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (_formKey.currentState!.validate()) {
                             log(_emailController.text);
                             log(_passwordController.text);
+                            context.goNamed(
+                              AppRoutesName.userBottomNavBarRoute,
+                            );
                           }
                         },
                       ),
