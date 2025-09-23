@@ -95,7 +95,7 @@ class CustomButton extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment:
-                            CrossAxisAlignment.center, // ✅ fixes top alignment
+                            CrossAxisAlignment.center,
                         children: [
                           if (leadingIcon != null) ...[
                             leadingIcon!,
