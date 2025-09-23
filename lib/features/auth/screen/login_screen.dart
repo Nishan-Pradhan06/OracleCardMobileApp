@@ -57,11 +57,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomTextField(
                         label: 'Email',
                         type: CustomTextFieldType.email,
+                        controller: _emailController,
                         validator: InputValidator.validateEmail,
                       ),
                       CustomTextField(
                         label: 'Password',
                         obscureText: true,
+                        controller: _passwordController,
                         type: CustomTextFieldType.password,
                         validator: InputValidator.validatePassword,
                       ),
