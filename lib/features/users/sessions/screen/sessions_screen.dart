@@ -28,6 +28,7 @@ class SessionScreen extends StatelessWidget {
         child: CustomRefreshIndicator(
           onRefresh: () async {},
           child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: CustomPadding(
               child: Column(
                 spacing: 10,

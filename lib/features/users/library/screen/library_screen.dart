@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
@@ -23,33 +24,37 @@ class LibraryScreen extends StatelessWidget {
         ],
       ),
       body: CustomBackground(
-        child: SingleChildScrollView(
-          child: CustomPadding(
-            child: Column(
-              spacing: 10,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeadingWidget(
-                  title: "Spiritual Library",
-                  subtitle:
-                      "Explore meditations and guidance to support your spiritual journey.",
-                ),
+        child: CustomRefreshIndicator(
+          onRefresh: () async {},
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: CustomPadding(
+              child: Column(
+                spacing: 10,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeadingWidget(
+                    title: "Spiritual Library",
+                    subtitle:
+                        "Explore meditations and guidance to support your spiritual journey.",
+                  ),
 
-                LibraryCardWidget(
-                  svgUrl: 'assets/svg/meditations_icon.svg',
-                  title: 'Meditations',
-                  description:
-                      'Guided meditations to calm your mind and connect with your inner wisdom',
-                ),
-                LibraryCardWidget(
-                  svgUrl: 'assets/svg/guidance.svg',
-                  title: 'Guidance Archive',
-                  description:
-                      'Access past daily guidance messages and angelic wisdom',
-                ),
+                  LibraryCardWidget(
+                    svgUrl: 'assets/svg/meditations_icon.svg',
+                    title: 'Meditations',
+                    description:
+                        'Guided meditations to calm your mind and connect with your inner wisdom',
+                  ),
+                  LibraryCardWidget(
+                    svgUrl: 'assets/svg/guidance.svg',
+                    title: 'Guidance Archive',
+                    description:
+                        'Access past daily guidance messages and angelic wisdom',
+                  ),
 
-                UpgradePremiumButtonWidget(),
-              ],
+                  UpgradePremiumButtonWidget(),
+                ],
+              ),
             ),
           ),
         ),

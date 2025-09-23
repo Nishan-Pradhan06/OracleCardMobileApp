@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../models/entries_list_model.dart';
@@ -23,41 +24,46 @@ class JournalScreen extends StatelessWidget {
         ],
       ),
       body: CustomBackground(
-        child: SingleChildScrollView(
-          child: CustomPadding(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'My Entires',
-                      style: Theme.of(context).textTheme.headlineMedium
-                          ?.copyWith(
-                            // fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    Text(
-                      '2 entires',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-                ListView.builder(
-                  itemCount: entries.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    final entry = entries[index];
-                    return EntriesCardWidget(
-                      title: entry.title,
-                      dateTime: entry.dateTime,
-                      description: entry.description,
-                    );
-                  },
-                ),
-              ],
+        child: CustomRefreshIndicator(
+          onRefresh: () async {},
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+
+            child: CustomPadding(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'My Entires',
+                        style: Theme.of(context).textTheme.headlineMedium
+                            ?.copyWith(
+                              // fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        '2 entires',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                  ListView.builder(
+                    itemCount: entries.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final entry = entries[index];
+                      return EntriesCardWidget(
+                        title: entry.title,
+                        dateTime: entry.dateTime,
+                        description: entry.description,
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

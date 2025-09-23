@@ -28,3 +28,50 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 }
+
+
+  // Simulated data: 0 = no activity, 1 = low, 2 = medium, 3 = high
+  // final Random random = Random();
+  // List<List<int>> generateWeeklyData() {
+  //   return List.generate(7, (week) {
+  //     return List.generate(30, (day) => random.nextInt(4)); // 30 days per week
+  //   });
+  // }
+    // List<List<int>> data = generateWeeklyData();
+
+
+  // Color getColor(int value) {
+  //   switch (value) {
+  //     case 0:
+  //       return Colors.grey[200]!;
+  //     case 1:
+  //       return Colors.green[200]!;
+  //     case 2:
+  //       return Colors.green[400]!;
+  //     case 3:
+  //       return Colors.green[800]!;
+  //     default:
+  //       return Colors.grey;
+  //   }
+  // }
+// }
+// SingleChildScrollView(
+//             scrollDirection: Axis.horizontal,
+//             child: Row(
+//               children: List.generate(data.length, (weekIndex) {
+//                 return Column(
+//                   children: List.generate(data[weekIndex].length, (dayIndex) {
+//                     return Container(
+//                       margin: EdgeInsets.all(2),
+//                       width: 16,
+//                       height: 16,
+//                       decoration: BoxDecoration(
+//                         color: getColor(data[weekIndex][dayIndex]),
+//                         borderRadius: BorderRadius.circular(4),
+//                       ),
+//                     );
+//                   }),
+//                 );
+//               }),
+//             ),
+//           ),
