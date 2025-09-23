@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/helpers/url_launcher_helper.dart';
 import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
@@ -11,6 +12,8 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import '../../../core/helpers/time_zone_helper.dart';
+import '../../../core/widgets/custom_account_check_text.dart';
+import '../../../router/app_routes_names.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -155,6 +158,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: double.infinity,
                           text: 'Sign Up',
                           onPressed: _submitForm,
+                        ),
+                        AccountCheckText(
+                          message: 'Already have an Account ?',
+                          actionText: 'Sign In',
+                          onTap: () {
+                            context.pushNamed(AppRoutesName.loginScreenRoute);
+                          },
                         ),
                       ],
                     ),
