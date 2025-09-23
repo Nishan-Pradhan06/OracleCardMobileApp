@@ -69,7 +69,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Center(
             child: SingleChildScrollView(
               child: CustomContainer(
-                height: MediaQuery.sizeOf(context).height * 0.65,
+                height: MediaQuery.sizeOf(context).height * 0.70,
+                useIntrinsicHeight: true,
                 child: Form(
                   key: _formKey,
                   child: Center(

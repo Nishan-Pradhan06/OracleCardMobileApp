@@ -10,7 +10,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
@@ -25,7 +24,27 @@ class ProfileScreen extends StatelessWidget {
           onRefresh: () async {},
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
-            child: Column(),
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage(
+                    'assets/images/profile_picture.png',
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'John Doe',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 5),
+              ],
+            ),
           ),
         ),
       ),
