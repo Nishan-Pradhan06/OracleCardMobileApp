@@ -62,7 +62,7 @@ class ProfileAvatar extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0,
-                right: 4, 
+                right: 4,
                 child: GestureDetector(
                   onTap: onCameraTap,
                   child: Container(
@@ -95,7 +95,7 @@ class ProfileAvatar extends StatelessWidget {
             userName,
             style: Theme.of(
               context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
           ),
         ],
       ),
