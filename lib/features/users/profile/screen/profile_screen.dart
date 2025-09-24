@@ -4,6 +4,7 @@ import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../home/widgets/notification_widget.dart';
+import '../widgets/profile_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -26,23 +27,12 @@ class ProfileScreen extends StatelessWidget {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                SizedBox(height: 20),
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(
-                    'assets/images/profile_picture.png',
-                  ),
+                ProfileAvatar(
+                  imagePath:
+                      'https://avatars.githubusercontent.com/u/105001135?v=4',
+                  userName: 'John Doe',
+                  onCameraTap: () {},
                 ),
-                SizedBox(height: 10),
-                Text(
-                  'John Doe',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 5),
               ],
             ),
           ),
