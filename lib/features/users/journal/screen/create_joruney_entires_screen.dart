@@ -14,7 +14,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Entry Details',
+        title: 'New Entry',
         titleAlignment: TitleAlignment.left,
         actions: [
           NotificationIcon(hasNotification: true),

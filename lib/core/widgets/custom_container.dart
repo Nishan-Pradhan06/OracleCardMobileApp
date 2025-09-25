@@ -13,6 +13,7 @@ class CustomContainer extends StatelessWidget {
   final bool showSvgOverlay;
   final String svgOverlayPath;
   final void Function()? onTap;
+  final EdgeInsetsGeometry? margin;
 
   /// NEW: Wrap with IntrinsicHeight when true
   final bool useIntrinsicHeight;
@@ -31,6 +32,7 @@ class CustomContainer extends StatelessWidget {
     this.svgOverlayPath = 'assets/svg/overlay.svg',
     this.onTap,
     this.useIntrinsicHeight = false, // default off
+    this.margin,
   });
 
   @override
@@ -38,6 +40,7 @@ class CustomContainer extends StatelessWidget {
     final container = GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: margin,
         height: useIntrinsicHeight
             ? null // let IntrinsicHeight handle it
             : (height ?? MediaQuery.sizeOf(context).height / 4.5),

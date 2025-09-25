@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../models/entries_list_model.dart';
@@ -59,6 +61,10 @@ class JournalScreen extends StatelessWidget {
                         title: entry.title,
                         dateTime: entry.dateTime,
                         description: entry.description,
+                        onTap: () {
+                          context.pushNamed(AppRoutesName.journeyEntriesDetailsScreen);
+                        },
+                        
                       );
                     },
                   ),
