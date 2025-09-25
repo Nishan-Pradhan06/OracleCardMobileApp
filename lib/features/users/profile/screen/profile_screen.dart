@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/helpers/validation_helpers.dart';
 import '../../../../core/widgets/cusotm_switch.dart';
 import '../../../../core/widgets/custom_chip.dart';
@@ -167,7 +169,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 'assets/icons/king.svg',
                               ),
                               text: 'Upgrade to Premium',
-                              onPressed: () {},
+                              onPressed: () {
+                                context.pushNamed(AppRoutesName.billingDetailsScreen);
+                              },
                             ),
                           ],
                         ),

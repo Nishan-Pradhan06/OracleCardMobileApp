@@ -6,6 +6,7 @@ class AppRoutesName {
 
   //#---------------USER ROUTES NAME--------------##
   static const String userBottomNavBarRoute = 'userBottomNavBarRoute';
+  static const String billingDetailsScreen = 'billingDetailsScreen';
 
   //#--------------ADMIN ROUTES NAME-------------##
   static const String adminBottomNavBarRoute = 'adminBottomNavBarRoute';
