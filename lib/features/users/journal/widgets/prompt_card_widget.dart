@@ -4,13 +4,13 @@ import '../../../../core/widgets/custom_container.dart';
 
 class PromptCard extends StatelessWidget {
   final String title;
-  final String description;
+  final String prompt;
   final Color sideColor;
   final Color backgroundColor;
   const PromptCard({
     super.key,
     required this.title,
-    required this.description,
+    required this.prompt,
     this.sideColor = const Color(0xFF6B48FF),
     this.backgroundColor = const Color(0xFFF1EDFF),
   });
@@ -53,7 +53,7 @@ class PromptCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  description,
+                  prompt,
                   style: TextTheme.of(context).bodyLarge?.copyWith(
                     // color: Color(0xFF6B48FF),
                     // fontWeight: FontWeight.bold,

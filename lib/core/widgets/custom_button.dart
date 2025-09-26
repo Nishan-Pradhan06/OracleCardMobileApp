@@ -94,8 +94,7 @@ class CustomButton extends StatelessWidget {
                     : Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment:
-                            CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (leadingIcon != null) ...[
                             leadingIcon!,
@@ -103,6 +102,7 @@ class CustomButton extends StatelessWidget {
                           ],
                           Text(
                             text,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: textColor,
                               fontSize: fontSize,

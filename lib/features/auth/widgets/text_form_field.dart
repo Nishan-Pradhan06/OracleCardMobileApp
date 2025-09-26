@@ -21,6 +21,9 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final List<String>? dropdownItems;
   final Function(String?)? onDropdownChanged;
+  final int maxLines;
+  final bool noBorder;
+  final TextStyle? hintStyle;
 
   const CustomTextField({
     super.key,
@@ -45,6 +48,9 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.dropdownItems,
     this.onDropdownChanged,
+    this.maxLines = 1,
+    this.noBorder = false,
+    this.hintStyle,
   });
 
   @override
@@ -128,6 +134,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           validator: widget.validator,
           decoration: InputDecoration(
             hintText: widget.hint,
+            hintStyle: widget.hintStyle,
             filled: true,
             fillColor: widget.fillColor ?? Colors.white,
             contentPadding: widget.contentPadding,
@@ -142,11 +149,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         onPressed: () => setState(() => _obscure = !_obscure),
                       )
                     : null),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-              borderSide: BorderSide(color: widget.borderColor ?? Colors.grey),
-            ),
+            border: widget.noBorder
+                ? InputBorder.none
+                : OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.borderRadius),
+                    borderSide: BorderSide(
+                      color: widget.borderColor ?? Colors.grey,
+                    ),
+                  ),
           ),
+          maxLines: widget.maxLines,
         ),
       ],
     );

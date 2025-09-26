@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
+import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
+import '../../../../router/app_routes_names.dart';
+import '../widgets/prompt_card_widget.dart';
 
 class CreateJoruneyEntiresScreen extends StatelessWidget {
   const CreateJoruneyEntiresScreen({super.key});
@@ -23,18 +29,68 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: CustomPadding(
               child: Column(
+                spacing: 10,
                 children: [
-                  PromptCard()
+                  PromptCard(
+                    title: 'Today\'s Prompt',
+                    prompt: 'What blessings are you grateful for today?',
+                  ),
                   CustomContainer(
                     useIntrinsicHeight: true,
-                    child: Column(
-                      children: [
-                        Text(
-                          'I pulled The Star card today and felt an immediate sense of hope and renewal. The message resonated deeply with me as I\'ve been going through a period of uncertainty in my career.\n\nThe card reminded me to trust in the universe\'s plan and have faith that everything is unfolding as it should. I\'m grateful for the small signs I\'ve been receiving that I\'m on the right path.',
-                          style: TextTheme.of(context).bodySmall,
-                        ),
-                      ],
+                    child: CustomTextField(
+                      hint: 'Start writing your reflection\nhere...',
+                      maxLines: 20,
+                      keyboardType: TextInputType.multiline,
+                      noBorder: true,
+                      hintStyle: TextTheme.of(
+                        context,
+                      ).titleLarge?.copyWith(color: Colors.grey),
                     ),
+                  ),
+                  Row(
+                    spacing: 10,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: CustomButton(
+                          leadingIcon: SvgPicture.asset(
+                            'assets/icons/time.svg',
+                          ),
+                          backgroundColor: Color(0xFFF0F0F0),
+                          textColor: Colors.black,
+                          text: 'Save\nTemporarily',
+                          fontSize: 22,
+                          height: MediaQuery.sizeOf(context).height * 0.1,
+                          onPressed: () {},
+                        ),
+                      ),
+                      Expanded(
+                        child: CustomButton(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          fontSize: 22,
+                          height: MediaQuery.sizeOf(context).height * 0.1,
+                          leadingIcon: SvgPicture.asset(
+                            'assets/icons/king.svg',
+                          ),
+                          text: 'Upgrade to\nSave',
+                          onPressed: () {
+                            context.pushNamed(
+                              AppRoutesName.billingDetailsScreen,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'Free plan: notes auto-delete after 24h',
+                    style: TextTheme.of(
+                      context,
+                    ).bodyLarge?.copyWith(color: Colors.grey),
                   ),
                 ],
               ),
