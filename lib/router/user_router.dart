@@ -25,6 +25,15 @@ List<GoRoute> userAppRoutes = [
   GoRoute(
     path: AppRoutesName.journeyEntriesDetailsScreen.path,
     name: AppRoutesName.journeyEntriesDetailsScreen,
-    builder: (context, state) => JournalDetailsScreen(),
+    builder: (context, state) {
+      final extra = state.extra as Map<String, dynamic>;
+      return JournalDetailsScreen(
+        title: extra['title'],
+        date: extra['dateTime'],
+        prompt: extra['prompt'],
+        description: extra['description'],
+        day: extra['day'],
+      );
+    },
   ),
 ];

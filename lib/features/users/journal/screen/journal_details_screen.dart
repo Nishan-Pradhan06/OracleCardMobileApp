@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
-
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
 import '../../../../core/widgets/custom_chip.dart';
@@ -13,7 +12,19 @@ import '../../../../router/app_routes_names.dart';
 import '../widgets/prompt_card_widget.dart';
 
 class JournalDetailsScreen extends StatelessWidget {
-  const JournalDetailsScreen({super.key});
+  final String title;
+  final String prompt;
+  final String date;
+  final String description;
+  final String? day;
+  const JournalDetailsScreen({
+    super.key,
+    required this.title,
+    required this.date,
+    required this.description,
+    required this.prompt,
+    this.day,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +49,14 @@ class JournalDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 10,
                       children: [
-                        Text(
-                          'Today, 10:30 AM',
-                          style: TextTheme.of(context).bodyLarge,
-                        ),
+                        Text(date, style: TextTheme.of(context).bodyLarge),
 
                         PickupOrderCard(
-                          title: 'Today\'s Prompt',
-                          description:
-                              'What blessings are you grateful for today?',
+                          title: '$day Prompt',
+                          description: prompt,
                         ),
                         Text(
-                          'I pulled The Star card today and felt an immediate sense of hope and renewal. The message resonated deeply with me as I\'ve been going through a period of uncertainty in my career.\n\nThe card reminded me to trust in the universe\'s plan and have faith that everything is unfolding as it should. I\'m grateful for the small signs I\'ve been receiving that I\'m on the right path.\n\nToday, I\'m especially thankful for:\n- The supportive friends who listened to my concerns\n- The beautiful sunrise that greeted me this morning\n- The unexpected opportunity that came my way\n\nI\'m learning to embrace the journey rather than focusing solely on the destination.',
+                          description,
                           style: TextTheme.of(
                             context,
                           ).bodyLarge?.copyWith(fontSize: 18),

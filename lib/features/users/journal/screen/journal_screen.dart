@@ -6,6 +6,7 @@ import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
+import '../../../../core/utils/date_string_split_utils.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../models/entries_list_model.dart';
@@ -41,12 +42,11 @@ class JournalScreen extends StatelessWidget {
                         'My Entires',
                         style: Theme.of(context).textTheme.headlineMedium
                             ?.copyWith(
-                              // fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                       ),
                       Text(
-                        '2 entires',
+                        '${entries.length} entries',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -57,14 +57,24 @@ class JournalScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       final entry = entries[index];
+                      String day = getDayFromDateTime(entry.dateTime);
+
                       return EntriesCardWidget(
                         title: entry.title,
                         dateTime: entry.dateTime,
                         description: entry.description,
                         onTap: () {
-                          context.pushNamed(AppRoutesName.journeyEntriesDetailsScreen);
+                          context.pushNamed(
+                            AppRoutesName.journeyEntriesDetailsScreen,
+                            extra: {
+                              'title': entry.title,
+                              'dateTime': entry.dateTime,
+                              'prompt': entry.prompt,
+                              'day': day,
+                              'description': entry.description,
+                            },
+                          );
                         },
-                        
                       );
                     },
                   ),
