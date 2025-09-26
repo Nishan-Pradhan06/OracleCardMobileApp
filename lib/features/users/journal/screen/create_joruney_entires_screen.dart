@@ -5,7 +5,6 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
-import '../../home/widgets/notification_widget.dart';
 
 class CreateJoruneyEntiresScreen extends StatelessWidget {
   const CreateJoruneyEntiresScreen({super.key});
@@ -16,10 +15,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'New Entry',
         titleAlignment: TitleAlignment.left,
-        actions: [
-          NotificationIcon(hasNotification: true),
-          CustomChip(label: 'Premium', type: ChipType.premium),
-        ],
+        actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
@@ -28,6 +24,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
             child: CustomPadding(
               child: Column(
                 children: [
+                  PromptCard()
                   CustomContainer(
                     useIntrinsicHeight: true,
                     child: Column(

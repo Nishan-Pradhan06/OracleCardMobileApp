@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/custom_container.dart';
 
-class PickupOrderCard extends StatelessWidget {
+class PromptCard extends StatelessWidget {
   final String title;
   final String description;
   final Color sideColor;
   final Color backgroundColor;
-  const PickupOrderCard({
+  const PromptCard({
     super.key,
     required this.title,
     required this.description,

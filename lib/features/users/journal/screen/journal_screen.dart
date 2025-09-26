@@ -41,9 +41,7 @@ class JournalScreen extends StatelessWidget {
                       Text(
                         'My Entires',
                         style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         '${entries.length} entries',
@@ -98,7 +96,7 @@ class JournalScreen extends StatelessWidget {
         ),
         child: FloatingActionButton(
           onPressed: () {
-            // Action here
+            context.pushNamed(AppRoutesName.createJourneyEntriesScreen);
           },
           shape: const CircleBorder(),
           backgroundColor: Colors.transparent,

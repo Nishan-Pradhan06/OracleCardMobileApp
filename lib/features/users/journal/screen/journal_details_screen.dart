@@ -51,10 +51,7 @@ class JournalDetailsScreen extends StatelessWidget {
                       children: [
                         Text(date, style: TextTheme.of(context).bodyLarge),
 
-                        PickupOrderCard(
-                          title: '$day Prompt',
-                          description: prompt,
-                        ),
+                        PromptCard(title: '$day Prompt', description: prompt),
                         Text(
                           description,
                           style: TextTheme.of(
