@@ -14,6 +14,7 @@ class CustomContainer extends StatelessWidget {
   final String svgOverlayPath;
   final void Function()? onTap;
   final EdgeInsetsGeometry? margin;
+  final BorderRadiusGeometry? borderRadius;
 
   /// NEW: Wrap with IntrinsicHeight when true
   final bool useIntrinsicHeight;
@@ -33,6 +34,7 @@ class CustomContainer extends StatelessWidget {
     this.onTap,
     this.useIntrinsicHeight = false, // default off
     this.margin,
+    this.borderRadius,
   });
 
   @override
@@ -46,7 +48,7 @@ class CustomContainer extends StatelessWidget {
             : (height ?? MediaQuery.sizeOf(context).height / 4.5),
         width: width ?? MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: borderRadius ?? BorderRadius.circular(20),
           gradient: isGradient
               ? LinearGradient(
                   begin: Alignment.topLeft,
