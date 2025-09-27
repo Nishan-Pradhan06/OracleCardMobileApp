@@ -16,22 +16,15 @@ final List<GuidanceListModel> guidanceList = [
   GuidanceListModel(
     title: 'Trust Your Intuition',
     isLock: false,
-    dateTime: 'Today, 10:30 AM',
+    dateTime: 'Today',
     description:
-        'I pulled The Star card today and felt an immediate sense of hope and renewal. The message resonated deeply with me as I\'ve been going through a period of uncertainty in my career.\n\n'
-        'The card reminded me to trust in the universe\'s plan and have faith that everything is unfolding as it should. '
-        'I\'m grateful for the small signs I\'ve been receiving that I\'m on the right path.\n\n'
-        'Today, I\'m especially thankful for:\n'
-        '- The supportive friends who listened to my concerns\n'
-        '- The beautiful sunrise that greeted me this morning\n'
-        '- The unexpected opportunity that came my way\n\n'
-        'I\'m learning to embrace the journey rather than focusing solely on the destination.',
+        'Your angels are guiding you to trust your inner wisdom. The answers you seek are already within you, waiting to be acknowledged. Take time to quiet your mind and listen to the subtle whispers of your soul. Your intuition is a powerful compass that will never lead you astray. When you face decisions, big or small, pause and check in with your inner guidance. How does each option feel in your body? Does it bring a sense of expansion and peace, or contraction and unease? Your body knows what your mind may not yet recognize. Trust that you are being supported and guided every step of your journey. The universe conspires in your favor when you align with your true self. Have faith in your path, even when it seems unclear from your current perspective.',
   ),
   GuidanceListModel(
     title: 'Embrace Change',
-    isLock: true,
+    isLock: false,
 
-    dateTime: 'Today, 7:00 AM',
+    dateTime: 'Today',
     description:
         'I woke up feeling refreshed and pulled The Sun card. Its energy reminded me to lean into joy, optimism, and gratitude as I began the day. '
         'The warmth of the card felt like a gentle nudge to focus not on what’s missing but on what is already beautiful in my life.\n\n'

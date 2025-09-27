@@ -52,6 +52,14 @@ List<GoRoute> userAppRoutes = [
   GoRoute(
     path: AppRoutesName.guidanceArchiveDetailScreenRoute.path,
     name: AppRoutesName.guidanceArchiveDetailScreenRoute,
-    builder: (context, state) => GuidanceDetailsScreen(),
+    builder: (context, state) {
+      final extra = state.extra as Map<String, dynamic>;
+
+      return GuidanceDetailsScreen(
+        title: extra['title'],
+        dateTime: extra['dateTime'],
+        description: extra['description'],
+      );
+    },
   ),
 ];
