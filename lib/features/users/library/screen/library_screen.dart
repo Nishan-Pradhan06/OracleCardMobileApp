@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
 import '../../../../core/widgets/custom_chip.dart';
@@ -44,6 +46,9 @@ class LibraryScreen extends StatelessWidget {
                     title: 'Meditations',
                     description:
                         'Guided meditations to calm your mind and connect with your inner wisdom',
+                    onTap: () {
+                      context.pushNamed(AppRoutesName.meditationsScreenRoute);
+                    },
                   ),
                   LibraryCardWidget(
                     svgUrl: 'assets/svg/guidance.svg',
