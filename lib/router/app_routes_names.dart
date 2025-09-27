@@ -10,6 +10,8 @@ class AppRoutesName {
   static const String createJourneyEntriesScreen = 'createJourneyEntriesScreen';
   static const String journeyEntriesDetailsScreen = 'journeyEntriesDetailsScreen';
   static const String meditationsScreenRoute = 'meditationsScreenRoute';
+  static const String guidanceArchiveScreenRoute = 'guidanceArchiveScreenRoute';
+  static const String guidanceArchiveDetailScreenRoute = 'guidanceArchiveDetailScreenRoute';
 
   //#--------------ADMIN ROUTES NAME-------------##
   static const String adminBottomNavBarRoute = 'adminBottomNavBarRoute';

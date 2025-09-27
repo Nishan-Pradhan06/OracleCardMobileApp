@@ -2,6 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
 import 'package:oracle_card_app/features/users/journal/screen/create_joruney_entires_screen.dart';
 import 'package:oracle_card_app/features/users/journal/screen/journal_details_screen.dart';
+import 'package:oracle_card_app/features/users/library/screen/guidance_archive_screen.dart';
+import 'package:oracle_card_app/features/users/library/screen/guidance_details_screen.dart';
 import 'package:oracle_card_app/features/users/library/screen/meditations_screen.dart';
 import 'package:oracle_card_app/features/users/profile/screen/billing_details.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
@@ -41,5 +43,15 @@ List<GoRoute> userAppRoutes = [
     path: AppRoutesName.meditationsScreenRoute.path,
     name: AppRoutesName.meditationsScreenRoute,
     builder: (context, state) => MeditationsScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.guidanceArchiveScreenRoute.path,
+    name: AppRoutesName.guidanceArchiveScreenRoute,
+    builder: (context, state) => GuidanceArchiveScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.guidanceArchiveDetailScreenRoute.path,
+    name: AppRoutesName.guidanceArchiveDetailScreenRoute,
+    builder: (context, state) => GuidanceDetailsScreen(),
   ),
 ];

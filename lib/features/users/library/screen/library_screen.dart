@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
@@ -55,6 +57,12 @@ class LibraryScreen extends StatelessWidget {
                     title: 'Guidance Archive',
                     description:
                         'Access past daily guidance messages and angelic wisdom',
+                    onTap: () {
+                      context.pushNamed(
+                        AppRoutesName.guidanceArchiveScreenRoute,
+                      );
+                      log('this is aa');
+                    },
                   ),
 
                   UpgradePremiumButtonWidget(),
