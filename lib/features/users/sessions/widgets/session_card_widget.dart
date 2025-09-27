@@ -51,7 +51,7 @@ class SessionsCardWidget extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: CustomButton(
               height: 36,
-              width: 85,
+              width: 90,
               leadingIcon: Icon(
                 isButtonEnabled ? Icons.check : Icons.lock,
                 color: Colors.white,
