@@ -21,7 +21,8 @@ class GuidanceDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Guidance Archive',
+        title: 'Guidance Details',
+        titleAlignment: TitleAlignment.left,
         actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
       ),
       body: CustomBackground(

@@ -17,6 +17,7 @@ class GuidanceArchiveScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Guidance Archive',
+        titleAlignment: TitleAlignment.left,
         actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
       ),
       body: CustomBackground(

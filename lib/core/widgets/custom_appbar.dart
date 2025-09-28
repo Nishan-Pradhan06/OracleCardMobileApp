@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 /// Enum to control title alignment in CustomAppBar
 enum TitleAlignment { center, left }
@@ -39,8 +40,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         automaticallyImplyLeading &&
         Navigator.canPop(context)) {
       leadingWidget = IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () => Navigator.pop(context),
+        icon: SvgPicture.asset('assets/icons/back.svg'),
       );
     }
 
@@ -57,14 +58,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               Expanded(
                 child: Align(
                   alignment: titleAlignment == TitleAlignment.center
-                      ? Alignment.center  
+                      ? Alignment.center
                       : Alignment.centerLeft,
                   child: Text(
                     title,
                     style: const TextStyle(
                       fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFF6B48FF),
                     ),
                   ),
                 ),
@@ -74,6 +75,42 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomBackButton extends StatelessWidget {
+  final String svgAssetPath;
+  final double size;
+  final Color? color;
+  final VoidCallback? onPressed;
+
+  const CustomBackButton({
+    super.key,
+    required this.svgAssetPath,
+    this.size = 24,
+    this.color,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: SvgPicture.asset(
+        svgAssetPath,
+        width: size,
+        height: size,
+        colorFilter: color != null
+            ? ColorFilter.mode(color!, BlendMode.srcIn)
+            : null,
+      ),
+      onPressed:
+          onPressed ??
+          () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+          },
     );
   }
 }
