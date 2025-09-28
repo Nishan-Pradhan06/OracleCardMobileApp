@@ -23,9 +23,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // final _timezoneController = TextEditingController();
+  final _nameController = TextEditingController(text: "John Doe");
+  final _emailController = TextEditingController(text: "johndoe@email.com");
+  final _timezoneController = TextEditingController(text: "GMT+5:45");
 
-  bool isSwitched = true;
+  bool isSwitchedPushNotification = true;
+  bool isEditField = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +64,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         CustomTextField(
                           label: 'Name',
-                          // controller: ,
+                          controller: _nameController,
+                          readOnly: !isEditField,
+                          borderColor: Color(0xFFE0E0E0),
                           trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                isEditField = !isEditField;
+                              });
+                            },
                             icon: SvgPicture.asset('assets/icons/edit.svg'),
                           ),
                           type: CustomTextFieldType.text,
@@ -71,7 +80,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         CustomTextField(
                           label: 'Email',
+                          controller: _emailController,
                           readOnly: true,
+                          enabled: false,
+                          borderColor: Color(0xFFE0E0E0),
                           trailing: IconButton(
                             onPressed: () {},
                             icon: SvgPicture.asset('assets/icons/lock.svg'),
@@ -81,8 +93,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         CustomTextField(
                           label: 'Timezone',
-                          // controller: _timezoneController,
-                          // keyboardType: TextInputType.datetime,
+                          controller: _timezoneController,
+                          borderColor: Color(0xFFE0E0E0),
                           type: CustomTextFieldType.text,
                         ),
                       ],
@@ -110,10 +122,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             CustomSwitch(
-                              value: isSwitched,
+                              value: isSwitchedPushNotification,
                               onChanged: (val) {
                                 setState(() {
-                                  isSwitched = val;
+                                  isSwitchedPushNotification = val;
                                 });
                               },
                             ),
@@ -170,7 +182,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               text: 'Upgrade to Premium',
                               onPressed: () {
-                                context.pushNamed(AppRoutesName.billingDetailsScreen);
+                                context.pushNamed(
+                                  AppRoutesName.billingDetailsScreen,
+                                );
                               },
                             ),
                           ],
