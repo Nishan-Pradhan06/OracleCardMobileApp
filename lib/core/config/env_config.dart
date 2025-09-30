@@ -5,7 +5,7 @@ enum Environment { development, production }
 class EnvConfig {
   final Environment environment;
   final String apiBaseUrl;
-  final String baseUrl;
+  // final String baseUrl;
   final bool enableLogging;
   final bool enableDarkTheme;
   final bool isShrinkDownVersion;
@@ -13,7 +13,7 @@ class EnvConfig {
   EnvConfig({
     required this.environment,
     required this.apiBaseUrl,
-    required this.baseUrl,
+    // required this.baseUrl,
     required this.enableLogging,
     this.enableDarkTheme = false,
 
@@ -25,19 +25,17 @@ class EnvConfig {
 
   factory EnvConfig.development() {
     return EnvConfig(
-      baseUrl: EnvSecreteConfig.instance.baseTestUrl,
       environment: Environment.development,
-      apiBaseUrl: EnvSecreteConfig.instance.apiTestBaseUrl,
+      apiBaseUrl: EnvSecreteConfig.instance.apiBaseUrl,
       enableLogging: true,
     );
   }
 
   factory EnvConfig.production() {
     return EnvConfig(
-      baseUrl: EnvSecreteConfig.instance.baseUrl,
       environment: Environment.production,
       apiBaseUrl: EnvSecreteConfig.instance.apiBaseUrl,
-      enableLogging: false,
+      enableLogging: true,
     );
   }
 
