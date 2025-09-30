@@ -27,6 +27,11 @@ class OracelCard extends StatelessWidget {
       // theme: AppTheme.light(),
       // darkTheme: AppTheme.dark(),
       // themeMode: ThemeMode.system,
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+      ),
     );
   }
 }

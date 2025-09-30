@@ -6,6 +6,7 @@ import 'package:oracle_card_app/features/users/library/screen/guidance_archive_s
 import 'package:oracle_card_app/features/users/library/screen/guidance_details_screen.dart';
 import 'package:oracle_card_app/features/users/library/screen/meditations_screen.dart';
 import 'package:oracle_card_app/features/users/profile/screen/billing_details.dart';
+import 'package:oracle_card_app/features/users/profile/screen/buy_premium_screen.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../features/shared/bottom_nav_bar/user_bottom_nav_bar.dart';
 
@@ -61,5 +62,10 @@ List<GoRoute> userAppRoutes = [
         description: extra['description'],
       );
     },
+  ),
+  GoRoute(
+    path: AppRoutesName.buyPremiumScreenScreenRoute.path,
+    name: AppRoutesName.buyPremiumScreenScreenRoute,
+    builder: (context, state) => BuyPremiumScreen(),
   ),
 ];

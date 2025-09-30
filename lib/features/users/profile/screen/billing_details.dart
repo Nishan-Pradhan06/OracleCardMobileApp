@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/credit_card_masked_widget.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../home/widgets/notification_widget.dart';
@@ -174,7 +176,9 @@ class BillingDetailsScreen extends StatelessWidget {
               text: 'Cancel Subscription',
               height: MediaQuery.sizeOf(context).height * 0.05,
               width: MediaQuery.sizeOf(context).width / 2,
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(AppRoutesName.buyPremiumScreenScreenRoute);
+              },
             ),
           ),
         ],
