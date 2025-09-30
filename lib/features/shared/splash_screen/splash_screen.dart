@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
-
 import '../../../core/animations/loading_animation.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,8 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        context.go(AppRoutesName.userBottomNavBarRoute.path);
-        // context.go(AppRoutesName.adminDashboardRoute.path);
+        context.go(AppRoutesName.loginScreenRoute.path);
       }
     });
   }
