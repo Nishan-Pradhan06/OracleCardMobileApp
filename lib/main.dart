@@ -23,6 +23,7 @@ class OracelCard extends StatelessWidget {
       title: 'Oracle Card',
       debugShowCheckedModeBanner: false,
       routerConfig: appRoute,
+      theme: ThemeData(fontFamily: 'Inter'),
       // theme: AppTheme.light(),
       // darkTheme: AppTheme.dark(),
       // themeMode: ThemeMode.system,
