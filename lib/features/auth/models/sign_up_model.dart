@@ -2,13 +2,13 @@ class SignUpModel {
   final String fullName;
   final String email;
   final String password;
-  final String timeZone;
+  final String timezone;
 
   SignUpModel({
     required this.email,
     required this.password,
     required this.fullName,
-    required this.timeZone,
+    required this.timezone,
   });
 
   Map<String, dynamic> toMap() {
@@ -16,7 +16,7 @@ class SignUpModel {
       'email': email,
       'password': password,
       'firstName': fullName,
-      'timeZone': timeZone,
+      'timezone': timezone,
     };
   }
 }

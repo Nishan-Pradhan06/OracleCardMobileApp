@@ -48,9 +48,18 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<String> signUp({required SignUpModel signUpModel}) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+  FutureEither<String> signUp({required SignUpModel signUpModel}) async {
+    final response = await _apiService.post<Map>(
+      'auth/signup',
+      data: {...signUpModel.toMap()},
+    );
+
+    return response.fold((failure) => Left(failure), (data) async {
+      final authData = data['data'];
+
+      await CacheServices.instance.setAuthToken(authData['token']);
+      return Right("Register Successful !!!");
+    });
   }
 
   @override
