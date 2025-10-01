@@ -1,4 +1,6 @@
 //##-------------------AUTH REPOSITORY-------------------------##
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../common/typedef/either_type.dart';
@@ -29,14 +31,19 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   FutureEither<String> signIn({required SignInModel signInModel}) async {
     final response = await _apiService.post<Map>(
-      'auth/login',
+      'auth/signin',
       data: {...signInModel.toMap()},
     );
 
     return response.fold((failure) => Left(failure), (data) async {
-      await CacheServices.instance.setAuthToken(data['token']);
-      // await CacheServices.setUserRole(data['user']?['role']);
-      return Right(data['user']?['role']);
+      final authData = data['data'];
+
+      await CacheServices.instance.setAuthToken(authData['token']);
+      log(authData['token']);
+      await CacheServices.instance.setUserRole(authData['user']?['role']);
+      log(authData['user']?['role']);
+
+      return Right(authData['user']?['role']);
     });
   }
 

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
 import 'package:oracle_card_app/core/widgets/custom_account_check_text.dart';
@@ -8,8 +9,13 @@ import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/core/widgets/custom_toast.dart';
+import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
+import 'package:oracle_card_app/features/auth/models/sign_in_model.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
+
+import '../../../core/di/dependency_injection.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,17 +74,53 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: InputValidator.validatePassword,
                       ),
 
-                      CustomButton(
-                        width: double.infinity,
-                        text: 'Login',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            log(_emailController.text);
-                            log(_passwordController.text);
-                            context.goNamed(
-                              AppRoutesName.userBottomNavBarRoute,
-                            );
-                          }
+                      BlocConsumer<UserSignInBloc, UserSignInState>(
+                        listener: (context, state) {
+                          state.whenOrNull(
+                            loaded: (data) {
+                              CustomToast.showSuccess("Login Successful");
+                              // context.read<>();
+                              if (data == 'USER') {
+                                context.goNamed(
+                                  AppRoutesName.userBottomNavBarRoute,
+                                );
+                              } else if (data == 'ADMIN') {
+                                context.goNamed(
+                                  AppRoutesName.adminBottomNavBarRoute,
+                                );
+                              }
+                            },
+                            failure: (failure) {
+                              CustomToast.showError(failure.message);
+                            },
+                          );
+                        },
+                        builder: (context, state) {
+                          final bool isLoading = state.maybeWhen(
+                            loading: () => true,
+                            orElse: () => false,
+                          );
+                          return CustomButton(
+                            isLoading: isLoading,
+                            width: double.infinity,
+                            text: 'Login',
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    if (_formKey.currentState!.validate()) {
+                                      log(_emailController.text);
+                                      log(_passwordController.text);
+                                      sl<UserSignInBloc>().add(
+                                        UserSignInEvent.userSignIn(
+                                          SignInModel(
+                                            email: _emailController.text,
+                                            password: _passwordController.text,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                          );
                         },
                       ),
                       AccountCheckText(
