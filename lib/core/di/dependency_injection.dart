@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/repository/auth_repository.dart';
+import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
+import 'package:oracle_card_app/features/users/profile/repository/user_profile_repository.dart';
 import 'package:retry/retry.dart';
 
 import '../network/dio_client.dart';
@@ -14,12 +16,16 @@ Future<void> setupServiceLocator() async {
 
   //###---------------BLOC---------------------###
   sl.registerLazySingleton(() => UserSignInBloc(repo: sl()));
+  sl.registerSingleton(() => UserProfileBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 
   //###---------------REPOSITORY---------------###
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(apiService: sl()),
+  );
+  sl.registerLazySingleton<UserProfileRepository>(
+    () => UserProfileRepositoryImpl(apiService: sl()),
   );
 
   //###---------------EXTERNAL REPOSITORY SERVICES---------------###

@@ -10,8 +10,8 @@ abstract interface class UserProfileRepository {
 
 class UserProfileRepositoryImpl implements UserProfileRepository {
   final ApiService _apiService;
-  UserProfileRepositoryImpl({required ApiService apiServices})
-    : _apiService = apiServices;
+  UserProfileRepositoryImpl({required ApiService apiService})
+    : _apiService = apiService;
 
   //##-------------------GET USER PROFILE-------------------------##
   @override
