@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/helpers/url_launcher_helper.dart';
 import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
@@ -10,10 +11,12 @@ import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_toast.dart';
+import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
+import 'package:oracle_card_app/features/auth/models/sign_up_model.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
+import '../../../core/di/dependency_injection.dart';
 import '../../../core/helpers/time_zone_helper.dart';
 import '../../../core/widgets/custom_account_check_text.dart';
-import '../../../router/app_routes_names.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -56,8 +59,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (isFormValid && isCheckboxValid) {
       // Form + checkbox both valid
+
+      sl<UserSignUpBloc>().add(
+        UserSignUpEvent.userSignUp(
+          SignUpModel(
+            email: _emailController.text,
+            password: _passwordController.text,
+            fullName: _fullNameController.text,
+            timezone: _timezoneController.text,
+          ),
+        ),
+      );
       log(_emailController.text);
       log(_passwordController.text);
+      log(_timezoneController.text);
+      log(_fullNameController.text);
     }
   }
 
@@ -155,16 +171,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ],
                         ),
-                        CustomButton(
-                          width: double.infinity,
-                          text: 'Sign Up',
-                          onPressed: _submitForm,
+                        BlocConsumer<UserSignUpBloc, UserSignUpState>(
+                          listener: (context, state) {
+                            state.whenOrNull(
+                              loaded: (data) {
+                                CustomToast.showSuccess(
+                                  "Register Successful !!!",
+                                );
+                                context.pop();
+                              },
+                              failure: (failure) {
+                                CustomToast.showError(failure.message);
+                              },
+                            );
+                          },
+                          builder: (context, state) {
+                            final bool isLoading = state.maybeWhen(
+                              loading: () => true,
+                              orElse: () => false,
+                            );
+                            return CustomButton(
+                              isLoading: isLoading,
+                              isDisabled: isLoading ? true : false,
+                              width: double.infinity,
+                              text: 'Sign Up',
+                              onPressed: _submitForm,
+                            );
+                          },
                         ),
                         AccountCheckText(
                           message: 'Already have an Account ?',
                           actionText: 'Sign In',
                           onTap: () {
-                            context.pushNamed(AppRoutesName.loginScreenRoute);
+                            context.pop();
                           },
                         ),
                       ],
