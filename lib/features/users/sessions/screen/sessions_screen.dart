@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/heading_widget.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../models/session_model.dart';
@@ -27,6 +29,7 @@ class SessionScreen extends StatelessWidget {
       title: 'Tarot Insights Workshop',
       description:
           'Learn to interpret tarot cards and gain deeper insights into your life path.',
+      isButtonEnabled: true,
     ),
     Session(
       dateText: 'Jun 22, 9:00 PM',
@@ -71,7 +74,12 @@ class SessionScreen extends StatelessWidget {
                       title: session.title,
                       description: session.description,
                       isButtonEnabled: session.isButtonEnabled,
-                      onPressed: () {},
+                      onPressed: () {
+                        context.pushNamed(
+                          AppRoutesName.sessionsDetailsScreenScreenRoute,
+                          extra: {'title': session.title},
+                        );
+                      },
                     ),
                   ),
 
