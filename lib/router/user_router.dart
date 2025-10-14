@@ -75,7 +75,10 @@ List<GoRoute> userAppRoutes = [
     builder: (context, state) {
       final extra = state.extra as Map<String, dynamic>;
 
-      return SessionsDetailsScreen(title: extra['title']);
+      return SessionsDetailsScreen(
+        title: extra['title'],
+        dateTime: extra['dateTime'],
+      );
     },
   ),
 ];

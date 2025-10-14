@@ -1,11 +1,11 @@
 class Session {
-  final String dateText;
+  final String dateTime;
   final String title;
   final String description;
   final bool isButtonEnabled;
 
   const Session({
-    required this.dateText,
+    required this.dateTime,
     required this.title,
     required this.description,
     this.isButtonEnabled = false,
@@ -14,7 +14,7 @@ class Session {
   // Factory constructor for JSON parsing (optional)
   factory Session.fromJson(Map<String, dynamic> json) {
     return Session(
-      dateText: json['dateText'] ?? '',
+      dateTime: json['dateTime'] ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       isButtonEnabled: json['isButtonEnabled'] ?? false,
@@ -24,7 +24,7 @@ class Session {
   // Convert to JSON (optional)
   Map<String, dynamic> toJson() {
     return {
-      'dateText': dateText,
+      'dateTime': dateTime,
       'title': title,
       'description': description,
       'isButtonEnabled': isButtonEnabled,
@@ -33,13 +33,13 @@ class Session {
 
   // Copy with new values (optional for immutability)
   Session copyWith({
-    String? dateText,
+    String? dateTime,
     String? title,
     String? description,
     bool? isButtonEnabled,
   }) {
     return Session(
-      dateText: dateText ?? this.dateText,
+      dateTime: dateTime ?? this.dateTime,
       title: title ?? this.title,
       description: description ?? this.description,
       isButtonEnabled: isButtonEnabled ?? this.isButtonEnabled,

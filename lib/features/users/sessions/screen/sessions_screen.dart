@@ -18,21 +18,21 @@ class SessionScreen extends StatelessWidget {
   // ✅ Example list of sessions
   List<Session> get sessions => const [
     Session(
-      dateText: 'Jun 15, 6:00 PM',
+      dateTime: 'Jun 15, 6:00 PM',
       title: 'Angel Connection Circle',
       description:
           'Connect with your angels and receive messages in this guided group meditation session.',
       isButtonEnabled: true,
     ),
     Session(
-      dateText: 'Jun 18, 7:30 PM',
+      dateTime: 'Jun 18, 7:30 PM',
       title: 'Tarot Insights Workshop',
       description:
           'Learn to interpret tarot cards and gain deeper insights into your life path.',
       isButtonEnabled: true,
     ),
     Session(
-      dateText: 'Jun 22, 9:00 PM',
+      dateTime: 'Jun 22, 9:00 PM',
       title: 'Full Moon Meditation',
       description:
           'Harness the energy of the full moon for manifestation and release.',
@@ -70,14 +70,17 @@ class SessionScreen extends StatelessWidget {
                   // ✅ Dynamically build cards from the model
                   ...sessions.map(
                     (session) => SessionsCardWidget(
-                      dateText: session.dateText,
+                      dateText: session.dateTime,
                       title: session.title,
                       description: session.description,
                       isButtonEnabled: session.isButtonEnabled,
                       onPressed: () {
                         context.pushNamed(
                           AppRoutesName.sessionsDetailsScreenScreenRoute,
-                          extra: {'title': session.title},
+                          extra: {
+                            'title': session.title,
+                            'dateTime': session.dateTime,
+                          },
                         );
                       },
                     ),
