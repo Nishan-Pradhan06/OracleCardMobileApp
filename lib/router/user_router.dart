@@ -10,6 +10,7 @@ import 'package:oracle_card_app/features/users/profile/screen/buy_premium_screen
 import 'package:oracle_card_app/features/users/sessions/screen/sessions_details_screen.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../features/shared/bottom_nav_bar/user_bottom_nav_bar.dart';
+import '../features/users/sessions/screen/join_session_screen.dart';
 
 List<GoRoute> userAppRoutes = [
   GoRoute(
@@ -80,5 +81,10 @@ List<GoRoute> userAppRoutes = [
         dateTime: extra['dateTime'],
       );
     },
+  ),
+  GoRoute(
+    path: AppRoutesName.joinSessionScreenAppRoutes.path,
+    name: AppRoutesName.joinSessionScreenAppRoutes,
+    builder: (context, state) => JoinSessionScreen(),
   ),
 ];
