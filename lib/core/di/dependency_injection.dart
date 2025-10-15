@@ -5,6 +5,8 @@ import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart'
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/auth/repository/auth_repository.dart';
+import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
+import 'package:oracle_card_app/features/users/notifications/repository/notification_repository.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/repository/user_profile_repository.dart';
 import 'package:retry/retry.dart';
@@ -21,6 +23,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => UserSignUpBloc(repo: sl()));
   sl.registerLazySingleton(() => SignOutBloc(repo: sl()));
   sl.registerLazySingleton(() => UserProfileBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetNotificationsBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 
@@ -30,6 +33,9 @@ Future<void> setupServiceLocator() async {
   );
   sl.registerLazySingleton<UserProfileRepository>(
     () => UserProfileRepositoryImpl(apiService: sl()),
+  );
+  sl.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImpl(apiService: sl()),
   );
 
   //###---------------EXTERNAL REPOSITORY SERVICES---------------###
