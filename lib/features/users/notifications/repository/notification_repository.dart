@@ -5,9 +5,7 @@ import 'package:oracle_card_app/core/network/api_services.dart';
 import '../models/notification_model.dart';
 
 abstract interface class NotificationRepository {
-  FutureEither<NotificationModel> notificationInbox({
-    required NotificationModel notificationModel,
-  });
+  FutureEither<NotificationModel> notificationInbox();
 }
 
 class NotificationRepositoryImpl implements NotificationRepository {
@@ -17,9 +15,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
     : _apiService = apiService;
 
   @override
-  FutureEither<NotificationModel> notificationInbox({
-    required NotificationModel notificationModel,
-  }) async {
+  FutureEither<NotificationModel> notificationInbox() async {
     final response = await _apiService.get('notifications');
 
     return response.fold((failure) => Left(failure), (data) {
