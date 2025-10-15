@@ -20,7 +20,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => UserSignInBloc(repo: sl()));
   sl.registerLazySingleton(() => UserSignUpBloc(repo: sl()));
   sl.registerLazySingleton(() => SignOutBloc(repo: sl()));
-  sl.registerSingleton(() => UserProfileBloc(repo: sl()));
+  sl.registerLazySingleton(() => UserProfileBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 

@@ -16,14 +16,13 @@ class UserProfileModel {
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
-    final data = json['data'];
     return UserProfileModel(
-      id: data['id'],
-      userId: data['userId'],
-      timezone: data['timezone'],
-      bio: data['bio'],
-      pushEnabled: data['pushEnabled'],
-      user: User.fromJson(data['user']),
+      id: json['id'],
+      userId: json['userId'],
+      timezone: json['timezone'],
+      bio: json['bio'],
+      pushEnabled: json['pushEnabled'],
+      user: User.fromJson(json['user']),
     );
   }
 }

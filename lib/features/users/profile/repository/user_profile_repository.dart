@@ -16,7 +16,7 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   //##-------------------GET USER PROFILE-------------------------##
   @override
   FutureEither<UserProfileModel> getUserProfile() async {
-    final response = await _apiService.get<Map>('auth/profile');
+    final response = await _apiService.get<Map>('profile');
 
     return response.fold((failure) => Left(failure), (profileData) {
       final userJson = profileData['data'];
