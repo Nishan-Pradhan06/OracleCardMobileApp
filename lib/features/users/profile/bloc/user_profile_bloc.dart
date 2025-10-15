@@ -21,8 +21,6 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     Emitter<UserProfileState> emit,
   ) async {
     emit(UserProfileState.loading());
-    //REMVOED:
-    await Future.delayed(Duration(seconds: 20));
 
     final result = await _userProfileRepository.getUserProfile();
 
