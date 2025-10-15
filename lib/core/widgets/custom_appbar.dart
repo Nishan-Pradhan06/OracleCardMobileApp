@@ -51,7 +51,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: SafeArea(
         child: Container(
           height: preferredSize.height,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.only(left: 10.0, right: 16),
           child: Row(
             children: [
               leadingWidget ?? const SizedBox.shrink(),
@@ -95,22 +95,16 @@ class CustomBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: SvgPicture.asset(
-        svgAssetPath,
-        width: size,
-        height: size,
-        colorFilter: color != null
-            ? ColorFilter.mode(color!, BlendMode.srcIn)
-            : null,
-      ),
-      onPressed:
+    return GestureDetector(
+      onTap:
           onPressed ??
           () {
             if (Navigator.canPop(context)) {
               Navigator.pop(context);
             }
           },
+
+      child: SvgPicture.asset(svgAssetPath, width: size, height: size),
     );
   }
 }
