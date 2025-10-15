@@ -25,12 +25,12 @@ $UserSignUpEventCopyWith<UserSignUpEvent> get copyWith => _$UserSignUpEventCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSignUpEvent&&const DeepCollectionEquality().equals(other.signUpModel, signUpModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSignUpEvent&&(identical(other.signUpModel, signUpModel) || other.signUpModel == signUpModel));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(signUpModel));
+int get hashCode => Object.hash(runtimeType,signUpModel);
 
 @override
 String toString() {
@@ -62,9 +62,9 @@ class _$UserSignUpEventCopyWithImpl<$Res>
 
 /// Create a copy of UserSignUpEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? signUpModel = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? signUpModel = null,}) {
   return _then(_self.copyWith(
-signUpModel: freezed == signUpModel ? _self.signUpModel : signUpModel // ignore: cast_nullable_to_non_nullable
+signUpModel: null == signUpModel ? _self.signUpModel : signUpModel // ignore: cast_nullable_to_non_nullable
 as SignUpModel,
   ));
 }
@@ -221,12 +221,12 @@ _$UserSignUpModelEventCopyWith<_UserSignUpModelEvent> get copyWith => __$UserSig
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSignUpModelEvent&&const DeepCollectionEquality().equals(other.signUpModel, signUpModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSignUpModelEvent&&(identical(other.signUpModel, signUpModel) || other.signUpModel == signUpModel));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(signUpModel));
+int get hashCode => Object.hash(runtimeType,signUpModel);
 
 @override
 String toString() {
@@ -258,9 +258,9 @@ class __$UserSignUpModelEventCopyWithImpl<$Res>
 
 /// Create a copy of UserSignUpEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? signUpModel = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? signUpModel = null,}) {
   return _then(_UserSignUpModelEvent(
-freezed == signUpModel ? _self.signUpModel : signUpModel // ignore: cast_nullable_to_non_nullable
+null == signUpModel ? _self.signUpModel : signUpModel // ignore: cast_nullable_to_non_nullable
 as SignUpModel,
   ));
 }

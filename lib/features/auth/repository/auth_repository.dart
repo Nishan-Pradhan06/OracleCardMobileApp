@@ -63,8 +63,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEither<String> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  FutureEither<String> signOut() async {
+    await CacheServices.instance.clearAuthToken();
+    return Right("Logout Successfully!!!");
   }
 }
