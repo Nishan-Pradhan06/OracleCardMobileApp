@@ -5,6 +5,7 @@ import 'package:oracle_card_app/features/users/journal/screen/journal_details_sc
 import 'package:oracle_card_app/features/users/library/screen/guidance_archive_screen.dart';
 import 'package:oracle_card_app/features/users/library/screen/guidance_details_screen.dart';
 import 'package:oracle_card_app/features/users/library/screen/meditations_screen.dart';
+import 'package:oracle_card_app/features/users/notifications/screens/notifications_screen.dart';
 import 'package:oracle_card_app/features/users/profile/screen/billing_details.dart';
 import 'package:oracle_card_app/features/users/profile/screen/buy_premium_screen.dart';
 import 'package:oracle_card_app/features/users/sessions/screen/sessions_details_screen.dart';
@@ -22,6 +23,11 @@ List<GoRoute> userAppRoutes = [
     path: AppRoutesName.billingDetailsScreen.path,
     name: AppRoutesName.billingDetailsScreen,
     builder: (context, state) => BillingDetailsScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.notificationScreenAppRoute.path,
+    name: AppRoutesName.notificationScreenAppRoute,
+    builder: (context, state) => NotificationsScreen(),
   ),
   GoRoute(
     path: AppRoutesName.createJourneyEntriesScreen.path,
