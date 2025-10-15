@@ -41,6 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       "openedAt": null,
     },
   ];
+  
 
   void _markAsRead(int index) {
     if (_notifications[index]['openedAt'] == null) {
