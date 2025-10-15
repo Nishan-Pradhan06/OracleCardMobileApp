@@ -249,11 +249,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             listener: (context, state) {
                               state.whenOrNull(
                                 loaded: (data) {
-                                  CustomToast.showSuccess(
-                                    'Signout Successfully!!!',
-                                  );
                                   context.goNamed(
                                     AppRoutesName.loginScreenRoute,
+                                  );
+                                  CustomToast.showSuccess(
+                                    'Signout Successfully!!!',
                                   );
                                 },
                                 failure: (failure) {

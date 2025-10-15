@@ -78,7 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         listener: (context, state) {
                           state.whenOrNull(
                             loaded: (data) {
-                              CustomToast.showSuccess("Login Successful");
                               // context.read<>();
                               if (data == 'USER') {
                                 context.goNamed(
@@ -89,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   AppRoutesName.adminDashboardRoute,
                                 );
                               }
+                              CustomToast.showSuccess("Login Successful");
                             },
                             failure: (failure) {
                               CustomToast.showError(failure.message);
