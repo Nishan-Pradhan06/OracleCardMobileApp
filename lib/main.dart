@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oracle_card_app/core/config/env_config.dart';
+import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
@@ -40,6 +41,7 @@ class OracelCard extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => sl<UserSignInBloc>()),
         BlocProvider(create: (context) => sl<UserSignUpBloc>()),
+        BlocProvider(create: (context) => sl<SignOutBloc>()),
         BlocProvider(create: (context) => sl<UserProfileBloc>()),
       ],
       child: MaterialApp.router(

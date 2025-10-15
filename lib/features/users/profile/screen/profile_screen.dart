@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/core/widgets/custom_toast.dart';
+import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/helpers/validation_helpers.dart';
 import '../../../../core/widgets/cusotm_switch.dart';
@@ -191,6 +195,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ],
                     ),
+                  ),
+                  BlocConsumer<SignOutBloc, SignOutState>(
+                    listener: (context, state) {
+                      state.whenOrNull(
+                        loaded: (data) {
+                          CustomToast.showSuccess('Signout Successfully!!!');
+                          context.goNamed(AppRoutesName.loginScreenRoute);
+                        },
+                        failure: (failure) {
+                          CustomToast.showError(failure.message);
+                        },
+                      );
+                    },
+                    builder: (context, state) {
+                      final bool isLoading = state.maybeWhen(
+                        loading: () => true,
+                        orElse: () => false,
+                      );
+                      return CustomButton(
+                        isLoading: isLoading,
+                        isDisabled: isLoading,
+                        text: 'SignOut',
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                sl<SignOutBloc>().add(SignOutEvent.signOut());
+                              },
+                        leadingIcon: Icon(
+                          Icons.exit_to_app_outlined,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
