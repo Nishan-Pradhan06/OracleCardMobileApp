@@ -90,6 +90,7 @@ class SessionsDetailsScreen extends StatelessWidget {
                       onTap: () {
                         context.pushNamed(
                           AppRoutesName.joinSessionScreenAppRoutes,
+                          extra: {'title': title},
                         );
                       },
                       useIntrinsicHeight: true,

@@ -85,6 +85,10 @@ List<GoRoute> userAppRoutes = [
   GoRoute(
     path: AppRoutesName.joinSessionScreenAppRoutes.path,
     name: AppRoutesName.joinSessionScreenAppRoutes,
-    builder: (context, state) => JoinSessionScreen(),
+    builder: (context, state) {
+      final extra = state.extra as Map<String, dynamic>;
+
+      return JoinSessionScreen(title: extra['title']);
+    },
   ),
 ];
