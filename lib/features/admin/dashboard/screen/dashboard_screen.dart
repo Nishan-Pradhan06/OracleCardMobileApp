@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/widgets/admin_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../../../../core/widgets/custom_toast.dart';
 import '../../../../router/app_routes_names.dart';
+import '../../../auth/blocs/sign_out/sign_out_bloc.dart';
 import '../widgets/admin_dashboard_cart.dart';
 
 class AdminDasboardScreen extends StatelessWidget {
@@ -51,6 +56,39 @@ class AdminDasboardScreen extends StatelessWidget {
                   svgPath: 'assets/svg/users.svg',
                   title: 'Users & Billing',
                   subtitle: 'View users and billing',
+                ),
+                BlocConsumer<SignOutBloc, SignOutState>(
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      loaded: (data) {
+                        context.goNamed(AppRoutesName.loginScreenRoute);
+                        CustomToast.showSuccess('Signout Successfully!!!');
+                      },
+                      failure: (failure) {
+                        CustomToast.showError(failure.message);
+                      },
+                    );
+                  },
+                  builder: (context, state) {
+                    final bool isLoading = state.maybeWhen(
+                      loading: () => true,
+                      orElse: () => false,
+                    );
+                    return CustomButton(
+                      isLoading: isLoading,
+                      isDisabled: isLoading,
+                      text: 'SignOut',
+                      onPressed: isLoading
+                          ? null
+                          : () {
+                              sl<SignOutBloc>().add(SignOutEvent.signOut());
+                            },
+                      leadingIcon: Icon(
+                        Icons.exit_to_app_outlined,
+                        color: Colors.white,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               } else if (data == 'ADMIN') {
                                 context.goNamed(
-                                  AppRoutesName.adminBottomNavBarRoute,
+                                  AppRoutesName.adminDashboardRoute,
                                 );
                               }
                             },

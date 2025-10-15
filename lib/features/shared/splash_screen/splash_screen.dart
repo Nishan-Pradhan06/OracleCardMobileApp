@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (token != null && token.isNotEmpty) {
       // User is already logged in → go to respective bottom bar
       if (role == 'ADMIN') {
-        context.goNamed(AppRoutesName.adminBottomNavBarRoute);
+        context.goNamed(AppRoutesName.adminDashboardRoute);
       } else {
         context.goNamed(AppRoutesName.userBottomNavBarRoute);
       }
