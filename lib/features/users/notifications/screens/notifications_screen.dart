@@ -90,218 +90,203 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    // Fetch notifications initially
-    sl<GetNotificationsBloc>().add(
-      GetNotificationsEvent.getNotificationInbox(),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<GetNotificationsBloc>(),
-      child: Scaffold(
-        appBar: CustomAppBar(
-          title: 'Notifications',
-          titleAlignment: TitleAlignment.left,
-          actions: [
-            PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert, color: Color(0xFF6B48FF)),
-              color: Colors.white,
-              onSelected: (value) {
-                if (value == 'mark_all_read') {
-                  final state = context.read<GetNotificationsBloc>().state;
-                  state.maybeWhen(
-                    loaded: (data) => _markAllAsRead(data),
-                    orElse: () {},
-                  );
-                }
-              },
-              itemBuilder: (BuildContext context) => [
-                const PopupMenuItem<String>(
-                  value: 'mark_all_read',
-                  child: Row(
-                    children: [
-                      Icon(Icons.done_all, color: Colors.black87, size: 20),
-                      SizedBox(width: 12),
-                      Text(
-                        'Mark all as read',
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                    ],
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'Notifications',
+        titleAlignment: TitleAlignment.left,
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, color: Color(0xFF6B48FF)),
+            color: Colors.white,
+            onSelected: (value) {
+              if (value == 'mark_all_read') {
+                final state = context.read<GetNotificationsBloc>().state;
+                state.maybeWhen(
+                  loaded: (data) => _markAllAsRead(data),
+                  orElse: () {},
+                );
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem<String>(
+                value: 'mark_all_read',
+                child: Row(
+                  children: [
+                    Icon(Icons.done_all, color: Colors.black87, size: 20),
+                    SizedBox(width: 12),
+                    Text(
+                      'Mark all as read',
+                      style: TextStyle(color: Colors.black87),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: CustomBackground(
+        child: CustomRefreshIndicator(
+          onRefresh: () async {
+            sl<GetNotificationsBloc>().add(
+              GetNotificationsEvent.getNotificationInbox(),
+            );
+          },
+          child: BlocBuilder<GetNotificationsBloc, GetNotificationsState>(
+            builder: (context, state) {
+              return state.when(
+                initial: () => const SizedBox(height: 100),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                failure: (failure) => Center(
+                  child: Text(
+                    'Error: ${failure.message}',
+                    style: const TextStyle(color: Colors.red),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
-        body: CustomBackground(
-          child: CustomRefreshIndicator(
-            onRefresh: () async {
-              sl<GetNotificationsBloc>().add(
-                GetNotificationsEvent.getNotificationInbox(),
-              );
-            },
-            child: BlocBuilder<GetNotificationsBloc, GetNotificationsState>(
-              builder: (context, state) {
-                return state.when(
-                  initial: () => const SizedBox(height: 100),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  failure: (failure) => Center(
-                    child: Text(
-                      'Error: ${failure.message}',
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  ),
-                  loaded: (data) {
-                    _unreadCount = data.items
-                        .where((n) => n.openedAt == null)
-                        .length;
+                loaded: (data) {
+                  _unreadCount = data.items
+                      .where((n) => n.openedAt == null)
+                      .length;
 
-                    if (data.items.isEmpty) {
-                      return SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height -
-                              kToolbarHeight,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.notifications_none,
-                                  size: 64,
-                                  color: Colors.grey[400],
+                  if (data.items.isEmpty) {
+                    return SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: SizedBox(
+                        height:
+                            MediaQuery.of(context).size.height - kToolbarHeight,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.notifications_none,
+                                size: 64,
+                                color: Colors.grey[400],
+                              ),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'No notifications',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
                                 ),
-                                const SizedBox(height: 16),
-                                const Text(
-                                  'No notifications',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    itemCount: data.items.length,
+                    itemBuilder: (context, index) {
+                      final notification = data.items[index];
+                      final isUnread = _isUnread(notification);
+
+                      return InkWell(
+                        onTap: () => _markAsRead(notification, data),
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(
+                              0xFF6B48FF,
+                            ).withValues(alpha: isUnread ? 0.1 : 0),
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey[300]!,
+                                width: 1,
+                              ),
                             ),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF6B48FF),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: notification.type == 'PUSH'
+                                      ? const Icon(
+                                          Icons.notifications,
+                                          color: Colors.white,
+                                          size: 20,
+                                        )
+                                      : const Text(
+                                          'K',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            notification.title,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ),
+                                        if (isUnread)
+                                          Container(
+                                            width: 8,
+                                            height: 8,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFF6B48FF),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      notification.body,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.grey[700],
+                                        height: 1.4,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      _formatTime(notification.sentAt),
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
-                    }
-
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      itemCount: data.items.length,
-                      itemBuilder: (context, index) {
-                        final notification = data.items[index];
-                        final isUnread = _isUnread(notification);
-
-                        return InkWell(
-                          onTap: () => _markAsRead(notification, data),
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: const Color(
-                                0xFF6B48FF,
-                              ).withValues(alpha: isUnread ? 0.1 : 0),
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Colors.grey[300]!,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF6B48FF),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Center(
-                                    child: notification.type == 'PUSH'
-                                        ? const Icon(
-                                            Icons.notifications,
-                                            color: Colors.white,
-                                            size: 20,
-                                          )
-                                        : const Text(
-                                            'K',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              notification.title,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.black87,
-                                              ),
-                                            ),
-                                          ),
-                                          if (isUnread)
-                                            Container(
-                                              width: 8,
-                                              height: 8,
-                                              decoration: const BoxDecoration(
-                                                color: Color(0xFF6B48FF),
-                                                shape: BoxShape.circle,
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Text(
-                                        notification.body,
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.grey[700],
-                                          height: 1.4,
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      const SizedBox(height: 12),
-                                      Text(
-                                        _formatTime(notification.sentAt),
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-            ),
+                    },
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
