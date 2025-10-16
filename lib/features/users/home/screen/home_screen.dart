@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_padding.dart';
+import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/upgrade_premium_button_widget.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../models/home_container_model.dart';
 import '../widgets/custom_card_button.dart';
 import '../../../../core/widgets/custom_container.dart';
-import '../widgets/daily_guidance_card_loader.dart';
 import '../widgets/home_container.dart';
 import '../widgets/notification_widget.dart';
 
@@ -29,7 +30,11 @@ class HomeScreen extends StatelessWidget {
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
-          onRefresh: () async {},
+          onRefresh: () async {
+            sl<GetDailyGuidanceBloc>().add(
+              GetDailyGuidanceEvent.getDailyGuidance(),
+            );
+          },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
 
@@ -91,7 +96,7 @@ class HomeScreen extends StatelessWidget {
 
                         loading: () => const SizedBox(
                           height: 100,
-                          child: DailyGuidanceSkeleton(),
+                          child: ShimmerLoaderWidget(),
                         ),
                         failure: (failure) => SizedBox(
                           height: 100,

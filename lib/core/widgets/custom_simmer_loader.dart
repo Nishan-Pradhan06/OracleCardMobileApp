@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class PromptCardShimmer extends StatelessWidget {
-  const PromptCardShimmer({super.key});
+class ShimmerLoaderWidget extends StatelessWidget {
+  const ShimmerLoaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -12,9 +12,9 @@ import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../../router/app_routes_names.dart';
-import '../widgets/prompt_card_loader.dart';
 import '../widgets/prompt_card_widget.dart';
 
 class CreateJoruneyEntiresScreen extends StatelessWidget {
@@ -45,7 +45,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
                         initial: () => const SizedBox(height: 100),
                         loading: () => const SizedBox(
                           height: 100,
-                          child: PromptCardShimmer(),
+                          child: ShimmerLoaderWidget(),
                         ),
                         failure: (failure) => SizedBox(
                           height: 100,
