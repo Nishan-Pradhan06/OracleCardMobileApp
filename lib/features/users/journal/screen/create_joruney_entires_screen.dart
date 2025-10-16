@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
+import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../../router/app_routes_names.dart';
+import '../widgets/prompt_card_loader.dart';
 import '../widgets/prompt_card_widget.dart';
 
 class CreateJoruneyEntiresScreen extends StatelessWidget {
@@ -26,15 +30,40 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
-          onRefresh: () async {},
+          onRefresh: () async {
+            sl<GetTodayPromptBloc>().add(GetTodayPromptEvent.getTodayPrompt());
+          },
           child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: CustomPadding(
               child: Column(
                 spacing: 10,
                 children: [
-                  PromptCard(
-                    title: 'Today\'s Prompt',
-                    prompt: 'What blessings are you grateful for today?',
+                  BlocBuilder<GetTodayPromptBloc, GetTodayPromptState>(
+                    builder: (context, state) {
+                      return state.when(
+                        initial: () => const SizedBox(height: 100),
+                        loading: () => const SizedBox(
+                          height: 100,
+                          child: PromptCardShimmer(),
+                        ),
+                        failure: (failure) => SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              'Error: ${failure.message}',
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ),
+                        loaded: (getTodayPromptData) {
+                          return PromptCard(
+                            title: 'Today\'s Prompt',
+                            prompt: getTodayPromptData.prompt.text,
+                          );
+                        },
+                      );
+                    },
                   ),
                   CustomContainer(
                     useIntrinsicHeight: true,
