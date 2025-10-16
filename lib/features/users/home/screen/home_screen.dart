@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
-import '../../../../core/helpers/user_session_helper.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/upgrade_premium_button_widget.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../models/home_container_model.dart';
 import '../widgets/custom_card_button.dart';
 import '../../../../core/widgets/custom_container.dart';
@@ -18,7 +18,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final freePlan = UserPlanType().isFree;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Oracle Card App',
@@ -175,7 +174,10 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  freePlan ? UpgradePremiumButtonWidget() : SizedBox.shrink(),
+                  UserPlanTypeWidget(
+                    freePlan: UpgradePremiumButtonWidget(),
+                    paidPlan: SizedBox.shrink(),
+                  ),
                 ],
               ),
             ),
