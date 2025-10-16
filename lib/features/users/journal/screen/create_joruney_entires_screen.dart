@@ -9,6 +9,7 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../../router/app_routes_names.dart';
 import '../widgets/prompt_card_widget.dart';
 
@@ -40,6 +41,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
                     child: CustomTextField(
                       hint: 'Start writing your reflection\nhere...',
                       maxLines: 20,
+
                       keyboardType: TextInputType.multiline,
                       noBorder: true,
                       hintStyle: TextTheme.of(
@@ -86,11 +88,14 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    'Free plan: notes auto-delete after 24h',
-                    style: TextTheme.of(
-                      context,
-                    ).bodyLarge?.copyWith(color: Colors.grey),
+                  UserPlanTypeWidget(
+                    freePlan: Text(
+                      'Free plan: notes auto-delete after 24h',
+                      style: TextTheme.of(
+                        context,
+                      ).bodyLarge?.copyWith(color: Colors.grey),
+                    ),
+                    paidPlan: SizedBox.shrink(),
                   ),
                 ],
               ),

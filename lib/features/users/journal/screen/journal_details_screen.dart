@@ -8,6 +8,7 @@ import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_container.dart';
 import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../../router/app_routes_names.dart';
 import '../widgets/prompt_card_widget.dart';
 
@@ -61,42 +62,45 @@ class JournalDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  CustomContainer(
-                    useIntrinsicHeight: true,
-                    child: Column(
-                      spacing: 20,
-                      children: [
-                        SvgPicture.asset('assets/icons/circle_lock.svg'),
-                        Text(
-                          'Unlock Full Access',
-                          style: TextTheme.of(
-                            context,
-                          ).titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Upgrade to Premium to view and edit your journal entries permanently',
-                          textAlign: TextAlign.center,
-                          style: TextTheme.of(context).bodyLarge,
-                        ),
-                        CustomButton(
-                          width: MediaQuery.sizeOf(context).width / 2.5,
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                  UserPlanTypeWidget(
+                    freePlan: CustomContainer(
+                      useIntrinsicHeight: true,
+                      child: Column(
+                        spacing: 20,
+                        children: [
+                          SvgPicture.asset('assets/icons/circle_lock.svg'),
+                          Text(
+                            'Unlock Full Access',
+                            style: TextTheme.of(
+                              context,
+                            ).titleLarge?.copyWith(fontWeight: FontWeight.bold),
                           ),
-                          leadingIcon: SvgPicture.asset(
-                            'assets/icons/king.svg',
+                          Text(
+                            'Upgrade to Premium to view and edit your journal entries permanently',
+                            textAlign: TextAlign.center,
+                            style: TextTheme.of(context).bodyLarge,
                           ),
-                          text: 'Upgrade Now',
-                          onPressed: () {
-                            context.pushNamed(
-                              AppRoutesName.billingDetailsScreen,
-                            );
-                          },
-                        ),
-                      ],
+                          CustomButton(
+                            width: MediaQuery.sizeOf(context).width / 2.5,
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            leadingIcon: SvgPicture.asset(
+                              'assets/icons/king.svg',
+                            ),
+                            text: 'Upgrade Now',
+                            onPressed: () {
+                              context.pushNamed(
+                                AppRoutesName.billingDetailsScreen,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
+                    paidPlan: SizedBox.shrink(),
                   ),
                 ],
               ),
