@@ -43,10 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: CustomAppBar(
         title: '',
         titleAlignment: TitleAlignment.left,
-        actions: [
-          NotificationIcon(hasNotification: true),
-          CustomChip(label: 'Premium', type: ChipType.premium),
-        ],
+        actions: [NotificationIcon(hasNotification: true), CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
@@ -210,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ).textTheme.titleMedium,
                                         ),
                                         Text(
-                                          ' Free',
+                                          profileData.user.plan,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleLarge
@@ -221,6 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       ],
                                     ),
+
                                     CustomButton(
                                       gradient: const LinearGradient(
                                         colors: [
@@ -234,11 +232,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'assets/icons/king.svg',
                                       ),
                                       text: 'Upgrade to Premium',
-                                      onPressed: () {
-                                        context.pushNamed(
-                                          AppRoutesName.billingDetailsScreen,
-                                        );
-                                      },
+                                      onPressed: profileData.user.plan == 'FREE'
+                                          ? () {
+                                              context.pushNamed(
+                                                AppRoutesName
+                                                    .billingDetailsScreen,
+                                              );
+                                            }
+                                          : null,
                                     ),
                                   ],
                                 ),

@@ -23,7 +23,7 @@ class JournalScreen extends StatelessWidget {
         titleAlignment: TitleAlignment.left,
         actions: [
           NotificationIcon(hasNotification: true),
-          CustomChip(label: 'Premium', type: ChipType.premium),
+CustomChip()
         ],
       ),
       body: CustomBackground(

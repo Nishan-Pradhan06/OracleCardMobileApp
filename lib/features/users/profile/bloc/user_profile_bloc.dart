@@ -4,6 +4,8 @@ import 'package:oracle_card_app/core/state/bloc_base_state.dart';
 import 'package:oracle_card_app/features/users/profile/model/user_profile_model.dart';
 import 'package:oracle_card_app/features/users/profile/repository/user_profile_repository.dart';
 
+import '../../../../core/helpers/user_session_helper.dart';
+
 part 'user_profile_event.dart';
 part 'user_profile_state.dart';
 part 'user_profile_bloc.freezed.dart';
@@ -24,9 +26,13 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
 
     final result = await _userProfileRepository.getUserProfile();
 
-    result.fold(
-      (failure) => emit(UserProfileState.failure(failure)),
-      (userProfileData) => emit(UserProfileState.loaded(userProfileData)),
-    );
+    result.fold((failure) => emit(UserProfileState.failure(failure)), (
+      userProfileData,
+    ) {
+      //TODO:
+      UserPlanType().updateFromProfile(userProfileData);
+
+      emit(UserProfileState.loaded(userProfileData));
+    });
   }
 }

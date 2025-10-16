@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import '../../../../core/helpers/user_session_helper.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_padding.dart';
@@ -17,14 +18,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final freePlan = UserPlanType().isFree;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Oracle Card App',
         titleAlignment: TitleAlignment.left,
-        actions: [
-          NotificationIcon(hasNotification: true),
-          CustomChip(label: 'Premium', type: ChipType.premium),
-        ],
+        actions: [NotificationIcon(hasNotification: true), CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
@@ -107,10 +106,11 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Text(
                           'Your angels are watching over you today. Trust your intuition and follow your heart.',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            fontSize: 20,
-                            color: Color(0xFF333333).withValues(alpha: 0.7),
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge
+                              ?.copyWith(
+                                fontSize: 20,
+                                color: Color(0xFF333333).withValues(alpha: 0.7),
+                              ),
                         ),
                         Container(
                           height: 70,
@@ -156,15 +156,16 @@ class HomeScreen extends StatelessWidget {
                   ),
                   GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
-          
+
                     shrinkWrap: true,
                     itemCount: homeItems.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 1,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          childAspectRatio: 1,
+                        ),
                     itemBuilder: (context, index) {
                       final item = homeItems[index];
                       return HomeContainer(
@@ -174,7 +175,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  UpgradePremiumButtonWidget(),
+                  freePlan ? UpgradePremiumButtonWidget() : SizedBox.shrink(),
                 ],
               ),
             ),

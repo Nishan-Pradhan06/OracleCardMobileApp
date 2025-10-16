@@ -25,10 +25,7 @@ class SessionsDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Sessions Details',
         titleAlignment: TitleAlignment.left,
-        actions: [
-          NotificationIcon(hasNotification: true),
-          CustomChip(label: 'Premium', type: ChipType.premium),
-        ],
+        actions: [NotificationIcon(hasNotification: true), CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

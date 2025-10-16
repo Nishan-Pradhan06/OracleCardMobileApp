@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import '../helpers/user_session_helper.dart';
 
 /// Enum for chip types
 enum ChipType { free, premium }
 
-/// A reusable custom chip that supports Free and Premium styles.
+/// A reusable custom chip that displays the current user plan (Free or Premium)
+/// using global UserSession values.
 class CustomChip extends StatelessWidget {
-  final String label;
-  final ChipType type;
   final bool isSelected;
   final VoidCallback? onTap;
 
-  const CustomChip({
-    super.key,
-    required this.label,
-    required this.type,
-    this.isSelected = false,
-    this.onTap,
-  });
+  const CustomChip({super.key, this.isSelected = false, this.onTap});
 
   @override
   Widget build(BuildContext context) {
+      //TODO:
+
+    final session = UserPlanType();
+    final plan = session.plan?.toUpperCase();
+
+    // Determine chip type based on the user's plan
+    final ChipType type = plan == 'PREMIUM' ? ChipType.premium : ChipType.free;
+
     // Colors based on type
     final Gradient? gradient = type == ChipType.premium
         ? const LinearGradient(
@@ -59,7 +61,7 @@ class CustomChip extends StatelessWidget {
           ],
         ),
         child: Text(
-          label,
+          plan.toString(),
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,

@@ -34,6 +34,9 @@ class User {
   final String role;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String plan;
+  final List<dynamic> subscriptions;
+  final UserCount count;
 
   User({
     required this.id,
@@ -42,6 +45,9 @@ class User {
     required this.role,
     required this.createdAt,
     required this.updatedAt,
+    required this.plan,
+    required this.subscriptions,
+    required this.count,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -52,6 +58,29 @@ class User {
       role: json['role'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
+      plan: json['plan'] ?? 'FREE',
+      subscriptions: json['subscriptions'] ?? [],
+      count: UserCount.fromJson(json['_count']),
+    );
+  }
+}
+
+class UserCount {
+  final int journalEntries;
+  final int oraclePulls;
+  final int userMeditationActivities;
+
+  UserCount({
+    required this.journalEntries,
+    required this.oraclePulls,
+    required this.userMeditationActivities,
+  });
+
+  factory UserCount.fromJson(Map<String, dynamic> json) {
+    return UserCount(
+      journalEntries: json['journalEntries'] ?? 0,
+      oraclePulls: json['oraclePulls'] ?? 0,
+      userMeditationActivities: json['userMeditationActivities'] ?? 0,
     );
   }
 }

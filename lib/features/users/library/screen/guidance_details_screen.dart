@@ -23,7 +23,7 @@ class GuidanceDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Guidance Details',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
+        actions: [CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

@@ -20,10 +20,7 @@ class BillingDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: '',
         titleAlignment: TitleAlignment.left,
-        actions: [
-          NotificationIcon(hasNotification: true),
-          CustomChip(label: 'Premium', type: ChipType.premium),
-        ],
+        actions: [NotificationIcon(hasNotification: true), CustomChip()],
       ),
       body: CustomBackground(
         child: SingleChildScrollView(

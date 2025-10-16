@@ -21,7 +21,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'New Entry',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
+        actions: [CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

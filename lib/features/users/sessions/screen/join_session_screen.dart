@@ -17,7 +17,7 @@ class JoinSessionScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Join Session',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
+        actions: [CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

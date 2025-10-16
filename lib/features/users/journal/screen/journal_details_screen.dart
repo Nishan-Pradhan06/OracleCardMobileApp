@@ -32,7 +32,7 @@ class JournalDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Entry Details',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
+        actions: [CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

@@ -18,7 +18,7 @@ class MeditationsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Meditations',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip(label: 'Premium', type: ChipType.premium)],
+        actions: [CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
