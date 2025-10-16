@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_padding.dart';
@@ -10,6 +12,7 @@ import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../models/home_container_model.dart';
 import '../widgets/custom_card_button.dart';
 import '../../../../core/widgets/custom_container.dart';
+import '../widgets/daily_guidance_card_loader.dart';
 import '../widgets/home_container.dart';
 import '../widgets/notification_widget.dart';
 
@@ -81,77 +84,111 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  CustomContainer(
-                    height: MediaQuery.sizeOf(context).height / 3.8,
-                    useIntrinsicHeight: true,
-                    padding: EdgeInsetsGeometry.only(
-                      top: 20,
-                      left: 20,
-                      right: 20,
-                      bottom: 10,
-                    ),
-                    isGradient: false,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 10,
-                      children: [
-                        Text(
-                          'Daily Guidance',
-                          style: Theme.of(context).textTheme.headlineSmall
-                              ?.copyWith(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
+                  BlocBuilder<GetDailyGuidanceBloc, GetDailyGuidanceState>(
+                    builder: (context, state) {
+                      return state.when(
+                        initial: () => const SizedBox(height: 100),
+
+                        loading: () => const SizedBox(
+                          height: 100,
+                          child: DailyGuidanceSkeleton(),
                         ),
-                        Text(
-                          'Your angels are watching over you today. Trust your intuition and follow your heart.',
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(
-                                fontSize: 20,
-                                color: Color(0xFF333333).withValues(alpha: 0.7),
-                              ),
-                        ),
-                        Container(
-                          height: 70,
-                          padding: EdgeInsets.all(10),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Color(0xFFF5F5F5),
-                          ),
-                          child: Row(
-                            spacing: 10,
-                            children: [
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(0xFFCCCCCC),
-                                ),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.play_arrow_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: LinearProgressIndicator(
-                                  color: Color(0xFF6B48FF),
-                                  borderRadius: BorderRadius.circular(10),
-                                  backgroundColor: Color(0xFFE0E0E0),
-                                  value: 10,
-                                ),
-                              ),
-                              Text('0:00'),
-                            ],
+                        failure: (failure) => SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              'Error: ${failure.message}',
+                              style: const TextStyle(color: Colors.red),
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                        loaded: (data) {
+                          return CustomContainer(
+                            height: MediaQuery.sizeOf(context).height / 3.8,
+                            useIntrinsicHeight: true,
+                            padding: EdgeInsetsGeometry.only(
+                              top: 20,
+                              left: 20,
+                              right: 20,
+                              bottom: 10,
+                            ),
+                            isGradient: false,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 10,
+                              children: [
+                                Text(
+                                  data.title,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                Text(
+                                  data.message,
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(
+                                        fontSize: 20,
+                                        color: Color(
+                                          0xFF333333,
+                                        ).withValues(alpha: 0.7),
+                                      ),
+                                ),
+                                data.hasAudio == true
+                                    ? Container(
+                                        height: 70,
+                                        padding: EdgeInsets.all(10),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            15,
+                                          ),
+                                          color: Color(0xFFF5F5F5),
+                                        ),
+                                        child: Row(
+                                          spacing: 10,
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFCCCCCC),
+                                              ),
+                                              child: IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 30,
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: LinearProgressIndicator(
+                                                color: Color(0xFF6B48FF),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                backgroundColor: Color(
+                                                  0xFFE0E0E0,
+                                                ),
+                                                value: 10,
+                                              ),
+                                            ),
+                                            Text('0:00'),
+                                          ],
+                                        ),
+                                      )
+                                    : SizedBox.shrink(),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                   GridView.builder(
                     physics: NeverScrollableScrollPhysics(),

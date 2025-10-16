@@ -7,6 +7,7 @@ import 'package:oracle_card_app/core/config/env_config.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
+import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
@@ -57,6 +58,11 @@ class OracelCard extends StatelessWidget {
           create: (context) =>
               sl<GetTodayPromptBloc>()
                 ..add(GetTodayPromptEvent.getTodayPrompt()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              sl<GetDailyGuidanceBloc>()
+                ..add(GetDailyGuidanceEvent.getDailyGuidance()),
         ),
       ],
       child: MaterialApp.router(

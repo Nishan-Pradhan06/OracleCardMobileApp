@@ -5,6 +5,8 @@ import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart'
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/auth/repository/auth_repository.dart';
+import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
+import 'package:oracle_card_app/features/users/home/repository/guidance_repository.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/repository/journal_repository.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
@@ -27,6 +29,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => UserProfileBloc(repo: sl()));
   sl.registerLazySingleton(() => GetNotificationsBloc(repo: sl()));
   sl.registerLazySingleton(() => GetTodayPromptBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetDailyGuidanceBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 
@@ -42,6 +45,9 @@ Future<void> setupServiceLocator() async {
   );
   sl.registerLazySingleton<JournalRepository>(
     () => JournalRepositoryImpl(apiService: sl()),
+  );
+  sl.registerLazySingleton<GuidanceRepository>(
+    () => GuidanceRepositoryImpl(apiService: sl()),
   );
 
   //###---------------EXTERNAL REPOSITORY SERVICES---------------###
