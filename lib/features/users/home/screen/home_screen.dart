@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Oracle Card App',
         titleAlignment: TitleAlignment.left,
-        actions: [NotificationIcon(hasNotification: true), CustomChip()],
+        actions: [NotificationIcon(), CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

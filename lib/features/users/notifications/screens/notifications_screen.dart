@@ -4,6 +4,7 @@ import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/models/notification_model.dart';
 
@@ -34,13 +35,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       _unreadCount = 0;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('All notifications marked as read'),
-        duration: Duration(seconds: 2),
-        backgroundColor: Colors.green,
-      ),
-    );
+    CustomToast.showSuccess('All notifications marked as read');
   }
 
   String _formatTime(DateTime dateTime) {

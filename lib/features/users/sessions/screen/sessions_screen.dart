@@ -45,7 +45,7 @@ class SessionScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Sessions',
         titleAlignment: TitleAlignment.left,
-        actions: [NotificationIcon(hasNotification: true), CustomChip()],
+        actions: [NotificationIcon(), CustomChip()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

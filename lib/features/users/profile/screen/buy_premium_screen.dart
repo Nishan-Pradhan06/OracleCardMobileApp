@@ -18,7 +18,8 @@ class BuyPremiumScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
-        actions: [NotificationIcon(hasNotification: true), CustomChip()],
+               actions: [NotificationIcon(), CustomChip()],
+
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

@@ -43,7 +43,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: CustomAppBar(
         title: '',
         titleAlignment: TitleAlignment.left,
-        actions: [NotificationIcon(hasNotification: true), CustomChip()],
+               actions: [NotificationIcon(), CustomChip()],
+
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
