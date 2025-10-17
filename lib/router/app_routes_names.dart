@@ -8,6 +8,7 @@ class AppRoutesName {
   static const String userBottomNavBarRoute = 'userBottomNavBarRoute';
   static const String billingDetailsScreen = 'billingDetailsScreen';
   static const String createJourneyEntriesScreen = 'createJourneyEntriesScreen';
+  static const String yourOracleCardScreenRoute = 'yourOracleCardScreenRoute';
   static const String journeyEntriesDetailsScreen = 'journeyEntriesDetailsScreen';
   static const String meditationsScreenRoute = 'meditationsScreenRoute';
   static const String guidanceArchiveScreenRoute = 'guidanceArchiveScreenRoute';

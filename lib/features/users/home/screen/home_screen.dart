@@ -135,7 +135,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     text: "Random Pull",
                                     onPressed: data.remaining > 0
-                                        ? () {}
+                                        ? () {
+                                            context.pushNamed(
+                                              AppRoutesName
+                                                  .yourOracleCardScreenRoute,
+                                            );
+                                          }
                                         : null,
                                   ),
                                 ],
