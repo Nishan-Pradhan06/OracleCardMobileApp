@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomCardButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double borderRadius;
   final double borderWidth;
   final EdgeInsetsGeometry padding;
@@ -12,7 +12,7 @@ class CustomCardButton extends StatelessWidget {
   const CustomCardButton({
     super.key,
     required this.text,
-    required this.onPressed,
+     this.onPressed,
     this.borderRadius = 12,
     this.borderWidth = 1.5,
     this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 12),

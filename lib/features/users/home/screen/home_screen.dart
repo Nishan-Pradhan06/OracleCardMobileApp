@@ -5,6 +5,7 @@ import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
+import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_padding.dart';
@@ -34,6 +35,9 @@ class HomeScreen extends StatelessWidget {
             sl<GetDailyGuidanceBloc>().add(
               GetDailyGuidanceEvent.getDailyGuidance(),
             );
+            sl<GetOraclePullStatusBloc>().add(
+              GetOraclePullStatusEvent.getOracleCardPullStatus(),
+            );
           },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -42,52 +46,87 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 spacing: 20,
                 children: [
-                  CustomContainer(
-                    isGradient: true,
-                    showSvgOverlay: true,
-                    useIntrinsicHeight: true,
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: 10,
-                        children: [
-                          Text(
-                            'Today\'s Oracle',
-                            style: Theme.of(context).textTheme.displaySmall
-                                ?.copyWith(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                  BlocBuilder<
+                    GetOraclePullStatusBloc,
+                    GetOraclePullStatusState
+                  >(
+                    builder: (context, state) {
+                      return state.when(
+                        initial: () => const SizedBox(height: 100),
+
+                        loading: () => const SizedBox(
+                          height: 100,
+                          child: ShimmerLoaderWidget(),
+                        ),
+                        failure: (failure) => SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              'Error: ${failure.message}',
+                              style: const TextStyle(color: Colors.red),
+                            ),
                           ),
-                          Text(
-                            'Tap to reveal your message',
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(color: Colors.white, fontSize: 18),
-                          ),
-                          CustomCardButton(
-                            leading: SvgPicture.asset(
-                              'assets/svg/shuffle.svg',
-                              height: 15,
-                              width: 15,
-                              colorFilter: const ColorFilter.mode(
-                                Colors.white,
-                                BlendMode.srcIn,
+                        ),
+
+                        loaded: (data) {
+                          return CustomContainer(
+                            isGradient: true,
+                            showSvgOverlay: true,
+                            useIntrinsicHeight: true,
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                spacing: 10,
+                                children: [
+                                  Text(
+                                    'Today\'s Oracle',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall
+                                        ?.copyWith(
+                                          fontSize: 30,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                  Text(
+                                    'Tap to reveal your message',
+                                    style: Theme.of(context).textTheme.bodyLarge
+                                        ?.copyWith(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                  ),
+                                  CustomCardButton(
+                                    leading: SvgPicture.asset(
+                                      'assets/svg/shuffle.svg',
+                                      height: 15,
+                                      width: 15,
+                                      colorFilter: const ColorFilter.mode(
+                                        Colors.white,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                    action: Text(
+                                      '${data.remaining}/1',
+                                      // '0/1',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(color: Colors.white),
+                                    ),
+                                    text: "Random Pull",
+                                    onPressed: data.remaining > 0
+                                        ? () {}
+                                        : null,
+                                  ),
+                                ],
                               ),
                             ),
-                            action: Text(
-                              '0/1',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: Colors.white),
-                            ),
-                            text: "Random Pull",
-                            onPressed: () {
-                              // Handle button press
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
+                          );
+                        },
+                      );
+                    },
                   ),
                   BlocBuilder<GetDailyGuidanceBloc, GetDailyGuidanceState>(
                     builder: (context, state) {
