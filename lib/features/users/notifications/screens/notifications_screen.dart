@@ -16,13 +16,10 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  int _unreadCount = 0;
-
-  void _markAsRead(NotificationItemModel notification, NotificationModel data) {
+  void _markAsRead(NotificationItemModel notification) {
     if (notification.openedAt == null) {
       setState(() {
         notification.openedAt = DateTime.now();
-        _unreadCount = (_unreadCount - 1).clamp(0, data.items.length);
       });
     }
   }
@@ -32,7 +29,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       for (var notification in data.items) {
         notification.openedAt ??= DateTime.now();
       }
-      _unreadCount = 0;
     });
 
     CustomToast.showSuccess('All notifications marked as read');
@@ -78,10 +74,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     final minute = dateTime.minute.toString().padLeft(2, '0');
     final period = dateTime.hour >= 12 ? 'pm' : 'am';
     return '$hour:$minute $period';
-  }
-
-  bool _isUnread(NotificationItemModel notification) {
-    return notification.openedAt == null;
   }
 
   @override
@@ -140,10 +132,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   ),
                 ),
                 loaded: (data) {
-                  _unreadCount = data.items
-                      .where((n) => n.openedAt == null)
-                      .length;
-
                   if (data.items.isEmpty) {
                     return SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -179,10 +167,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     itemCount: data.items.length,
                     itemBuilder: (context, index) {
                       final notification = data.items[index];
-                      final isUnread = _isUnread(notification);
+                      final isUnread = notification.openedAt == null;
 
                       return InkWell(
-                        onTap: () => _markAsRead(notification, data),
+                        onTap: () => _markAsRead(notification),
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -213,13 +201,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                           color: Colors.white,
                                           size: 20,
                                         )
-                                      : const Text(
-                                          'K',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      : notification.type == 'EMAIL'
+                                      ? const Icon(
+                                          Icons.email,
+                                          color: Colors.white,
+                                          size: 20,
+                                        )
+                                      : const Icon(
+                                          Icons.notifications_active,
+                                          color: Colors.white,
+                                          size: 20,
                                         ),
                                 ),
                               ),

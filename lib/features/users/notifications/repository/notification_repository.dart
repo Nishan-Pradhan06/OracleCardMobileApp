@@ -20,7 +20,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
 
     return response.fold((failure) => Left(failure), (data) {
       final model = data['data'];
-      final notification = NotificationModel.fromJson(model);
+      final notification = NotificationModel.fromMap(model);
       return Right(notification);
     });
   }
