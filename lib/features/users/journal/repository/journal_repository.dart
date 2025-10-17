@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
+import 'package:oracle_card_app/features/users/journal/models/entries_list_model.dart';
 import 'package:oracle_card_app/features/users/journal/models/today_prompt_model.dart';
 
 import '../models/jorunal_model.dart';
@@ -8,6 +9,9 @@ import '../models/jorunal_model.dart';
 abstract interface class JournalRepository {
   //##-----GET TODAY PROMPT----------####
   FutureEither<PromptModel> getTodayPrompt();
+
+  //##-----GET MY JOURNAL ENTRIES----------####
+  FutureEither<JournalDataModel> getMyJournalEntires();
 
   //##-----POST JOURNAL----------####
   FutureEither<String> postJournal({
@@ -42,6 +46,18 @@ class JournalRepositoryImpl implements JournalRepository {
 
     return response.fold((failure) => Left(failure), (data) {
       return Right('Journal saved successfully');
+    });
+  }
+
+  //##-----GET MY JOURNAL ENTRIES----------####
+  @override
+  FutureEither<JournalDataModel> getMyJournalEntires() async {
+    final response = await _apiService.get('journal');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final journalEntiresJson = data['data'];
+      final journalEntires = JournalDataModel.fromJson(journalEntiresJson);
+      return Right(journalEntires);
     });
   }
 }
