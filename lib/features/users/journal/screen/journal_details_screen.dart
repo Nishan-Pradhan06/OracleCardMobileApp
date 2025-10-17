@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
-import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_container.dart';
 import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
@@ -33,7 +32,7 @@ class JournalDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Entry Details',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip()],
+        actions: [UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

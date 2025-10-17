@@ -8,8 +8,8 @@ import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart'
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
-import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/heading_widget.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../widgets/library_card_widget.dart';
 
@@ -22,8 +22,7 @@ class LibraryScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Library',
         titleAlignment: TitleAlignment.left,
-        actions: [NotificationIcon(), CustomChip()],
-
+        actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

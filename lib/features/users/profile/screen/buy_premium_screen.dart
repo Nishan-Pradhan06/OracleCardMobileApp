@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
-import 'package:oracle_card_app/core/widgets/custom_chip.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import '../../../../core/widgets/custom_button.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
 
 class BuyPremiumScreen extends StatelessWidget {
@@ -18,8 +18,7 @@ class BuyPremiumScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: '',
-               actions: [NotificationIcon(), CustomChip()],
-
+        actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
-import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 
 class GuidanceDetailsScreen extends StatelessWidget {
   final String title;
@@ -23,7 +23,7 @@ class GuidanceDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Guidance Details',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip()],
+        actions: [UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

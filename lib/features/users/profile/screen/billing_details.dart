@@ -8,7 +8,7 @@ import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/credit_card_masked_widget.dart';
-import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
 
 class BillingDetailsScreen extends StatelessWidget {
@@ -20,8 +20,7 @@ class BillingDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: '',
         titleAlignment: TitleAlignment.left,
-               actions: [NotificationIcon(), CustomChip()],
-
+        actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: SingleChildScrollView(

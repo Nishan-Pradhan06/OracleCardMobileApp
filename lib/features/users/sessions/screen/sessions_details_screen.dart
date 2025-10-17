@@ -7,7 +7,7 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 
 import '../../../../core/widgets/custom_appbar.dart';
-import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
 
 class SessionsDetailsScreen extends StatelessWidget {
@@ -25,8 +25,7 @@ class SessionsDetailsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Sessions Details',
         titleAlignment: TitleAlignment.left,
-               actions: [NotificationIcon(), CustomChip()],
-
+        actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

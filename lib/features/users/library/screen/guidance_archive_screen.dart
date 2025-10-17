@@ -6,7 +6,7 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/library/models/guidance_model.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
-import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../widgets/guidance_card_widget.dart';
 
 class GuidanceArchiveScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class GuidanceArchiveScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Guidance Archive',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip()],
+        actions: [UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

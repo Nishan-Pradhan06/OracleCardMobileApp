@@ -11,7 +11,6 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import '../../../../core/widgets/custom_appbar.dart';
-import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../../router/app_routes_names.dart';
@@ -26,7 +25,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'New Entry',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip()],
+        actions: [UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

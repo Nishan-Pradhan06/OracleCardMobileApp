@@ -15,7 +15,7 @@ class UserPlanTypeWidget extends StatelessWidget {
       builder: (context, state) {
         return state.maybeWhen(
           loaded: (data) {
-            if (data.user.plan == 'PREMIUM') {
+            if (data.user.plan == 'Monthly' || data.user.plan == 'Yearly') {
               return paidPlan ?? CustomChip(planType: ChipType.premium);
             } else {
               return freePlan ?? CustomChip(planType: ChipType.free);

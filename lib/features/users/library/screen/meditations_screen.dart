@@ -6,7 +6,7 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
-import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../widgets/meditation_card.dart';
 
 class MeditationsScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class MeditationsScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Meditations',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip()],
+        actions: [UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

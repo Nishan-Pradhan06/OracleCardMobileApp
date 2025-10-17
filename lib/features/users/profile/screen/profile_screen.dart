@@ -15,7 +15,7 @@ import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.da
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/helpers/validation_helpers.dart';
 import '../../../../core/widgets/cusotm_switch.dart';
-import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../auth/widgets/text_form_field.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../widgets/profile_simmer_loader.dart';
@@ -43,8 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: CustomAppBar(
         title: '',
         titleAlignment: TitleAlignment.left,
-               actions: [NotificationIcon(), CustomChip()],
-
+        actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

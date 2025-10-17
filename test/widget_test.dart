@@ -99,7 +99,7 @@ void main() {
 //         titleAlignment: TitleAlignment.left,
 //         actions: [
 //           NotificationIcon(hasNotification: true),
-// CustomChip()//         ],
+//  UserPlanTypeWidget()//         ],
 //       ),
 //       body: CustomBackground(
 //         child: CustomRefreshIndicator(

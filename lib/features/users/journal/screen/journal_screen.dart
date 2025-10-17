@@ -10,8 +10,8 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/utils/date_string_split_utils.dart';
-import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../widgets/entires_card_widget.dart';
 
@@ -24,7 +24,7 @@ class JournalScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Journal',
         titleAlignment: TitleAlignment.left,
-        actions: [NotificationIcon(), CustomChip()],
+        actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

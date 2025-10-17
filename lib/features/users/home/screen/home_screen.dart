@@ -7,7 +7,6 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import '../../../../core/widgets/custom_appbar.dart';
-import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/upgrade_premium_button_widget.dart';
@@ -44,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: CustomAppBar(
         title: 'Oracle Card App',
         titleAlignment: TitleAlignment.left,
-        actions: [NotificationIcon(), CustomChip()],
+        actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(

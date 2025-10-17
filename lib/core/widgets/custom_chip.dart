@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 /// Enum for chip types
@@ -10,6 +12,7 @@ class CustomChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(planType.name);
     // Determine chip type based on the user's plan
 
     // Colors based on type
@@ -41,7 +44,7 @@ class CustomChip extends StatelessWidget {
               color:
                   (planType == ChipType.premium
                           ? const Color(0xFFFF7E5F)
-                          : Colors.black)
+                        : Colors.black)
                       .withValues(alpha: 0.2),
               blurRadius: 6,
               offset: const Offset(0, 3),

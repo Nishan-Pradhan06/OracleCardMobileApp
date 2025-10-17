@@ -5,7 +5,7 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 
 import '../../../../core/widgets/custom_appbar.dart';
-import '../../../../core/widgets/custom_chip.dart';
+import '../../../../core/widgets/user_plan_type_widget.dart';
 
 class JoinSessionScreen extends StatelessWidget {
   final String title;
@@ -17,7 +17,7 @@ class JoinSessionScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Join Session',
         titleAlignment: TitleAlignment.left,
-        actions: [CustomChip()],
+        actions: [UserPlanTypeWidget()],
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
