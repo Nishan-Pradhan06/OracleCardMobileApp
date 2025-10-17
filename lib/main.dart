@@ -9,6 +9,7 @@ import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bl
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
+import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
@@ -46,10 +47,7 @@ class OracelCard extends StatelessWidget {
         BlocProvider(create: (context) => sl<UserSignInBloc>()),
         BlocProvider(create: (context) => sl<UserSignUpBloc>()),
         BlocProvider(create: (context) => sl<SignOutBloc>()),
-        BlocProvider(
-          create: (context) =>
-              sl<UserProfileBloc>()..add(UserProfileEvent.getUserProfile()),
-        ),
+        BlocProvider(create: (context) => sl<UserProfileBloc>()),
         BlocProvider(
           create: (context) =>
               sl<GetNotificationsBloc>()
@@ -69,6 +67,11 @@ class OracelCard extends StatelessWidget {
           create: (context) =>
               sl<GetOraclePullStatusBloc>()
                 ..add(GetOraclePullStatusEvent.getOracleCardPullStatus()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              sl<GetJournalEntiresListBloc>()
+                ..add(GetJournalEntiresListEvent.getJournalEntiresList()),
         ),
       ],
       child: MaterialApp.router(

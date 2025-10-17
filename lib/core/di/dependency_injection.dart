@@ -9,6 +9,7 @@ import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import 'package:oracle_card_app/features/users/home/repository/guidance_repository.dart';
 import 'package:oracle_card_app/features/users/home/repository/oracle_card_repository.dart';
+import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/repository/journal_repository.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
@@ -33,6 +34,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetTodayPromptBloc(repo: sl()));
   sl.registerLazySingleton(() => GetDailyGuidanceBloc(repo: sl()));
   sl.registerLazySingleton(() => GetOraclePullStatusBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetJournalEntiresListBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 

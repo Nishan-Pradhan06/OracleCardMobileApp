@@ -12,14 +12,31 @@ import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/upgrade_premium_button_widget.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
+import '../../journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
+import '../../profile/bloc/user_profile_bloc.dart';
 import '../models/home_container_model.dart';
 import '../widgets/custom_card_button.dart';
 import '../../../../core/widgets/custom_container.dart';
 import '../widgets/home_container.dart';
 import '../widgets/notification_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    sl<GetJournalEntiresListBloc>().add(
+      GetJournalEntiresListEvent.getJournalEntiresList(),
+    );
+    sl<UserProfileBloc>().add(UserProfileEvent.getUserProfile());
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
