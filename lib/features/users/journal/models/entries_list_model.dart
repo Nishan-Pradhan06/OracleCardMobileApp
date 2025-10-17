@@ -26,12 +26,16 @@ class JournalDataModel {
 
   JournalDataModel({required this.items, this.nextCursor});
 
-  factory JournalDataModel.fromJson(Map<String, dynamic> json) => JournalDataModel(
-    items: (json['items'] as List<dynamic>)
-        .map((e) => JournalEntryListModel.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    nextCursor: json['nextCursor'] as String?,
-  );
+factory JournalDataModel.fromJson(Map<String, dynamic> json) =>
+      JournalDataModel(
+        items: (json['items'] as List<dynamic>)
+            .map(
+              (e) => JournalEntryListModel.fromJson(e as Map<String, dynamic>),
+            )
+            .toList(),
+        nextCursor: json['nextCursor']?.toString(),
+      );
+
 
   Map<String, dynamic> toJson() => {
     'items': items.map((e) => e.toJson()).toList(),

@@ -13,7 +13,6 @@ import '../../../../core/utils/date_string_split_utils.dart';
 import '../../../../core/widgets/custom_chip.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../home/widgets/notification_widget.dart';
-import '../../profile/bloc/user_profile_bloc.dart';
 import '../widgets/entires_card_widget.dart';
 
 class JournalScreen extends StatelessWidget {
@@ -33,7 +32,6 @@ class JournalScreen extends StatelessWidget {
             sl<GetJournalEntiresListBloc>().add(
               GetJournalEntiresListEvent.getJournalEntiresList(),
             );
-            sl<UserProfileBloc>().add(UserProfileEvent.getUserProfile());
           },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
