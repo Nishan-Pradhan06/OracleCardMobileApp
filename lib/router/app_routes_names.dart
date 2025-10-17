@@ -18,6 +18,7 @@ class AppRoutesName {
   static const String joinSessionScreenAppRoutes = 'joinSessionScreenAppRoutes';
   static const String notificationScreenAppRoute = 'notificationScreenAppRoute';
   static const String dailyGuidanceScreenRoute = 'dailyGuidanceScreenRoute';
+  static const String oracleCardGridScreenRoute = 'oracleCardGridScreenRoute';
 
   //#--------------ADMIN ROUTES NAME-------------##
   static const String adminDashboardRoute = 'adminDashboardRoute';

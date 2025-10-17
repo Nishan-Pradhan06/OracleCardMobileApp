@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Oracle Card App',
+        automaticallyImplyLeading: false,
         titleAlignment: TitleAlignment.left,
         actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
@@ -138,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ? () {
                                             context.pushNamed(
                                               AppRoutesName
-                                                  .yourOracleCardScreenRoute,
+                                                  .oracleCardGridScreenRoute,
                                             );
                                           }
                                         : null,
@@ -276,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                     itemBuilder: (context, index) {
                       final item = homeItems[index];
-                      return HomeContainer(
+                      return GridContainer(
                         svgUrl: item.svgUrl,
                         title: item.title,
                         description: item.description,

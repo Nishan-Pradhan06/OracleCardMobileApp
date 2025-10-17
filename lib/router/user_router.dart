@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
 import 'package:oracle_card_app/features/users/home/screen/daily_guidance_screen.dart';
+import 'package:oracle_card_app/features/users/home/screen/oracle_card_grid_screen.dart';
 import 'package:oracle_card_app/features/users/home/screen/your_oracle_card.dart';
 import 'package:oracle_card_app/features/users/journal/screen/create_joruney_entires_screen.dart';
 import 'package:oracle_card_app/features/users/journal/screen/journal_details_screen.dart';
@@ -45,6 +46,11 @@ List<GoRoute> userAppRoutes = [
     path: AppRoutesName.yourOracleCardScreenRoute.path,
     name: AppRoutesName.yourOracleCardScreenRoute,
     builder: (context, state) => YourOracleCard(),
+  ),
+  GoRoute(
+    path: AppRoutesName.oracleCardGridScreenRoute.path,
+    name: AppRoutesName.oracleCardGridScreenRoute,
+    builder: (context, state) => OracleCardGridScreen(),
   ),
   GoRoute(
     path: AppRoutesName.journeyEntriesDetailsScreen.path,

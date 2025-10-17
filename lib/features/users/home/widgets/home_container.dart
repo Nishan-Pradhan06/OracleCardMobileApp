@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomeContainer extends StatelessWidget {
+class GridContainer extends StatelessWidget {
   final String svgUrl;
   final String title;
   final String description;
 
-  const HomeContainer({
+  const GridContainer({
     super.key,
     required this.svgUrl,
     required this.title,
@@ -43,11 +43,14 @@ class HomeContainer extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          Text(
-            description,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: 16,
-              color: Colors.grey[600],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              description,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
             ),
           ),
         ],
