@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
+import 'package:oracle_card_app/features/users/home/screen/daily_guidance_screen.dart';
 import 'package:oracle_card_app/features/users/journal/screen/create_joruney_entires_screen.dart';
 import 'package:oracle_card_app/features/users/journal/screen/journal_details_screen.dart';
 import 'package:oracle_card_app/features/users/library/screen/guidance_archive_screen.dart';
@@ -23,6 +24,11 @@ List<GoRoute> userAppRoutes = [
     path: AppRoutesName.billingDetailsScreen.path,
     name: AppRoutesName.billingDetailsScreen,
     builder: (context, state) => BillingDetailsScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.dailyGuidanceScreenRoute.path,
+    name: AppRoutesName.dailyGuidanceScreenRoute,
+    builder: (context, state) => DailyGuidanceScreen(),
   ),
   GoRoute(
     path: AppRoutesName.notificationScreenAppRoute.path,

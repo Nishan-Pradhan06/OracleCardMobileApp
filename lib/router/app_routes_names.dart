@@ -16,6 +16,7 @@ class AppRoutesName {
   static const String sessionsDetailsScreenScreenRoute = 'sessionsDetailsScreenScreenRoute';
   static const String joinSessionScreenAppRoutes = 'joinSessionScreenAppRoutes';
   static const String notificationScreenAppRoute = 'notificationScreenAppRoute';
+  static const String dailyGuidanceScreenRoute = 'dailyGuidanceScreenRoute';
 
   //#--------------ADMIN ROUTES NAME-------------##
   static const String adminDashboardRoute = 'adminDashboardRoute';

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
@@ -164,6 +166,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         loaded: (data) {
                           return CustomContainer(
+                            onTap: () {
+                              context.pushNamed(
+                                AppRoutesName.dailyGuidanceScreenRoute,
+                              );
+                            },
                             height: MediaQuery.sizeOf(context).height / 3.8,
                             useIntrinsicHeight: true,
                             padding: EdgeInsetsGeometry.only(
