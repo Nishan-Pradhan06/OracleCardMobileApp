@@ -22,7 +22,7 @@ class GetDailyGuidanceBloc
     Emitter<GetDailyGuidanceState> emit,
   ) async {
     emit(GetDailyGuidanceState.loading());
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 3));
     final result = await _guidanceRepository.getDailyGuidance();
 
     result.fold(

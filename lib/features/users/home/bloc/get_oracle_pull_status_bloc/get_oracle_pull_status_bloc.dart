@@ -22,7 +22,7 @@ class GetOraclePullStatusBloc
     Emitter<GetOraclePullStatusState> emit,
   ) async {
     emit(GetOraclePullStatusState.loading());
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 3));
 
     final result = await _oracleCardRepository.getCardPullStatus();
     result.fold(

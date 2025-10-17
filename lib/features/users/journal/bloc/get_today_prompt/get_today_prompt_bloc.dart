@@ -23,7 +23,7 @@ class GetTodayPromptBloc
     Emitter<GetTodayPromptState> emit,
   ) async {
     emit(GetTodayPromptState.loading());
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 3));
     final result = await _journalRepository.getTodayPrompt();
     result.fold(
       (failure) => emit(GetTodayPromptState.failure(failure)),
