@@ -25,8 +25,7 @@ class _DailyGuidanceScreenState extends State<DailyGuidanceScreen> {
   bool isPlaying = false;
   bool isLoading = false;
 
-  final String audioUrl =
-      'https://github.com/Nishan-Pradhan06/OracleCardMobileApplication/blob/main/assets/Nepathya%20-%20Himal%20Chuchure%20(Remastered)%20%20%E0%A4%B9%E0%A4%AE%E0%A4%B2%20%E0%A4%9A%E0%A4%9A%E0%A4%B0.mp3';
+  final String audioUrl = 'assets/audio.mp3';
 
   @override
   void initState() {
@@ -53,7 +52,7 @@ class _DailyGuidanceScreenState extends State<DailyGuidanceScreen> {
 
   Future<void> _preloadAudio() async {
     try {
-      await _audioPlayer.setSource(UrlSource(audioUrl));
+      await _audioPlayer.setSource(AssetSource(audioUrl));
     } catch (e) {
       debugPrint('Error preloading audio: $e');
     }
