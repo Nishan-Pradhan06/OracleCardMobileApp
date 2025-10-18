@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
@@ -11,6 +12,7 @@ import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_sess
 import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
+import '../../../../router/app_routes_names.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../widgets/session_card_widget.dart';
 
@@ -83,13 +85,14 @@ class SessionScreen extends StatelessWidget {
                                 description: session.description,
                                 isButtonEnabled: session.rsvp,
                                 onPressed: () {
-                                  // context.pushNamed(
-                                  //   // AppRoutesName.sessionsDetailsScreenScreenRoute,
-                                  //   // extra: {
-                                  //   //   'title': session.title,
-                                  //   //   'dateTime': session.dateTime,
-                                  //   // },
-                                  // );
+                                  context.pushNamed(
+                                    AppRoutesName
+                                        .sessionsDetailsScreenScreenRoute,
+                                    extra: {
+                                      'title': session.title,
+                                      'dateTime': formattedDateTime,
+                                    },
+                                  );
                                 },
                               );
                             },
