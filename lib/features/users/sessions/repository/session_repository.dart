@@ -10,8 +10,8 @@ abstract interface class SessionRepository {
 class SessionRepositoryImpl implements SessionRepository {
   final ApiService _apiService;
 
-  SessionRepositoryImpl({required ApiService apiServices})
-    : _apiService = apiServices;
+  SessionRepositoryImpl({required ApiService apiService})
+    : _apiService = apiService;
 
   @override
   FutureEither<UpcomingSessionsDataModel> getUpcommingSession() async {

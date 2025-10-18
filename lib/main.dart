@@ -14,6 +14,7 @@ import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get
 import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_meditations_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
+import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_session/get_upcomming_session_bloc.dart';
 import 'package:oracle_card_app/router/app_router.dart';
 
 import 'core/di/dependency_injection.dart';
@@ -78,6 +79,11 @@ class OracelCard extends StatelessWidget {
           create: (context) =>
               sl<GetMeditationsBloc>()
                 ..add(GetMeditationsEvent.getMeditations()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              sl<GetUpcommingSessionBloc>()
+                ..add(GetUpcommingSessionEvent.getUpCommingSession()),
         ),
       ],
       child: MaterialApp.router(
