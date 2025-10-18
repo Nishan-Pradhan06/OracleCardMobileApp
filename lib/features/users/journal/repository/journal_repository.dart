@@ -17,12 +17,16 @@ abstract interface class JournalRepository {
   FutureEither<String> postJournal({
     required JournalEntryModel journalEntryModel,
   });
+  //##-----GET JOURNAL BY ID----------####
+  FutureEither<JournalDataModel> getJournalById({required int journalId});
 }
 
 class JournalRepositoryImpl implements JournalRepository {
   final ApiService _apiService;
   JournalRepositoryImpl({required ApiService apiService})
     : _apiService = apiService;
+
+  //##-----GET MY TODAY PROMPT----------####
   @override
   FutureEither<PromptModel> getTodayPrompt() async {
     final response = await _apiService.get('journal/prompt/today');
@@ -58,6 +62,21 @@ class JournalRepositoryImpl implements JournalRepository {
       final journalEntiresJson = data['data'];
       final journalEntires = JournalDataModel.fromJson(journalEntiresJson);
       return Right(journalEntires);
+    });
+  }
+
+  //##-----GET MY JOURNAL BY ID----------####
+
+  @override
+  FutureEither<JournalDataModel> getJournalById({
+    required int journalId,
+  }) async {
+    final response = await _apiService.get('journal/$journalId');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final journalJson = data['data'];
+      final journalData = JournalDataModel.fromJson(journalJson);
+      return Right(journalData);
     });
   }
 }
