@@ -62,7 +62,10 @@ class LibraryScreen extends StatelessWidget {
                     },
                   ),
 
-                  UpgradePremiumButtonWidget(),
+                  UserPlanTypeWidget(
+                    freePlan: UpgradePremiumButtonWidget(),
+                    paidPlan: SizedBox.shrink(),
+                  ),
                 ],
               ),
             ),

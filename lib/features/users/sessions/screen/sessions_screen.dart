@@ -83,7 +83,10 @@ class SessionScreen extends StatelessWidget {
                     ),
                   ),
 
-                  const UpgradePremiumButtonWidget(),
+                  const UserPlanTypeWidget(
+                    freePlan: UpgradePremiumButtonWidget(),
+                    paidPlan: SizedBox.shrink(),
+                  ),
                 ],
               ),
             ),
