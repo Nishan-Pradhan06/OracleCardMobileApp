@@ -62,9 +62,7 @@ class MeditationsScreen extends StatelessWidget {
                                 title: entry.title,
                                 timer: '${entry.durationSec.toString()} sec',
                                 svgUrl: 'assets/icons/meditation_icon_1.svg',
-                                isLock: entry.visibility == 'PREMIUM'
-                                    ? true
-                                    : false,
+                                isLock: entry.locked,
                                 onTap: () {},
                               );
                             },
