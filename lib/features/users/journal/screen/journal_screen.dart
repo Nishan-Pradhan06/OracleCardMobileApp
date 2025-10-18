@@ -9,7 +9,7 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
-import '../../../../core/utils/date_string_split_utils.dart';
+import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
@@ -88,13 +88,14 @@ class JournalScreen extends StatelessWidget {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   final entry = journalEntiresData.items[index];
-                                  String day = getDayFromDateTime(
-                                    entry.createdAt.toString(),
-                                  );
+                                  final formattedDateTime =
+                                      DateTimeUtils.formatReadableDate(
+                                        entry.createdAt.toString(),
+                                      );
 
                                   return EntriesCardWidget(
                                     title: entry.status.name.toUpperCase(),
-                                    dateTime: day,
+                                    dateTime: formattedDateTime,
                                     description: entry.content,
                                     onTap: () {
                                       // context.pushNamed(

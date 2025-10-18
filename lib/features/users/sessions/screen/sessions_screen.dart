@@ -8,6 +8,7 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/heading_widget.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
 import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_session/get_upcomming_session_bloc.dart';
+import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
@@ -71,9 +72,13 @@ class SessionScreen extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final session = upCommingSessionData.items[index];
+                              final formattedDateTime =
+                                  DateTimeUtils.formatShortDate(
+                                    session.startTime.toString(),
+                                  );
 
                               return SessionsCardWidget(
-                                dateText: session.startTime.toIso8601String(),
+                                dateText: formattedDateTime,
                                 title: session.title,
                                 description: session.description,
                                 isButtonEnabled: session.rsvp,

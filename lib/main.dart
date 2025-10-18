@@ -50,6 +50,7 @@ class OracelCard extends StatelessWidget {
         BlocProvider(create: (context) => sl<UserSignUpBloc>()),
         BlocProvider(create: (context) => sl<SignOutBloc>()),
         BlocProvider(create: (context) => sl<UserProfileBloc>()),
+        BlocProvider(create: (context) => sl<GetJournalEntiresListBloc>()),
         BlocProvider(
           create: (context) =>
               sl<GetNotificationsBloc>()
@@ -69,11 +70,6 @@ class OracelCard extends StatelessWidget {
           create: (context) =>
               sl<GetOraclePullStatusBloc>()
                 ..add(GetOraclePullStatusEvent.getOracleCardPullStatus()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              sl<GetJournalEntiresListBloc>()
-                ..add(GetJournalEntiresListEvent.getJournalEntiresList()),
         ),
         BlocProvider(
           create: (context) =>
