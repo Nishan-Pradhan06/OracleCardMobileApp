@@ -43,6 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: CustomAppBar(
         title: '',
         titleAlignment: TitleAlignment.left,
+        automaticallyImplyLeading: false,
         actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(

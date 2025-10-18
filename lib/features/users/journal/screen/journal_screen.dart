@@ -24,6 +24,7 @@ class JournalScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Journal',
         titleAlignment: TitleAlignment.left,
+        automaticallyImplyLeading: false,
         actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(

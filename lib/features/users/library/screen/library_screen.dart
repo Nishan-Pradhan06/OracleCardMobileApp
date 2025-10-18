@@ -21,6 +21,7 @@ class LibraryScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Library',
         titleAlignment: TitleAlignment.left,
+        automaticallyImplyLeading: false,
         actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
