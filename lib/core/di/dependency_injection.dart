@@ -12,6 +12,8 @@ import 'package:oracle_card_app/features/users/home/repository/oracle_card_repos
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/repository/journal_repository.dart';
+import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_meditations_bloc.dart';
+import 'package:oracle_card_app/features/users/library/repository/meditations_repository.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/repository/notification_repository.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
@@ -35,6 +37,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetDailyGuidanceBloc(repo: sl()));
   sl.registerLazySingleton(() => GetOraclePullStatusBloc(repo: sl()));
   sl.registerLazySingleton(() => GetJournalEntiresListBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetMeditationsBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 
@@ -56,6 +59,9 @@ Future<void> setupServiceLocator() async {
   );
   sl.registerLazySingleton<OracleCardRepository>(
     () => OracleCardRepositoryImpl(apiService: sl()),
+  );
+  sl.registerLazySingleton<MeditationsRepository>(
+    () => MeditationsRepositoryImp(apiService: sl()),
   );
 
   //###---------------EXTERNAL REPOSITORY SERVICES---------------###
