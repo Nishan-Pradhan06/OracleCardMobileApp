@@ -19,60 +19,66 @@ class MeditatoinsCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      useIntrinsicHeight: true,
-      child: Row(
-        spacing: 10,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: CustomContainer(
+        useIntrinsicHeight: true,
+        child: Row(
+          spacing: 10,
 
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            spacing: 10,
-            children: [
-              SvgPicture.asset(svgUrl),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 2,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    spacing: 6,
-                    children: [
-                      SvgPicture.asset('assets/icons/time_grey.svg'),
-                      Text(
-                        timer,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey.shade700,
-                        ),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              spacing: 10,
+              children: [
+                SvgPicture.asset(svgUrl),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 2,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
+                    ),
+                    Row(
+                      spacing: 6,
+                      children: [
+                        SvgPicture.asset('assets/icons/time_grey.svg'),
+                        Text(
+                          timer,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey.shade700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: isLock ? null : onTap,
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(isLock ? 0xFFF0F0F0 : 0xFF6B48FF),
+                ),
+                child: Center(
+                  child: SvgPicture.asset(
+                    isLock ? 'assets/icons/lock.svg' : 'assets/icons/play.svg',
                   ),
-                ],
-              ),
-            ],
-          ),
-          GestureDetector(
-            onTap: isLock ? null : onTap,
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(isLock ? 0xFFF0F0F0 : 0xFF6B48FF),
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  isLock ? 'assets/icons/lock.svg' : 'assets/icons/play.svg',
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

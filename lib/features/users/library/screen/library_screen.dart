@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -58,7 +57,6 @@ class LibraryScreen extends StatelessWidget {
                       context.pushNamed(
                         AppRoutesName.guidanceArchiveScreenRoute,
                       );
-                      log('this is aa');
                     },
                   ),
 

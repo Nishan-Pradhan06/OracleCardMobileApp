@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
@@ -25,66 +24,60 @@ class MeditationsScreen extends StatelessWidget {
       ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
-          onRefresh: () async {},
+          onRefresh: () async {
+            sl<GetMeditationsBloc>().add(GetMeditationsEvent.getMeditations());
+          },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             child: CustomPadding(
-              child: BlocBuilder<GetMeditationsBloc, GetMeditationsState>(
-                builder: (context, state) {
-                  return state.when(
-                    initial: () => const SizedBox(height: 100),
-                    loading: () => ShimmerLoaderWidget(
-                      isList: true,
-                      count: 5,
-                      spacing: 10,
-                    ),
-                    failure: (failure) => SizedBox(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Error: ${failure.message}',
-                          style: const TextStyle(color: Colors.red),
+              child: Column(
+                children: [
+                  BlocBuilder<GetMeditationsBloc, GetMeditationsState>(
+                    builder: (context, state) {
+                      return state.when(
+                        initial: () => const SizedBox(height: 100),
+                        loading: () => ShimmerLoaderWidget(
+                          isList: true,
+                          count: 5,
+                          spacing: 10,
                         ),
-                      ),
-                    ),
-                    loaded: (meditationsData) {
-                      return Column(
-                        spacing: 10,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListView.builder(
+                        failure: (failure) => SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              'Error: ${failure.message}',
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ),
+                        loaded: (meditationsData) {
+                          return ListView.builder(
                             itemCount: meditationsData.items.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final entry = meditationsData.items[index];
-                              // String day = getDayFromDateTime(
-                              //   entry.createdAt.toString(),
-                              // );
 
                               return MeditatoinsCardWidget(
                                 title: entry.title,
-                                timer: entry.durationSec.toString(),
+                                timer: '${entry.durationSec.toString()} sec',
                                 svgUrl: 'assets/icons/meditation_icon_1.svg',
                                 isLock: entry.visibility == 'PREMIUM'
                                     ? true
                                     : false,
-                                onTap: () {
-                                  log('unlock');
-                                },
+                                onTap: () {},
                               );
                             },
-                          ),
-
-                          UserPlanTypeWidget(
-                            freePlan: UpgradePremiumButtonWidget(),
-                            paidPlan: SizedBox.shrink(),
-                          ),
-                        ],
+                          );
+                        },
                       );
                     },
-                  );
-                },
+                  ),
+                  UserPlanTypeWidget(
+                    freePlan: UpgradePremiumButtonWidget(),
+                    paidPlan: SizedBox.shrink(),
+                  ),
+                ],
               ),
             ),
           ),
