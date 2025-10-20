@@ -17,6 +17,7 @@ class SignOutBloc extends Bloc<SignOutEvent, SignOutState> {
 
   Future<void> _onSignOut(_SignOut event, Emitter<SignOutState> emit) async {
     emit(SignOutState.loading());
+    await Future.delayed(Duration(seconds: 3));
 
     final result = await _authRepository.signOut();
 
