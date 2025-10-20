@@ -6,6 +6,8 @@ import '../models/payment_history_model.dart';
 
 abstract interface class PaymentRepository {
   FutureEither<PaymentHistoryDataModel> getPaymentHistory();
+
+  FutureEither<String> applyRedeemCode({required String redeemCode});
 }
 
 class PaymentRepositoryImpl implements PaymentRepository {
@@ -24,5 +26,15 @@ class PaymentRepositoryImpl implements PaymentRepository {
       final paymentHistory = PaymentHistoryDataModel.fromJson(paymentJson);
       return Right(paymentHistory);
     });
+  }
+
+  @override
+  FutureEither<String> applyRedeemCode({required String redeemCode}) async {
+    final response = await _apiService.post(
+      'billing/redeem',
+      data: {'code': redeemCode},
+    );
+
+    return response.fold((failure) => Left(failure), (data) => Right(data));
   }
 }
