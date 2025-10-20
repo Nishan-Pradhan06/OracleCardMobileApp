@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
+import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/redeem_promo_code/redeem_promo_code_bloc.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
 import '../widgets/feature_list_tile.dart';
 
-class BuyPremiumScreen extends StatelessWidget {
+class BuyPremiumScreen extends StatefulWidget {
   const BuyPremiumScreen({super.key});
+
+  @override
+  State<BuyPremiumScreen> createState() => _BuyPremiumScreenState();
+}
+
+class _BuyPremiumScreenState extends State<BuyPremiumScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _promoCodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,23 +97,60 @@ class BuyPremiumScreen extends StatelessWidget {
                           ),
                         ),
 
-                        Row(
-                          spacing: 10,
-                          children: [
-                            Expanded(
-                              child: CustomTextField(
-                                hint: 'Enter promo code',
-                                hintStyle: TextTheme.of(
-                                  context,
-                                ).bodyLarge?.copyWith(color: Colors.grey),
+                        Form(
+                          key: _formKey,
+                          child: Row(
+                            spacing: 10,
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  hint: 'Enter promo code',
+                                  controller: _promoCodeController,
+                                  hintStyle: TextTheme.of(
+                                    context,
+                                  ).bodyLarge?.copyWith(color: Colors.grey),
+                                ),
                               ),
-                            ),
-                            CustomButton(
-                              width: 100,
-                              text: 'Apply',
-                              onPressed: () {},
-                            ),
-                          ],
+                              BlocConsumer<
+                                RedeemPromoCodeBloc,
+                                RedeemPromoCodeState
+                              >(
+                                listener: (context, state) {
+                                  state.whenOrNull(
+                                    loaded: (data) {
+                                      CustomToast.showSuccess(
+                                        "Promo code applied successfully",
+                                      );
+                                    },
+                                    failure: (failure) =>
+                                        CustomToast.showError(failure.message),
+                                  );
+                                },
+                                builder: (context, state) {
+                                  final bool isLoading = state.maybeWhen(
+                                    loading: () => true,
+                                    orElse: () => false,
+                                  );
+                                  return CustomButton(
+                                    width: 100,
+                                    text: 'Apply',
+                                    isDisabled: isLoading,
+                                    isLoading: isLoading,
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        sl<RedeemPromoCodeBloc>().add(
+                                          RedeemPromoCodeEvent.redeemPromoCode(
+                                            redeemPromoCode:
+                                                _promoCodeController.text,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
 
                         Text(

@@ -35,6 +35,9 @@ class PaymentRepositoryImpl implements PaymentRepository {
       data: {'code': redeemCode},
     );
 
-    return response.fold((failure) => Left(failure), (data) => Right(data));
+    return response.fold(
+      (failure) => Left(failure),
+      (data) => Right(data['data'] as String),
+    );
   }
 }
