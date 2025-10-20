@@ -233,14 +233,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         'assets/icons/king.svg',
                                       ),
                                       text: 'Upgrade to Premium',
-                                      onPressed: profileData.user.plan == 'FREE'
-                                          ? () {
-                                              context.pushNamed(
-                                                AppRoutesName
-                                                    .billingDetailsScreen,
-                                              );
-                                            }
-                                          : null,
+                                      onPressed:
+                                          // profileData.user.plan == 'FREE'?
+                                          () {
+                                            context.pushNamed(
+                                              AppRoutesName
+                                                  .billingDetailsScreen,
+                                            );
+                                          },
+                                      // : null,
                                     ),
                                   ],
                                 ),

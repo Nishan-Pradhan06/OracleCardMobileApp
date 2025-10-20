@@ -9,6 +9,7 @@ import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
+import '../widgets/feature_list_tile.dart';
 
 class BuyPremiumScreen extends StatelessWidget {
   const BuyPremiumScreen({super.key});
@@ -33,38 +34,41 @@ class BuyPremiumScreen extends StatelessWidget {
                     'Billing',
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                  CustomContainer(
-                    useIntrinsicHeight: true,
-                    child: Column(
-                      spacing: 10,
-                      children: [
-                        SvgPicture.asset('assets/icons/king_circle.svg'),
-                        Text(
-                          'Upgrade to Premium',
-                          style: TextTheme.of(context).titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
+                  UserPlanTypeWidget(
+                    freePlan: CustomContainer(
+                      useIntrinsicHeight: true,
+                      child: Column(
+                        spacing: 10,
+                        children: [
+                          SvgPicture.asset('assets/icons/king_circle.svg'),
+                          Text(
+                            'Upgrade to Premium',
+                            style: TextTheme.of(context).titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Unlock all features including unlimited card pulls, full audio guidance, and permanent journal entries.',
-                          textAlign: TextAlign.center,
-                          style: TextTheme.of(
-                            context,
-                          ).bodyLarge?.copyWith(color: Colors.grey),
-                        ),
-                        CustomButton(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                          Text(
+                            'Unlock all features including unlimited card pulls, full audio guidance, and permanent journal entries.',
+                            textAlign: TextAlign.center,
+                            style: TextTheme.of(
+                              context,
+                            ).bodyLarge?.copyWith(color: Colors.grey),
                           ),
+                          CustomButton(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
 
-                          text: 'Upgrade to Premium',
-                          onPressed: () {},
-                        ),
-                      ],
+                            text: 'Upgrade to Premium',
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
                     ),
+                    paidPlan: SizedBox.shrink(),
                   ),
 
                   CustomContainer(
@@ -146,22 +150,6 @@ class BuyPremiumScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class FeatureListTile extends StatelessWidget {
-  final String featureTitle;
-  const FeatureListTile({super.key, required this.featureTitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      spacing: 6,
-      children: [
-        SvgPicture.asset('assets/icons/circle_mark.svg'),
-        Text(featureTitle, style: TextTheme.of(context).bodyLarge),
-      ],
     );
   }
 }

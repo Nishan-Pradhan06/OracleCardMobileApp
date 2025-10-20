@@ -7,6 +7,7 @@ import 'package:oracle_card_app/core/config/env_config.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
+import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
@@ -80,6 +81,11 @@ class OracelCard extends StatelessWidget {
           create: (context) =>
               sl<GetUpcommingSessionBloc>()
                 ..add(GetUpcommingSessionEvent.getUpCommingSession()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              sl<GetPaymentHistoryBloc>()
+                ..add(GetPaymentHistoryEvent.getPaymentHistory()),
         ),
       ],
       child: MaterialApp.router(

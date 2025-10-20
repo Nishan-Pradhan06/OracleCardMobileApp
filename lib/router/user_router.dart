@@ -115,4 +115,15 @@ List<GoRoute> userAppRoutes = [
       return JoinSessionScreen(title: extra['title']);
     },
   ),
+
+  // GoRoute(
+  //   path: AppRoutesName.allOrders.path,
+  //   name: AppRoutesName.allOrders,
+  //   builder: (context, state) => BlocProvider(
+  //     create: (_) =>
+  //         AllOrderBloc(repo: sl<OrderRepository>())
+  //           ..add(const AllOrderEvent.getAllOrder()),
+  //     child: const OrdersScreen(),
+  //   ),
+  // ),
 ];

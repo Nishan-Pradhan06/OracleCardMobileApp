@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_appbar.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/credit_card_masked_widget.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/widgets/notification_widget.dart';
@@ -23,42 +29,102 @@ class BillingDetailsScreen extends StatelessWidget {
         actions: [NotificationIcon(), UserPlanTypeWidget()],
       ),
       body: CustomBackground(
-        child: SingleChildScrollView(
-          child: CustomPadding(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 10,
-              children: [
-                Text(
-                  'Billing',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
-                manageSubscription(context),
-                paymentMethod(context),
-                CustomContainer(
-                  useIntrinsicHeight: true,
-                  child: Column(
-                    spacing: 10,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Payment History',
-                        style: TextTheme.of(context).titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-
-                      PaymentDetails(),
-                      PaymentDetails(),
-                      PaymentDetails(),
-                      PaymentDetails(),
-                      PaymentDetails(),
-                      PaymentDetails(),
-                    ],
+        child: CustomRefreshIndicator(
+          onRefresh: () async {
+            sl<GetPaymentHistoryBloc>().add(
+              GetPaymentHistoryEvent.getPaymentHistory(),
+            );
+          },
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: CustomPadding(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 10,
+                children: [
+                  Text(
+                    'Billing',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
+                  manageSubscription(context),
+                  paymentMethod(context),
+                  CustomContainer(
+                    useIntrinsicHeight: true,
+                    child: Column(
+                      spacing: 10,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Payment History',
+                          style: TextTheme.of(context).titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+
+                        BlocBuilder<
+                          GetPaymentHistoryBloc,
+                          GetPaymentHistoryState
+                        >(
+                          builder: (context, state) {
+                            return state.when(
+                              initial: () => const SizedBox(height: 100),
+                              loading: () => Column(
+                                children: List.generate(3, (index) {
+                                  return Shimmer(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.grey.shade300,
+                                        Colors.grey.shade100,
+                                        Colors.grey.shade300,
+                                      ],
+                                      begin: Alignment(-1.0, -0.3),
+                                      end: Alignment(1.0, 0.3),
+                                    ),
+                                    child: Container(
+                                      height: 60,
+
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                    ),
+                                  );
+                                }),
+                              ),
+                              failure: (failure) => SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: Text(
+                                    'Error: ${failure.message}',
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                              loaded: (paymentHistoryD) {
+                                return Column(
+                                  children: List.generate(
+                                    paymentHistoryD.items.length,
+                                    (index) {
+                                      final data = paymentHistoryD.items[index];
+                                      final date =
+                                          DateTimeUtils.formatReadableDate(
+                                            data.createdAt.toIso8601String(),
+                                          );
+                                      return PaymentDetails(
+                                        date: date,
+                                        description: data.status,
+                                        amount: data.amountCents.toString(),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -185,7 +251,15 @@ class BillingDetailsScreen extends StatelessWidget {
 }
 
 class PaymentDetails extends StatelessWidget {
-  const PaymentDetails({super.key});
+  final String date;
+  final String description;
+  final String amount;
+  const PaymentDetails({
+    super.key,
+    required this.date,
+    required this.description,
+    required this.amount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -194,18 +268,15 @@ class PaymentDetails extends StatelessWidget {
       // spacing: 6,
       children: [
         Text(
-          'Jun 15, 2023',
+          date,
           style: TextTheme.of(context).bodyLarge?.copyWith(color: Colors.grey),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Text(description, style: TextTheme.of(context).bodyLarge),
             Text(
-              'Payment Subscription',
-              style: TextTheme.of(context).bodyLarge,
-            ),
-            Text(
-              '\$9.99',
+              '\$$amount',
               style: TextTheme.of(
                 context,
               ).bodyLarge?.copyWith(fontWeight: FontWeight.bold),
