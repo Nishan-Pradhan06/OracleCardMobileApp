@@ -82,8 +82,9 @@ class BillingDetailsScreen extends StatelessWidget {
                                       end: Alignment(1.0, 0.3),
                                     ),
                                     child: Container(
-                                      height: 60,
-
+                                      height: 40,
+                                      width: double.infinity,
+                                      color: Colors.grey,
                                       margin: const EdgeInsets.only(bottom: 10),
                                     ),
                                   );
