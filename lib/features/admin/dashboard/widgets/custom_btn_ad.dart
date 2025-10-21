@@ -15,7 +15,7 @@ class CustomBtnAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: Color(0xFFFFFFFF),
         foregroundColor: Color(0xFF6B48FF),

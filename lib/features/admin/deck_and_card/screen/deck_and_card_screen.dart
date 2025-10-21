@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/admin_appbar.dart';
+import '../../../../router/app_routes_names.dart';
 import '../../dashboard/widgets/card_widget.dart';
 import '../../dashboard/widgets/custom_btn_ad.dart';
 
@@ -33,7 +35,14 @@ class DeckAndCardScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      CustomBtnAdmin(btnText: 'Create Deck', onPressed: () {}),
+                      CustomBtnAdmin(
+                        btnText: 'Create Deck',
+                        onPressed: () {
+                          context.pushNamed(
+                            AppRoutesName.adminCreateDeckDialogRoute,
+                          );
+                        },
+                      ),
                     ],
                   ),
                   Column(
