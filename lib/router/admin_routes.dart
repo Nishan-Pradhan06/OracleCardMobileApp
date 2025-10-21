@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/screen/admin_daily_guidance_screen.dart';
 import 'package:oracle_card_app/features/admin/dashboard/screen/dashboard_screen.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/screen/deck_and_card_screen.dart';
 import 'package:oracle_card_app/features/admin/meditations/screen/admin_meditations_screen.dart';
@@ -20,5 +21,10 @@ List<GoRoute> adminAppRoutes = [
     path: AppRoutesName.adminMeditationsScreenRoute.path,
     name: AppRoutesName.adminMeditationsScreenRoute,
     builder: (context, state) => AdminMeditationsScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.adminDailyGuidanceScreenRoute.path,
+    name: AppRoutesName.adminDailyGuidanceScreenRoute,
+    builder: (context, state) => AdminDailyGuidanceScreen(),
   ),
 ];

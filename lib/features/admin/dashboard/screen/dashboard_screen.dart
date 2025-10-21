@@ -58,6 +58,11 @@ class AdminDasboardScreen extends StatelessWidget {
                   svgPath: 'assets/svg/idea.svg',
                   title: 'Daily Guidance',
                   subtitle: 'Manage daily guidance',
+                  onTap: () {
+                    context.pushNamed(
+                      AppRoutesName.adminDailyGuidanceScreenRoute,
+                    );
+                  },
                 ),
                 AdminDashCardWdiget(
                   svgPath: 'assets/svg/boardcast.svg',
