@@ -9,6 +9,7 @@ import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_toast.dart';
 import '../../../../router/app_routes_names.dart';
 import '../../../auth/blocs/sign_out/sign_out_bloc.dart';
+import '../../sessions/screen/session_screen.dart';
 import '../widgets/admin_dashboard_cart.dart';
 
 class AdminDasboardScreen extends StatelessWidget {
@@ -46,6 +47,12 @@ class AdminDasboardScreen extends StatelessWidget {
                   svgPath: 'assets/svg/sessions.svg',
                   title: 'Sessions',
                   subtitle: 'Manage group sessions',
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const CreateSessionDialog(),
+                    );
+                  },
                 ),
                 AdminDashCardWdiget(
                   svgPath: 'assets/svg/idea.svg',
