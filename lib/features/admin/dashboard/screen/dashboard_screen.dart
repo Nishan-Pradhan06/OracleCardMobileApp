@@ -36,6 +36,11 @@ class AdminDasboardScreen extends StatelessWidget {
                   svgPath: 'assets/svg/meditation.svg',
                   title: 'Meditations',
                   subtitle: 'Manage meditation items',
+                  onTap: () {
+                    context.pushNamed(
+                      AppRoutesName.adminMeditationsScreenRoute,
+                    );
+                  },
                 ),
                 AdminDashCardWdiget(
                   svgPath: 'assets/svg/sessions.svg',

@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 class CustomBtnAdmin extends StatelessWidget {
   final String btnText;
   final void Function()? onPressed;
+  final BorderRadiusGeometry? borderRadius;
 
-  const CustomBtnAdmin({super.key, required this.btnText, this.onPressed});
+  const CustomBtnAdmin({
+    super.key,
+    required this.btnText,
+    this.onPressed,
+    this.borderRadius = const BorderRadius.all(Radius.circular(24)),
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +19,13 @@ class CustomBtnAdmin extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Color(0xFFFFFFFF),
         foregroundColor: Color(0xFF6B48FF),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        shape: RoundedRectangleBorder(borderRadius: borderRadius!),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         elevation: 5,
         shadowColor: Colors.black.withValues(alpha: 0.1),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         spacing: 10,
         children: [
           Icon(Icons.add, color: Color(0xFF6B48FF)),
