@@ -82,36 +82,60 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: CustomButton(
-                          leadingIcon: SvgPicture.asset(
-                            'assets/icons/time.svg',
+                        child: UserPlanTypeWidget(
+                          freePlan: CustomButton(
+                            leadingIcon: SvgPicture.asset(
+                              'assets/icons/time.svg',
+                            ),
+                            backgroundColor: Color(0xFFF0F0F0),
+                            textColor: Colors.black,
+                            text: 'Save\nTemporarily',
+                            fontSize: 22,
+                            height: MediaQuery.sizeOf(context).height * 0.1,
+                            onPressed: () {},
                           ),
-                          backgroundColor: Color(0xFFF0F0F0),
-                          textColor: Colors.black,
-                          text: 'Save\nTemporarily',
-                          fontSize: 22,
-                          height: MediaQuery.sizeOf(context).height * 0.1,
-                          onPressed: () {},
+                          paidPlan: CustomButton(
+                            leadingIcon: SvgPicture.asset(
+                              'assets/icons/save.svg',
+                            ),
+                            textColor: Colors.white,
+                            text: 'Save',
+                            fontSize: 22,
+
+                            onPressed: () {},
+                          ),
                         ),
                       ),
                       Expanded(
-                        child: CustomButton(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                        child: UserPlanTypeWidget(
+                          freePlan: CustomButton(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFFFF7E5F), Color(0xFFFFB347)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            fontSize: 22,
+                            height: MediaQuery.sizeOf(context).height * 0.1,
+                            leadingIcon: SvgPicture.asset(
+                              'assets/icons/king.svg',
+                            ),
+                            text: 'Upgrade to\nSave',
+                            onPressed: () {
+                              context.pushNamed(
+                                AppRoutesName.billingDetailsScreen,
+                              );
+                            },
                           ),
-                          fontSize: 22,
-                          height: MediaQuery.sizeOf(context).height * 0.1,
-                          leadingIcon: SvgPicture.asset(
-                            'assets/icons/king.svg',
+                          paidPlan: CustomButton(
+                            fontSize: 22,
+                            backgroundColor: Color(0xFFF0F0F0),
+                            leadingIcon: SvgPicture.asset(
+                              'assets/icons/delete.svg',
+                            ),
+                            text: 'Delete',
+                            textColor: Color(0xFFff7e5f),
+                            onPressed: () {},
                           ),
-                          text: 'Upgrade to\nSave',
-                          onPressed: () {
-                            context.pushNamed(
-                              AppRoutesName.billingDetailsScreen,
-                            );
-                          },
                         ),
                       ),
                     ],
