@@ -13,6 +13,7 @@ import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import 'package:oracle_card_app/features/users/home/repository/guidance_repository.dart';
 import 'package:oracle_card_app/features/users/home/repository/oracle_card_repository.dart';
+import 'package:oracle_card_app/features/users/journal/bloc/get_journal_by_id/get_journal_by_id_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/repository/journal_repository.dart';
@@ -47,6 +48,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetUpcommingSessionBloc(repo: sl()));
   sl.registerLazySingleton(() => GetPaymentHistoryBloc(repo: sl()));
   sl.registerLazySingleton(() => RedeemPromoCodeBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetJournalByIdBloc(repo: sl()));
   sl.registerFactory(() => AudioPlayerBloc());
 
   //###---------------CUBIT--------------------###

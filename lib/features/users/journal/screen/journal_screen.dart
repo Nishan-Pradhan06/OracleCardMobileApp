@@ -102,13 +102,9 @@ class JournalScreen extends StatelessWidget {
                                       context.pushNamed(
                                         AppRoutesName
                                             .journeyEntriesDetailsScreen,
-                                        // extra: {
-                                        //   'title': entry.title,
-                                        //   'dateTime': entry.dateTime,
-                                        //   'prompt': entry.prompt,
-                                        //   'day': day,
-                                        //   'description': entry.description,
-                                        // },
+                                        pathParameters: {
+                                          'id': entry.id.toString(),
+                                        },
                                       );
                                     },
                                   );

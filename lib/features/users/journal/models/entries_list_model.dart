@@ -104,7 +104,9 @@ class JournalEntryListModel {
         updatedAt:
             DateTime.tryParse(json['updatedAt'].toString()) ??
             DateTime.fromMillisecondsSinceEpoch(0),
-        prompt: PromptModel.fromJson(json['prompt']),
+        prompt: json['prompt'] == null
+            ? PromptModel.empty()
+            : PromptModel.fromJson(json['prompt']),
       );
 
   Map<String, dynamic> toJson() => {

@@ -8,7 +8,7 @@ import '../models/jorunal_model.dart';
 
 abstract interface class JournalRepository {
   //##-----GET TODAY PROMPT----------####
-  FutureEither<PromptModel> getTodayPrompt();
+  FutureEither<TodayPromptModel> getTodayPrompt();
 
   //##-----GET MY JOURNAL ENTRIES----------####
   FutureEither<JournalDataModel> getMyJournalEntires();
@@ -28,12 +28,12 @@ class JournalRepositoryImpl implements JournalRepository {
 
   //##-----GET MY TODAY PROMPT----------####
   @override
-  FutureEither<PromptModel> getTodayPrompt() async {
+  FutureEither<TodayPromptModel> getTodayPrompt() async {
     final response = await _apiService.get('journal/prompt/today');
 
     return response.fold((failure) => Left(failure), (promptData) {
-      final promptJson = promptData['data'];
-      final prompt = PromptModel.fromJson(promptJson);
+      final promptJson = promptData['data']['prompt'];
+      final prompt = TodayPromptModel.fromJson(promptJson);
       return Right(prompt);
     });
   }

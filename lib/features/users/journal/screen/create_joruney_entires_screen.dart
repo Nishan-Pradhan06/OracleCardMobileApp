@@ -58,7 +58,7 @@ class CreateJoruneyEntiresScreen extends StatelessWidget {
                         loaded: (getTodayPromptData) {
                           return PromptCard(
                             title: 'Today\'s Prompt',
-                            prompt: getTodayPromptData.prompt.text,
+                            prompt: getTodayPromptData.text,
                           );
                         },
                       );

@@ -1,8 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/common/extension/extension.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/features/users/home/screen/daily_guidance_screen.dart';
 import 'package:oracle_card_app/features/users/home/screen/oracle_card_grid_screen.dart';
 import 'package:oracle_card_app/features/users/home/screen/your_oracle_card.dart';
+import 'package:oracle_card_app/features/users/journal/bloc/get_journal_by_id/get_journal_by_id_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/screen/create_joruney_entires_screen.dart';
 import 'package:oracle_card_app/features/users/journal/screen/journal_details_screen.dart';
 import 'package:oracle_card_app/features/users/library/screen/guidance_archive_screen.dart';
@@ -57,7 +60,13 @@ List<GoRoute> userAppRoutes = [
     name: AppRoutesName.journeyEntriesDetailsScreen,
     builder: (context, state) {
       final journalId = state.pathParameters['id'];
-      return JournalDetailsScreen(journalId: int.parse(journalId!));
+      return BlocProvider.value(
+        value: sl<GetJournalByIdBloc>()
+          ..add(
+            GetJournalByIdEvent.getJournalById(journalId: int.parse(journalId!)),
+          ),
+        child: JournalDetailsScreen(journalId: int.parse(journalId)),
+      );
     },
   ),
   GoRoute(
