@@ -1,4 +1,3 @@
-
 enum JournalStatus { active, ephemeral, unknown }
 
 JournalStatus journalStatusFromString(String? s) {
@@ -26,7 +25,7 @@ class JournalDataModel {
 
   JournalDataModel({required this.items, this.nextCursor});
 
-factory JournalDataModel.fromJson(Map<String, dynamic> json) =>
+  factory JournalDataModel.fromJson(Map<String, dynamic> json) =>
       JournalDataModel(
         items: (json['items'] as List<dynamic>)
             .map(
@@ -36,13 +35,15 @@ factory JournalDataModel.fromJson(Map<String, dynamic> json) =>
         nextCursor: json['nextCursor']?.toString(),
       );
 
-
   Map<String, dynamic> toJson() => {
     'items': items.map((e) => e.toJson()).toList(),
     'nextCursor': nextCursor,
   };
 
-  JournalDataModel copyWith({List<JournalEntryListModel>? items, String? nextCursor}) {
+  JournalDataModel copyWith({
+    List<JournalEntryListModel>? items,
+    String? nextCursor,
+  }) {
     return JournalDataModel(
       items: items ?? this.items,
       nextCursor: nextCursor ?? this.nextCursor,
@@ -63,6 +64,7 @@ class JournalEntryListModel {
   final DateTime? expiresAt;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final PromptModel prompt;
 
   JournalEntryListModel({
     required this.id,
@@ -73,26 +75,29 @@ class JournalEntryListModel {
     this.expiresAt,
     required this.createdAt,
     required this.updatedAt,
+    required this.prompt,
   });
 
-  factory JournalEntryListModel.fromJson(Map<String, dynamic> json) => JournalEntryListModel(
-    id: json['id'] is int
-        ? json['id'] as int
-        : int.parse(json['id'].toString()),
-    userId: json['userId'] is int
-        ? json['userId'] as int
-        : int.parse(json['userId'].toString()),
-    promptId: json['promptId'] is int
-        ? json['promptId'] as int
-        : int.parse(json['promptId'].toString()),
-    content: json['content'] as String,
-    status: journalStatusFromString(json['status'] as String?),
-    expiresAt: json['expiresAt'] == null
-        ? null
-        : DateTime.parse(json['expiresAt'] as String),
-    createdAt: DateTime.parse(json['createdAt'] as String),
-    updatedAt: DateTime.parse(json['updatedAt'] as String),
-  );
+  factory JournalEntryListModel.fromJson(Map<String, dynamic> json) =>
+      JournalEntryListModel(
+        id: json['id'] is int
+            ? json['id'] as int
+            : int.parse(json['id'].toString()),
+        userId: json['userId'] is int
+            ? json['userId'] as int
+            : int.parse(json['userId'].toString()),
+        promptId: json['promptId'] is int
+            ? json['promptId'] as int
+            : int.parse(json['promptId'].toString()),
+        content: json['content'] as String,
+        status: journalStatusFromString(json['status'] as String?),
+        expiresAt: json['expiresAt'] == null
+            ? null
+            : DateTime.parse(json['expiresAt'] as String),
+        createdAt: DateTime.parse(json['createdAt'] as String),
+        updatedAt: DateTime.parse(json['updatedAt'] as String),
+        prompt: PromptModel.fromJson(json['prompt']),
+      );
 
   Map<String, dynamic> toJson() => {
     'id': id,
@@ -103,6 +108,7 @@ class JournalEntryListModel {
     'expiresAt': expiresAt?.toIso8601String(),
     'createdAt': createdAt.toIso8601String(),
     'updatedAt': updatedAt.toIso8601String(),
+    'prompt': prompt.toJson(),
   };
 
   JournalEntryListModel copyWith({
@@ -114,6 +120,7 @@ class JournalEntryListModel {
     DateTime? expiresAt,
     DateTime? createdAt,
     DateTime? updatedAt,
+    PromptModel? prompt,
   }) {
     return JournalEntryListModel(
       id: id ?? this.id,
@@ -124,11 +131,44 @@ class JournalEntryListModel {
       expiresAt: expiresAt ?? this.expiresAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      prompt: prompt ?? this.prompt,
     );
   }
 
   @override
   String toString() {
-    return 'JournalEntry(id: $id, userId: $userId, promptId: $promptId, status: $status, createdAt: $createdAt)';
+    return 'JournalEntry(id: $id, userId: $userId, promptId: $promptId, status: $status, createdAt: $createdAt,prompt:$prompt)';
+  }
+}
+
+class PromptModel {
+  final int id;
+  final String text;
+  final String visibility;
+  final bool isActive;
+
+  PromptModel({
+    required this.id,
+    required this.text,
+    required this.visibility,
+    required this.isActive,
+  });
+
+  factory PromptModel.fromJson(Map<String, dynamic> json) {
+    return PromptModel(
+      id: json['id'],
+      text: json['text'],
+      visibility: json['visibility'],
+      isActive: json['isActive'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'text': text,
+      'visibility': visibility,
+      'isActive': isActive,
+    };
   }
 }
