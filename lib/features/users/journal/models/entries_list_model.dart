@@ -1,3 +1,5 @@
+import 'today_prompt_model.dart';
+
 enum JournalStatus { active, ephemeral, unknown }
 
 JournalStatus journalStatusFromString(String? s) {
@@ -27,9 +29,11 @@ class JournalDataModel {
 
   factory JournalDataModel.fromJson(Map<String, dynamic> json) =>
       JournalDataModel(
-        items: (json['items'] as List<dynamic>)
+        items: (json['items'] as List<dynamic>? ?? [])
             .map(
-              (e) => JournalEntryListModel.fromJson(e as Map<String, dynamic>),
+              (e) => JournalEntryListModel.fromJson(
+                (e ?? {}) as Map<String, dynamic>,
+              ),
             )
             .toList(),
         nextCursor: json['nextCursor']?.toString(),
@@ -82,20 +86,24 @@ class JournalEntryListModel {
       JournalEntryListModel(
         id: json['id'] is int
             ? json['id'] as int
-            : int.parse(json['id'].toString()),
+            : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
         userId: json['userId'] is int
             ? json['userId'] as int
-            : int.parse(json['userId'].toString()),
+            : int.tryParse(json['userId']?.toString() ?? '0') ?? 0,
         promptId: json['promptId'] is int
             ? json['promptId'] as int
-            : int.parse(json['promptId'].toString()),
-        content: json['content'] as String,
-        status: journalStatusFromString(json['status'] as String?),
+            : int.tryParse(json['promptId']?.toString() ?? '0') ?? 0,
+        content: json['content']?.toString() ?? '',
+        status: journalStatusFromString(json['status']?.toString()),
         expiresAt: json['expiresAt'] == null
             ? null
-            : DateTime.parse(json['expiresAt'] as String),
-        createdAt: DateTime.parse(json['createdAt'] as String),
-        updatedAt: DateTime.parse(json['updatedAt'] as String),
+            : DateTime.tryParse(json['expiresAt'].toString()),
+        createdAt:
+            DateTime.tryParse(json['createdAt'].toString()) ??
+            DateTime.fromMillisecondsSinceEpoch(0),
+        updatedAt:
+            DateTime.tryParse(json['updatedAt'].toString()) ??
+            DateTime.fromMillisecondsSinceEpoch(0),
         prompt: PromptModel.fromJson(json['prompt']),
       );
 
@@ -137,38 +145,6 @@ class JournalEntryListModel {
 
   @override
   String toString() {
-    return 'JournalEntry(id: $id, userId: $userId, promptId: $promptId, status: $status, createdAt: $createdAt,prompt:$prompt)';
-  }
-}
-
-class PromptModel {
-  final int id;
-  final String text;
-  final String visibility;
-  final bool isActive;
-
-  PromptModel({
-    required this.id,
-    required this.text,
-    required this.visibility,
-    required this.isActive,
-  });
-
-  factory PromptModel.fromJson(Map<String, dynamic> json) {
-    return PromptModel(
-      id: json['id'],
-      text: json['text'],
-      visibility: json['visibility'],
-      isActive: json['isActive'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'text': text,
-      'visibility': visibility,
-      'isActive': isActive,
-    };
+    return 'JournalEntry(id: $id, userId: $userId, promptId: $promptId, status: $status, createdAt: $createdAt, prompt: $prompt)';
   }
 }

@@ -33,7 +33,7 @@ class JournalRepositoryImpl implements JournalRepository {
 
     return response.fold((failure) => Left(failure), (promptData) {
       final promptJson = promptData['data'];
-      final prompt = PromptModel.fromMap(promptJson);
+      final prompt = PromptModel.fromJson(promptJson);
       return Right(prompt);
     });
   }

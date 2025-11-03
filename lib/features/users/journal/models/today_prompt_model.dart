@@ -1,15 +1,24 @@
-
-
 class PromptModel {
   final TodayPromptModel prompt;
 
   PromptModel({required this.prompt});
 
-  factory PromptModel.fromMap(Map<String, dynamic> map) {
-    return PromptModel(prompt: TodayPromptModel.fromMap(map['prompt'] ?? {}));
+  factory PromptModel.fromJson(dynamic json) {
+    if (json == null || json is! Map<String, dynamic>) {
+      return PromptModel(
+        prompt: TodayPromptModel(
+          id: 0,
+          text: '',
+          visibility: '',
+          isActive: false,
+        ),
+      );
+    }
+
+    return PromptModel(prompt: TodayPromptModel.fromJson(json['prompt'] ?? {}));
   }
 
-  Map<String, dynamic> toMap() => {'prompt': prompt.toMap()};
+  Map<String, dynamic> toJson() => {'prompt': prompt.toJson()};
 }
 
 class TodayPromptModel {
@@ -25,16 +34,20 @@ class TodayPromptModel {
     required this.isActive,
   });
 
-  factory TodayPromptModel.fromMap(Map<String, dynamic> map) {
+  factory TodayPromptModel.fromJson(Map<String, dynamic> json) {
     return TodayPromptModel(
-      id: map['id'] ?? 0,
-      text: map['text'] ?? '',
-      visibility: map['visibility'] ?? '',
-      isActive: map['isActive'] ?? false,
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      text: json['text']?.toString() ?? '',
+      visibility: json['visibility']?.toString() ?? '',
+      isActive:
+          json['isActive'] == true ||
+          json['isActive']?.toString().toLowerCase() == 'true',
     );
   }
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
     'id': id,
     'text': text,
     'visibility': visibility,
