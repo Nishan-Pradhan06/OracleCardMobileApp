@@ -229,10 +229,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 50,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: Color(0xFFCCCCCC),
+                                                color: Color(
+                                                  data.hasAudio
+                                                      ? 0xFF6B48FF
+                                                      : 0xFFE0E0E0,
+                                                ),
                                               ),
                                               child: IconButton(
-                                                onPressed: () {},
+                                                onPressed: data.hasAudio
+                                                    ? () {}
+                                                    : null,
                                                 icon: Icon(
                                                   Icons.play_arrow_rounded,
                                                   color: Colors.white,

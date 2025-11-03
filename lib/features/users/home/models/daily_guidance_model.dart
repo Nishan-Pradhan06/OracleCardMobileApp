@@ -4,6 +4,7 @@ class DailyGuidanceModel {
   final int id;
   final String title;
   final String message;
+  final String? audioUrl;
   final bool hasAudio;
   final String visibility;
   final DateTime scheduledAt;
@@ -12,6 +13,7 @@ class DailyGuidanceModel {
     required this.id,
     required this.title,
     required this.message,
+    this.audioUrl,
     required this.hasAudio,
     required this.visibility,
     required this.scheduledAt,
@@ -22,6 +24,7 @@ class DailyGuidanceModel {
       id: map['id'] ?? 0,
       title: map['title'] ?? '',
       message: map['message'] ?? '',
+      audioUrl: map['audioUrl'],
       hasAudio: map['hasAudio'] ?? false,
       visibility: map['visibility'] ?? '',
       scheduledAt:
@@ -34,6 +37,7 @@ class DailyGuidanceModel {
       'id': id,
       'title': title,
       'message': message,
+      'audioUrl': audioUrl,
       'hasAudio': hasAudio,
       'visibility': visibility,
       'scheduledAt': scheduledAt.toIso8601String(),
