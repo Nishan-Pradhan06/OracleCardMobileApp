@@ -9,6 +9,7 @@ import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bl
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/redeem_promo_code/redeem_promo_code_bloc.dart';
+import 'package:oracle_card_app/features/users/home/bloc/audio_player/audio_player_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
@@ -89,6 +90,7 @@ class OracelCard extends StatelessWidget {
                 ..add(GetPaymentHistoryEvent.getPaymentHistory()),
         ),
         BlocProvider(create: (context) => sl<RedeemPromoCodeBloc>()),
+        BlocProvider(create: (context) => sl<AudioPlayerBloc>()),
       ],
       child: MaterialApp.router(
         title: 'Oracle Card',

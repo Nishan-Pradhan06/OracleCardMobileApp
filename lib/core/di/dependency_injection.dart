@@ -8,6 +8,7 @@ import 'package:oracle_card_app/features/auth/repository/auth_repository.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/redeem_promo_code/redeem_promo_code_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/repository/payment_repository.dart';
+import 'package:oracle_card_app/features/users/home/bloc/audio_player/audio_player_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import 'package:oracle_card_app/features/users/home/repository/guidance_repository.dart';
@@ -46,6 +47,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetUpcommingSessionBloc(repo: sl()));
   sl.registerLazySingleton(() => GetPaymentHistoryBloc(repo: sl()));
   sl.registerLazySingleton(() => RedeemPromoCodeBloc(repo: sl()));
+  sl.registerFactory(() => AudioPlayerBloc());
 
   //###---------------CUBIT--------------------###
 
