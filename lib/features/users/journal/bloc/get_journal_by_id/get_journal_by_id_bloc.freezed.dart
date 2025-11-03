@@ -14,30 +14,61 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$GetJournalByIdEvent {
 
-
+ int get journalId;
+/// Create a copy of GetJournalByIdEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetJournalByIdEventCopyWith<GetJournalByIdEvent> get copyWith => _$GetJournalByIdEventCopyWithImpl<GetJournalByIdEvent>(this as GetJournalByIdEvent, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetJournalByIdEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetJournalByIdEvent&&(identical(other.journalId, journalId) || other.journalId == journalId));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,journalId);
 
 @override
 String toString() {
-  return 'GetJournalByIdEvent()';
+  return 'GetJournalByIdEvent(journalId: $journalId)';
 }
 
 
 }
 
 /// @nodoc
-class $GetJournalByIdEventCopyWith<$Res>  {
-$GetJournalByIdEventCopyWith(GetJournalByIdEvent _, $Res Function(GetJournalByIdEvent) __);
+abstract mixin class $GetJournalByIdEventCopyWith<$Res>  {
+  factory $GetJournalByIdEventCopyWith(GetJournalByIdEvent value, $Res Function(GetJournalByIdEvent) _then) = _$GetJournalByIdEventCopyWithImpl;
+@useResult
+$Res call({
+ int journalId
+});
+
+
+
+
+}
+/// @nodoc
+class _$GetJournalByIdEventCopyWithImpl<$Res>
+    implements $GetJournalByIdEventCopyWith<$Res> {
+  _$GetJournalByIdEventCopyWithImpl(this._self, this._then);
+
+  final GetJournalByIdEvent _self;
+  final $Res Function(GetJournalByIdEvent) _then;
+
+/// Create a copy of GetJournalByIdEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? journalId = null,}) {
+  return _then(_self.copyWith(
+journalId: null == journalId ? _self.journalId : journalId // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
 }
 
 
@@ -119,10 +150,10 @@ return getJournalById(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  getJournalById,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int journalId)?  getJournalById,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GetJournalByIdE() when getJournalById != null:
-return getJournalById();case _:
+return getJournalById(_that.journalId);case _:
   return orElse();
 
 }
@@ -140,10 +171,10 @@ return getJournalById();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  getJournalById,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int journalId)  getJournalById,}) {final _that = this;
 switch (_that) {
 case _GetJournalByIdE():
-return getJournalById();case _:
+return getJournalById(_that.journalId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +191,10 @@ return getJournalById();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  getJournalById,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int journalId)?  getJournalById,}) {final _that = this;
 switch (_that) {
 case _GetJournalByIdE() when getJournalById != null:
-return getJournalById();case _:
+return getJournalById(_that.journalId);case _:
   return null;
 
 }
@@ -175,32 +206,66 @@ return getJournalById();case _:
 
 
 class _GetJournalByIdE implements GetJournalByIdEvent {
-  const _GetJournalByIdE();
+  const _GetJournalByIdE({required this.journalId});
   
 
+@override final  int journalId;
 
-
+/// Create a copy of GetJournalByIdEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$GetJournalByIdECopyWith<_GetJournalByIdE> get copyWith => __$GetJournalByIdECopyWithImpl<_GetJournalByIdE>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetJournalByIdE);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetJournalByIdE&&(identical(other.journalId, journalId) || other.journalId == journalId));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,journalId);
 
 @override
 String toString() {
-  return 'GetJournalByIdEvent.getJournalById()';
+  return 'GetJournalByIdEvent.getJournalById(journalId: $journalId)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$GetJournalByIdECopyWith<$Res> implements $GetJournalByIdEventCopyWith<$Res> {
+  factory _$GetJournalByIdECopyWith(_GetJournalByIdE value, $Res Function(_GetJournalByIdE) _then) = __$GetJournalByIdECopyWithImpl;
+@override @useResult
+$Res call({
+ int journalId
+});
 
 
+
+
+}
+/// @nodoc
+class __$GetJournalByIdECopyWithImpl<$Res>
+    implements _$GetJournalByIdECopyWith<$Res> {
+  __$GetJournalByIdECopyWithImpl(this._self, this._then);
+
+  final _GetJournalByIdE _self;
+  final $Res Function(_GetJournalByIdE) _then;
+
+/// Create a copy of GetJournalByIdEvent
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? journalId = null,}) {
+  return _then(_GetJournalByIdE(
+journalId: null == journalId ? _self.journalId : journalId // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
 
 // dart format on

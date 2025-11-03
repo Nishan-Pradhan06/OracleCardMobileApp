@@ -1,6 +1,7 @@
 part of 'get_journal_by_id_bloc.dart';
 
 @freezed
-class GetJournalByIdEvent with _$GetJournalByIdEvent {
-  const factory GetJournalByIdEvent.getJournalById() = _GetJournalByIdE;
+abstract class GetJournalByIdEvent with _$GetJournalByIdEvent {
+  const factory GetJournalByIdEvent.getJournalById({required int journalId}) =
+      _GetJournalByIdE;
 }
