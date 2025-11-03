@@ -99,16 +99,17 @@ class JournalScreen extends StatelessWidget {
                                     dateTime: formattedDateTime,
                                     description: entry.content,
                                     onTap: () {
-                                      // context.pushNamed(
-                                      //   AppRoutesName.journeyEntriesDetailsScreen,
-                                      //   extra: {
-                                      //     'title': entry.title,
-                                      //     'dateTime': entry.dateTime,
-                                      //     'prompt': entry.prompt,
-                                      //     'day': day,
-                                      //     'description': entry.description,
-                                      //   },
-                                      // );
+                                      context.pushNamed(
+                                        AppRoutesName
+                                            .journeyEntriesDetailsScreen,
+                                        // extra: {
+                                        //   'title': entry.title,
+                                        //   'dateTime': entry.dateTime,
+                                        //   'prompt': entry.prompt,
+                                        //   'day': day,
+                                        //   'description': entry.description,
+                                        // },
+                                      );
                                     },
                                   );
                                 },

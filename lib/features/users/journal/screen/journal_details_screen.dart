@@ -12,19 +12,8 @@ import '../../../../router/app_routes_names.dart';
 import '../widgets/prompt_card_widget.dart';
 
 class JournalDetailsScreen extends StatelessWidget {
-  final String title;
-  final String prompt;
-  final String date;
-  final String description;
-  final String? day;
-  const JournalDetailsScreen({
-    super.key,
-    required this.title,
-    required this.date,
-    required this.description,
-    required this.prompt,
-    this.day,
-  });
+  final int journalId;
+  const JournalDetailsScreen({super.key, required this.journalId});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +38,11 @@ class JournalDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 10,
                       children: [
-                        Text(date, style: TextTheme.of(context).bodyLarge),
+                        Text('date', style: TextTheme.of(context).bodyLarge),
 
-                        PromptCard(title: '$day Prompt', prompt: prompt),
+                        PromptCard(title: 'day Prompt', prompt: 'prompt'),
                         Text(
-                          description,
+                          'description',
                           style: TextTheme.of(
                             context,
                           ).bodyLarge?.copyWith(fontSize: 18),

@@ -53,17 +53,11 @@ List<GoRoute> userAppRoutes = [
     builder: (context, state) => OracleCardGridScreen(),
   ),
   GoRoute(
-    path: AppRoutesName.journeyEntriesDetailsScreen.path,
+    path: '/journalDetails/:id',
     name: AppRoutesName.journeyEntriesDetailsScreen,
     builder: (context, state) {
-      final extra = state.extra as Map<String, dynamic>;
-      return JournalDetailsScreen(
-        title: extra['title'],
-        date: extra['dateTime'],
-        prompt: extra['prompt'],
-        description: extra['description'],
-        day: extra['day'],
-      );
+      final journalId = state.pathParameters['id'];
+      return JournalDetailsScreen(journalId: int.parse(journalId!));
     },
   ),
   GoRoute(
