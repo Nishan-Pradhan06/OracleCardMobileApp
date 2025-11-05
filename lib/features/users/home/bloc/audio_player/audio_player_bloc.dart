@@ -38,11 +38,9 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
       add(const AudioPlayerEvent.stop());
     });
 
-    
-    
     _playerStateSub = _audioPlayer.onPlayerStateChanged.listen((state) {
       _lastPlayerState = state;
-      
+
       if (state == PlayerState.completed) {
         add(const AudioPlayerEvent.stop());
       }
@@ -60,7 +58,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   Future<void> _onPlay(_Play event, Emitter<AudioPlayerState> emit) async {
     emit(AudioPlayerState.loading());
     try {
-      final url = event.audioUrl.replaceAll('localhost', '192.168.1.42');
+      final url = event.audioUrl.replaceAll('localhost', '192.168.1.65');
       await _audioPlayer.play(UrlSource(url));
 
       _lastPlayerState = PlayerState.playing;
@@ -122,8 +120,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   Future<void> _onSeek(_Seek event, Emitter<AudioPlayerState> emit) async {
     try {
       final totalDuration = _duration.inSeconds;
-      
-      
+
       final seekInSecond = (totalDuration * event.position).round();
       final seekDuration = Duration(seconds: seekInSecond);
       await _audioPlayer.seek(seekDuration);
