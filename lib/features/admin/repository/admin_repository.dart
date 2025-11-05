@@ -7,4 +7,6 @@ class AdminRepositoryImp implements AdminRepository {
 
   AdminRepositoryImp({required ApiService apiService})
     : _apiService = apiService;
+
+    
 }
