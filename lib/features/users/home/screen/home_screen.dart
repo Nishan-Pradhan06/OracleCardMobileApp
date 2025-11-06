@@ -235,15 +235,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       : 0xFFE0E0E0,
                                                 ),
                                               ),
-                                              child: IconButton(
-                                                onPressed: data.hasAudio
-                                                    ? () {}
-                                                    : null,
-                                                icon: Icon(
-                                                  Icons.play_arrow_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
-                                                ),
+                                              child: Icon(
+                                                Icons.play_arrow_rounded,
+                                                color: Colors.white,
+                                                size: 30,
                                               ),
                                             ),
                                             Expanded(

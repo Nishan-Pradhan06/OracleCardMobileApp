@@ -21,6 +21,7 @@ class SessionsCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      margin: EdgeInsets.only(bottom: 10),
       useIntrinsicHeight: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

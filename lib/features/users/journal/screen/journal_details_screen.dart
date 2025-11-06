@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_by_id/get_journal_by_id_bloc.dart';
+import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
 import '../../../../core/widgets/custom_container.dart';
@@ -37,7 +38,8 @@ class JournalDetailsScreen extends StatelessWidget {
                     initial: () => const SizedBox(height: 100),
                     loading: () => ShimmerLoaderWidget(
                       isList: true,
-                      count: 5,
+                      count: 1,
+                      height: 200,
                       spacing: 10,
                     ),
                     failure: (failure) => SizedBox(
@@ -51,6 +53,11 @@ class JournalDetailsScreen extends StatelessWidget {
                     ),
 
                     loaded: (data) {
+                      final formattedDateTime =
+                          DateTimeUtils.formatReadableDate(
+                            data.createdAt.toString(),
+                          );
+
                       return Column(
                         spacing: 10,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +69,7 @@ class JournalDetailsScreen extends StatelessWidget {
                               spacing: 10,
                               children: [
                                 Text(
-                                  data.createdAt.toIso8601String(),
+                                  formattedDateTime,
                                   style: TextTheme.of(context).bodyLarge,
                                 ),
 

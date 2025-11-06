@@ -8,6 +8,7 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/home/bloc/audio_player/audio_player_bloc.dart';
 import 'package:oracle_card_app/features/users/home/widgets/audio_player_widget.dart';
+import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
@@ -75,13 +76,18 @@ class _DailyGuidanceScreenState extends State<DailyGuidanceScreen> {
                       ),
                     ),
                     loaded: (data) {
+                      final formattedDateTime =
+                          DateTimeUtils.formatReadableDate(
+                            data.scheduledAt.toString(),
+                          );
+
                       return CustomContainer(
                         useIntrinsicHeight: true,
                         child: Column(
                           spacing: 10,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(data.scheduledAt.toString()),
+                            Text(formattedDateTime),
                             Text(
                               data.title,
                               style: Theme.of(context).textTheme.headlineSmall
