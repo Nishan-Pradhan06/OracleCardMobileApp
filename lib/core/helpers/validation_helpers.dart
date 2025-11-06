@@ -1,4 +1,11 @@
 class InputValidator {
+  static String? validateRequired(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'This field is required';
+    }
+    return null;
+  }
+
   static String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
       return 'Enter your name';

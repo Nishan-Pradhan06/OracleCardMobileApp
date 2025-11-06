@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oracle_card_app/core/config/env_config.dart';
+import 'package:oracle_card_app/features/admin/deck_and_card/bloc/bloc/deck_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
@@ -91,6 +92,8 @@ class OracelCard extends StatelessWidget {
         ),
         BlocProvider(create: (context) => sl<RedeemPromoCodeBloc>()),
         BlocProvider(create: (context) => sl<AudioPlayerBloc>()),
+
+        BlocProvider(create: (context) => sl<DeckBloc>()),
       ],
       child: MaterialApp.router(
         title: 'Oracle Card',
