@@ -6,6 +6,8 @@ import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.da
 abstract interface class AdminRepository {
   //##-------------------CREATE DECK-------------------------##
   FutureEither<String> createDeck({required DeckCardModel deckCardModel});
+  //##-------------------GET DECK-------------------------##
+  FutureEither<AdminDeckModel> getAdminDeck();
 }
 
 class AdminRepositoryImp implements AdminRepository {
@@ -13,6 +15,8 @@ class AdminRepositoryImp implements AdminRepository {
 
   AdminRepositoryImp({required ApiService apiService})
     : _apiService = apiService;
+
+  //##-------------------CREATE DECK-------------------------##
 
   @override
   FutureEither<String> createDeck({
@@ -25,6 +29,18 @@ class AdminRepositoryImp implements AdminRepository {
 
     return response.fold((failure) => Left(failure), (data) {
       return Right("Deck Create Successful !!!");
+    });
+  }
+
+  //##-------------------GET DECK-------------------------##
+  @override
+  FutureEither<AdminDeckModel> getAdminDeck() async {
+    final respone = await _apiService.get('admin/decks');
+
+    return respone.fold((failure) => Left(failure), (data) {
+      final deckList = data['data'];
+      final decks = AdminDeckModel.fromMap(deckList);
+      return Right(decks);
     });
   }
 }
