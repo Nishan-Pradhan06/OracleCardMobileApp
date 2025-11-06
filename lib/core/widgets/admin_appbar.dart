@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AdminCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title; // <-- Pass custom title
-  final double height; // <-- Allow custom height
+  final String title;
+  final double height;
+  final bool automaticallyImplyLeading; // <-- Added toggle
 
   const AdminCustomAppBar({
     super.key,
     required this.title,
-    this.height = 100, // default height
+    this.height = 100,
+    this.automaticallyImplyLeading = false, // <-- default false
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false, // optional: hide default back button
+      automaticallyImplyLeading: false,
       toolbarHeight: height,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -24,30 +26,39 @@ class AdminCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 35,
-                width: 35,
-                padding: EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFFFFFFFF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 2,
-                      spreadRadius: 1,
-                      offset: const Offset(1, 0),
+              // 🔹 Show back button if automaticallyImplyLeading is true, else show notification icon
+              automaticallyImplyLeading
+                  ? InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SvgPicture.asset('assets/icons/back.svg'),
+                      ),
+                    )
+                  : Container(
+                      height: 35,
+                      width: 35,
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 2,
+                            spreadRadius: 1,
+                            offset: const Offset(1, 0),
+                          ),
+                        ],
+                      ),
+                      child: SvgPicture.asset('assets/svg/bell.svg'),
                     ),
-                  ],
-                ),
-                child: SvgPicture.asset('assets/svg/bell.svg'),
-              ),
               Container(
                 height: 30,
                 width: 80,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Color(0xFF6B48FF),
+                  color: const Color(0xFF6B48FF),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +85,7 @@ class AdminCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF6B48FF),
+                color: const Color(0xFF6B48FF),
               ),
             ),
           ),

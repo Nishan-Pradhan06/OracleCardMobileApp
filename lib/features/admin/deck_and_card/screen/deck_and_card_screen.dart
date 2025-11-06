@@ -18,7 +18,10 @@ class DeckAndCardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminCustomAppBar(title: 'Deck & Cards'),
+      appBar: AdminCustomAppBar(
+        title: 'Deck & Cards',
+        automaticallyImplyLeading: true,
+      ),
       body: CustomBackground(
         child: CustomRefreshIndicator(
           onRefresh: () async {
