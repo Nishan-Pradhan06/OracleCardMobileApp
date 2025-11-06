@@ -21,6 +21,8 @@ class GetAdminDeckBloc extends Bloc<GetAdminDeckEvent, GetAdminDeckState> {
     Emitter<GetAdminDeckState> emit,
   ) async {
     emit(GetAdminDeckState.loading());
+    await Future.delayed(Duration(seconds: 3));
+
     final result = await _adminRepository.getAdminDeck();
 
     result.fold(

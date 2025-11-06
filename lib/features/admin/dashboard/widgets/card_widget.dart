@@ -18,41 +18,55 @@ class AdminCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 6),
       // padding: EdgeInsetsGeometry.all(10),
       useIntrinsicHeight: true,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                cardTitle,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  cardTitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Colors.black,
+                    fontSize: 18,
+
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(cardSubtitle, style: Theme.of(context).textTheme.bodyLarge),
-            ],
+                Text(
+                  cardSubtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
+            ),
           ),
-          Row(
-            spacing: 6,
-            children: [
-              CustomIconButton(
-                icon: Icons.edit,
-                onTap: onTapCreate ?? () {},
-                size: 24,
-                color: Colors.grey.shade700,
-              ),
-              CustomIconButton(
-                icon: Icons.delete,
-                onTap: onTapDelete ?? () {},
-                size: 24,
-                color: Colors.grey.shade700,
-              ),
-            ],
+          SizedBox(
+            width: 55,
+            child: Row(
+              spacing: 6,
+              children: [
+                CustomIconButton(
+                  icon: Icons.edit,
+                  onTap: onTapCreate ?? () {},
+                  size: 24,
+                  color: Colors.grey.shade700,
+                ),
+                CustomIconButton(
+                  icon: Icons.delete,
+                  onTap: onTapDelete ?? () {},
+                  size: 24,
+                  color: Colors.grey.shade700,
+                ),
+              ],
+            ),
           ),
         ],
       ),

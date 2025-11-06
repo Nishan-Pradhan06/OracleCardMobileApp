@@ -7,7 +7,7 @@ abstract interface class AdminRepository {
   //##-------------------CREATE DECK-------------------------##
   FutureEither<String> createDeck({required DeckCardModel deckCardModel});
   //##-------------------GET DECK-------------------------##
-  FutureEither<AdminDeckModel> getAdminDeck();
+  FutureEither<List<AdminDeckModel>> getAdminDeck();
 }
 
 class AdminRepositoryImp implements AdminRepository {
@@ -34,12 +34,14 @@ class AdminRepositoryImp implements AdminRepository {
 
   //##-------------------GET DECK-------------------------##
   @override
-  FutureEither<AdminDeckModel> getAdminDeck() async {
+  FutureEither<List<AdminDeckModel>> getAdminDeck() async {
     final respone = await _apiService.get('admin/decks');
 
     return respone.fold((failure) => Left(failure), (data) {
-      final deckList = data['data'];
-      final decks = AdminDeckModel.fromMap(deckList);
+      final deckList = data['data'] as List<dynamic>;
+      final decks = deckList
+          .map((deck) => AdminDeckModel.fromMap(deck as Map<String, dynamic>))
+          .toList();
       return Right(decks);
     });
   }
