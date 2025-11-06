@@ -16,6 +16,7 @@ import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_
 import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
+import 'package:oracle_card_app/features/users/journal/bloc/post_journal/post_journal_bloc.dart';
 import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_meditations_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
@@ -93,6 +94,7 @@ class OracelCard extends StatelessWidget {
         ),
         BlocProvider(create: (context) => sl<RedeemPromoCodeBloc>()),
         BlocProvider(create: (context) => sl<AudioPlayerBloc>()),
+        BlocProvider(create: (context) => sl<PostJournalBloc>()),
 
         BlocProvider(create: (context) => sl<DeckBloc>()),
         BlocProvider(
