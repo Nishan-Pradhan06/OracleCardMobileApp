@@ -1,5 +1,3 @@
-
-
 class MeditationModel {
   final List<MeditationItemModel> items;
   final String? nextCursor;
@@ -26,6 +24,7 @@ class MeditationItemModel {
   final String title;
   final int durationSec;
   final String visibility;
+  final String? streamUrl;
   final bool locked;
 
   MeditationItemModel({
@@ -33,6 +32,7 @@ class MeditationItemModel {
     required this.title,
     required this.durationSec,
     required this.visibility,
+    this.streamUrl,
     required this.locked,
   });
 
@@ -42,6 +42,7 @@ class MeditationItemModel {
       title: json['title'],
       durationSec: json['durationSec'],
       visibility: json['visibility'],
+      streamUrl: json['streamUrl'] ?? '',
       locked: json['locked'],
     );
   }
@@ -51,6 +52,7 @@ class MeditationItemModel {
     'title': title,
     'durationSec': durationSec,
     'visibility': visibility,
+    'streamUrl': streamUrl,
     'locked': locked,
   };
 }

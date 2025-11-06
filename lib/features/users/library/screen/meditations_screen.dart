@@ -9,10 +9,33 @@ import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
+import '../../home/bloc/audio_player/audio_player_bloc.dart';
 import '../widgets/meditation_card.dart';
 
-class MeditationsScreen extends StatelessWidget {
+class MeditationsScreen extends StatefulWidget {
   const MeditationsScreen({super.key});
+
+  @override
+  State<MeditationsScreen> createState() => _MeditationsScreenState();
+}
+
+class _MeditationsScreenState extends State<MeditationsScreen> {
+  late AudioPlayerBloc _audioPlayerBloc;
+  final String audioUrl = 'assets/audio.mp3';
+
+  @override
+  void initState() {
+    super.initState();
+    // create bloc instance (if you use DI factory, replace this with sl<AudioPlayerBloc>())
+    _audioPlayerBloc = AudioPlayerBloc();
+  }
+
+  @override
+  void dispose() {
+    // don't close if it's provided by DI; if created here and you want to close, uncomment:
+    // _audioPlayerBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +86,8 @@ class MeditationsScreen extends StatelessWidget {
                                 timer: '${entry.durationSec.toString()} sec',
                                 svgUrl: 'assets/icons/meditation_icon_1.svg',
                                 isLock: entry.locked,
-                                onTap: () {},
+                                bloc: _audioPlayerBloc,
+                                audioUrl: entry.streamUrl!,
                               );
                             },
                           );
