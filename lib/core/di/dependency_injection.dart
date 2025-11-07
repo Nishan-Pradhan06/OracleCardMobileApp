@@ -21,6 +21,7 @@ import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/post_journal/post_journal_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/repository/journal_repository.dart';
+import 'package:oracle_card_app/features/users/library/bloc/get_guidance_archive/get_guidance_archive_bloc.dart';
 import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_meditations_bloc.dart';
 import 'package:oracle_card_app/features/users/library/repository/meditations_repository.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
@@ -54,6 +55,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => RedeemPromoCodeBloc(repo: sl()));
   sl.registerLazySingleton(() => GetJournalByIdBloc(repo: sl()));
   sl.registerLazySingleton(() => PostJournalBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetGuidanceArchiveBloc(repo: sl()));
   sl.registerFactory(() => AudioPlayerBloc());
 
   //###---------------ADMIN BLOC---------------------###

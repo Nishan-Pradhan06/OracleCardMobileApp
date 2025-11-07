@@ -1,82 +1,68 @@
 
-/// Individual guidance item
-class GuidanceArchiveModel {
+
+class GuidanceArchiveData {
+  final List<GuidanceArchiveItem> items;
+  final int? nextCursor;
+
+  GuidanceArchiveData({required this.items, this.nextCursor});
+
+  factory GuidanceArchiveData.fromJson(Map<String, dynamic> json) {
+    return GuidanceArchiveData(
+      items: (json['items'] as List)
+          .map((item) => GuidanceArchiveItem.fromJson(item))
+          .toList(),
+      nextCursor: json['nextCursor'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'items': items.map((e) => e.toJson()).toList(),
+      'nextCursor': nextCursor,
+    };
+  }
+}
+
+class GuidanceArchiveItem {
   final int id;
   final String title;
   final String message;
   final bool hasAudio;
   final String? audioUrl;
-  final Visibility visibility;
-  final DateTime? scheduledAt;
+  final String visibility;
+  final DateTime scheduledAt;
 
-  GuidanceArchiveModel({
+  GuidanceArchiveItem({
     required this.id,
     required this.title,
     required this.message,
     required this.hasAudio,
     this.audioUrl,
     required this.visibility,
-    this.scheduledAt,
+    required this.scheduledAt,
   });
 
-  factory GuidanceArchiveModel.fromJson(Map<String, dynamic> json) {
-    return GuidanceArchiveModel(
-      id: json['id'] is int ? json['id'] as int : int.parse('${json['id']}'),
-      title: json['title'] as String? ?? '',
-      message: json['message'] as String? ?? '',
-      hasAudio: json['hasAudio'] as bool? ?? false,
-      audioUrl: json['audioUrl'] as String?,
-      visibility: _visibilityFromString(json['visibility'] as String?),
-      scheduledAt: json['scheduledAt'],
+  factory GuidanceArchiveItem.fromJson(Map<String, dynamic> json) {
+    return GuidanceArchiveItem(
+      id: json['id'],
+      title: json['title'],
+      message: json['message'],
+      hasAudio: json['hasAudio'],
+      audioUrl: json['audioUrl'],
+      visibility: json['visibility'],
+      scheduledAt: DateTime.parse(json['scheduledAt']),
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'message': message,
-    'hasAudio': hasAudio,
-    'audioUrl': audioUrl,
-    'visibility': visibility,
-    'scheduledAt': scheduledAt?.toUtc().toIso8601String(),
-  };
-
-  GuidanceArchiveModel copyWith({
-    int? id,
-    String? title,
-    String? message,
-    bool? hasAudio,
-    String? audioUrl,
-    Visibility? visibility,
-    DateTime? scheduledAt,
-  }) {
-    return GuidanceArchiveModel(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      message: message ?? this.message,
-      hasAudio: hasAudio ?? this.hasAudio,
-      audioUrl: audioUrl ?? this.audioUrl,
-      visibility: visibility ?? this.visibility,
-      scheduledAt: scheduledAt ?? this.scheduledAt,
-    );
-  }
-
-  @override
-  String toString() =>
-      'GuidanceItem(id: $id, title: $title, hasAudio: $hasAudio, visibility: $visibility, scheduledAt: $scheduledAt)';
-}
-
-/// Visibility enum (expand if you have more visibility values)
-enum Visibility { FREE, PAID, UNKNOWN }
-
-Visibility _visibilityFromString(String? value) {
-  if (value == null) return Visibility.UNKNOWN;
-  switch (value.toUpperCase()) {
-    case 'FREE':
-      return Visibility.FREE;
-    case 'PAID':
-      return Visibility.PAID;
-    default:
-      return Visibility.UNKNOWN;
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'message': message,
+      'hasAudio': hasAudio,
+      'audioUrl': audioUrl,
+      'visibility': visibility,
+      'scheduledAt': scheduledAt.toIso8601String(),
+    };
   }
 }

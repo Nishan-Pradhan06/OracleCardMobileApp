@@ -7,7 +7,7 @@ import 'package:oracle_card_app/features/users/library/models/guidance_archive_m
 abstract interface class GuidanceRepository {
   FutureEither<DailyGuidanceModel> getDailyGuidance();
 
-  FutureEither<GuidanceArchiveModel> getGuidanceArchive();
+  FutureEither<GuidanceArchiveData> getGuidanceArchive();
 }
 
 class GuidanceRepositoryImpl implements GuidanceRepository {
@@ -27,12 +27,12 @@ class GuidanceRepositoryImpl implements GuidanceRepository {
   }
 
   @override
-  FutureEither<GuidanceArchiveModel> getGuidanceArchive() async {
+  FutureEither<GuidanceArchiveData> getGuidanceArchive() async {
     final response = await _apiService.get('guidance');
 
     return response.fold((failure) => Left(failure), (data) {
       final guidanceArchiveData = data['data'];
-      final guidanceArch = GuidanceArchiveModel.fromJson(guidanceArchiveData);
+      final guidanceArch = GuidanceArchiveData.fromJson(guidanceArchiveData);
 
       return Right(guidanceArch);
     });
