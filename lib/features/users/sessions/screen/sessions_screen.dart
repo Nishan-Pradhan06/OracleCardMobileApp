@@ -9,8 +9,10 @@ import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/heading_widget.dart';
 import 'package:oracle_card_app/core/widgets/upgrade_premium_button_widget.dart';
 import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_session/get_upcomming_session_bloc.dart';
+import 'package:oracle_card_app/features/users/sessions/blocs/rsvp_session/rsvp_session_bloc.dart';
 import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
+import '../../../../core/widgets/custom_toast.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../../router/app_routes_names.dart';
 import '../../home/widgets/notification_widget.dart';
@@ -21,6 +23,7 @@ class SessionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int? sessionId;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Sessions',
@@ -75,24 +78,60 @@ class SessionScreen extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final session = upCommingSessionData.items[index];
+                              sessionId = session.id;
                               final formattedDateTime =
                                   DateTimeUtils.formatShortDate(
                                     session.startTime.toString(),
                                   );
 
-                              return SessionsCardWidget(
-                                dateText: formattedDateTime,
-                                title: session.title,
-                                description: session.description,
-                                isButtonEnabled: session.rsvp,
-                                onPressed: () {
-                                  context.pushNamed(
-                                    AppRoutesName
-                                        .sessionsDetailsScreenScreenRoute,
-                                    extra: {
-                                      'title': session.title,
-                                      'dateTime': formattedDateTime,
+                              return BlocConsumer<
+                                RsvpSessionBloc,
+                                RsvpSessionState
+                              >(
+                                listener: (context, state) {
+                                  state.mapOrNull(
+                                    loaded: (data) {
+                                      CustomToast.showSuccess(
+                                        "RSVP successful",
+                                      );
                                     },
+                                    failure: (failure) {
+                                      CustomToast.showError(
+                                        failure.failure.message,
+                                      );
+                                    },
+                                  );
+                                },
+                                builder: (context, state) {
+                                  final bool isLoading = state.maybeWhen(
+                                    loading: () => true,
+                                    orElse: () => false,
+                                  );
+                                  return SessionsCardWidget(
+                                    dateText: formattedDateTime,
+                                    title: session.title,
+                                    description: session.description,
+                                    isButtonEnabled: isLoading,
+                                    isLoading: isLoading,
+                                    onTap: () {
+                                      context.pushNamed(
+                                        AppRoutesName
+                                            .sessionsDetailsScreenScreenRoute,
+                                        extra: {
+                                          'title': session.title,
+                                          'dateTime': formattedDateTime,
+                                        },
+                                      );
+                                    },
+                                    rsvpButton: isLoading
+                                        ? null
+                                        : () {
+                                            sl<RsvpSessionBloc>().add(
+                                              RsvpSessionEvent.rsvpSession(
+                                                sessionId!,
+                                              ),
+                                            );
+                                          },
                                   );
                                 },
                               );

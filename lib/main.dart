@@ -22,6 +22,7 @@ import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_session/get_upcomming_session_bloc.dart';
+import 'package:oracle_card_app/features/users/sessions/blocs/rsvp_session/rsvp_session_bloc.dart';
 import 'package:oracle_card_app/router/app_router.dart';
 
 import 'core/di/dependency_injection.dart';
@@ -98,6 +99,7 @@ class OracelCard extends StatelessWidget {
         BlocProvider(create: (context) => sl<PostJournalBloc>()),
 
         BlocProvider(create: (context) => sl<DeckBloc>()),
+        BlocProvider(create: (context) => sl<RsvpSessionBloc>()),
         BlocProvider(
           create: (context) =>
               sl<GetAdminDeckBloc>()..add(GetAdminDeckEvent.getAdminDeck()),

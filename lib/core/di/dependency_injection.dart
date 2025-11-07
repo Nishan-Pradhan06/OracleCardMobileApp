@@ -29,6 +29,7 @@ import 'package:oracle_card_app/features/users/notifications/repository/notifica
 import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/repository/user_profile_repository.dart';
 import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_session/get_upcomming_session_bloc.dart';
+import 'package:oracle_card_app/features/users/sessions/blocs/rsvp_session/rsvp_session_bloc.dart';
 import 'package:oracle_card_app/features/users/sessions/repository/session_repository.dart';
 import 'package:retry/retry.dart';
 
@@ -56,6 +57,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetJournalByIdBloc(repo: sl()));
   sl.registerLazySingleton(() => PostJournalBloc(repo: sl()));
   sl.registerLazySingleton(() => GetGuidanceArchiveBloc(repo: sl()));
+  sl.registerLazySingleton(() => RsvpSessionBloc(repo: sl()));
   sl.registerFactory(() => AudioPlayerBloc());
 
   //###---------------ADMIN BLOC---------------------###

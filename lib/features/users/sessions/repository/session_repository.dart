@@ -7,6 +7,7 @@ import 'package:oracle_card_app/features/users/sessions/models/session_model.dar
 abstract interface class SessionRepository {
   FutureEither<UpcomingSessionsDataModel> getUpcommingSession();
   FutureEither<JoinLinkDataModel> getJoinSessionLink({required int sessionId});
+  FutureEither<String> reserveSession({required int id});
 }
 
 class SessionRepositoryImpl implements SessionRepository {
@@ -36,6 +37,17 @@ class SessionRepositoryImpl implements SessionRepository {
       final dataJson = data['data'];
       final joinSessionLinkData = JoinLinkDataModel.fromJson(dataJson);
       return Right(joinSessionLinkData);
+    });
+  }
+
+  @override
+  FutureEither<String> reserveSession({required int id}) async {
+    final response = await _apiService.post('sessions/$id/rsvp');
+
+    return response.fold((failure) => Left((failure)), (data) {
+      // final rsvpD = data['data'];
+
+      return Right("RSVP successful");
     });
   }
 }

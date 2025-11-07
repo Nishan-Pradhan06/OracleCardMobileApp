@@ -7,7 +7,9 @@ class SessionsCardWidget extends StatelessWidget {
   final String title;
   final String description;
   final bool isButtonEnabled;
-  final VoidCallback? onPressed;
+  final VoidCallback? rsvpButton;
+  final VoidCallback? onTap;
+  final bool? isLoading;
 
   const SessionsCardWidget({
     super.key,
@@ -15,12 +17,15 @@ class SessionsCardWidget extends StatelessWidget {
     required this.title,
     required this.description,
     this.isButtonEnabled = true,
-    this.onPressed,
+    this.rsvpButton,
+    this.onTap,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      onTap: onTap,
       margin: EdgeInsets.only(bottom: 10),
       useIntrinsicHeight: true,
       child: Column(
@@ -59,10 +64,11 @@ class SessionsCardWidget extends StatelessWidget {
                 size: 15,
               ),
               text: 'RSVP',
+              isLoading: isLoading!,
               fontWeight: FontWeight.bold,
               fontSize: 12,
               isDisabled: !isButtonEnabled,
-              onPressed: isButtonEnabled ? onPressed ?? () {} : () {},
+              onPressed: isButtonEnabled ? rsvpButton ?? () {} : () {},
             ),
           ),
         ],
