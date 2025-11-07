@@ -8,10 +8,9 @@ import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/users/library/bloc/get_guidance_archive/get_guidance_archive_bloc.dart';
-import 'package:oracle_card_app/features/users/library/models/guidance_model.dart';
-import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
+import '../../../../router/app_routes_names.dart';
 import '../widgets/guidance_card_widget.dart';
 
 class GuidanceArchiveScreen extends StatelessWidget {
@@ -73,15 +72,16 @@ class GuidanceArchiveScreen extends StatelessWidget {
                                 dateTime: formmatedDate,
                                 isLock: !guidanceArchiveList.hasAudio,
                                 onTap: () {
-                                  // context.pushNamed(
-                                  //   AppRoutesName
-                                  //       .guidanceArchiveDetailScreenRoute,
-                                  //   extra: {
-                                  //     'title': list.title,
-                                  //     'dateTime': list.dateTime,
-                                  //     'description': list.description,
-                                  //   },
-                                  // );
+                                  context.pushNamed(
+                                    AppRoutesName
+                                        .guidanceArchiveDetailScreenRoute,
+                                    extra: {
+                                      'title': guidanceArchiveList.title,
+                                      'dateTime': formmatedDate,
+                                      'description':
+                                          guidanceArchiveList.message,
+                                    },
+                                  );
                                 },
                               );
                             },
