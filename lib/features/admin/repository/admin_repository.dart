@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/model/admin_daily_guidance_model.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.dart';
 
 import '../meditations/model/create_meditations_model.dart';
@@ -14,6 +15,10 @@ abstract interface class AdminRepository {
   //##-------------------CREATE MEDITATIONS-------------------------##
   FutureEither<String> createMeditations({
     required CreateMeditationsModel createMeditations,
+  });
+  //##-------------------CREATE DAILY GUIDANCE-------------------------##
+  FutureEither<String> createDailyGuidance({
+    required AdminDailyGuidanceModel adminDailyGuidance,
   });
 }
 
@@ -75,6 +80,31 @@ class AdminRepositoryImp implements AdminRepository {
     return response.fold(
       (failure) => Left(failure),
       (data) => const Right("Meditation Created Successfully!"),
+    );
+  }
+
+  //##-------------------CREATE DAILY GUIDANCE-------------------------##
+  @override
+  FutureEither<String> createDailyGuidance({
+    required AdminDailyGuidanceModel adminDailyGuidance,
+  }) async {
+    FormData formData = FormData.fromMap({
+      ...adminDailyGuidance.toMap(),
+      if (adminDailyGuidance.audioUrl != null)
+        'audio': await MultipartFile.fromFile(
+          adminDailyGuidance.audioUrl!.path,
+          filename: adminDailyGuidance.audioUrl!.path.split('/').last,
+        ),
+    });
+
+    final response = await _apiService.post<Map>(
+      'admin/guidance',
+      data: formData,
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (data) => const Right("Daily Guidance Created Successfully!"),
     );
   }
 }
