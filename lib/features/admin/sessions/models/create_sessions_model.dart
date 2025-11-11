@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class AdminSessionModel {
+class CreateSessionModel {
   final String title;
   final String description;
   final DateTime startTime;
@@ -9,7 +9,7 @@ class AdminSessionModel {
   final String zoomUrl;
   final bool isPremiumOnly;
 
-  AdminSessionModel({
+  CreateSessionModel({
     required this.title,
     required this.description,
     required this.startTime,
@@ -31,8 +31,8 @@ class AdminSessionModel {
     };
   }
 
-  factory AdminSessionModel.fromMap(Map<String, dynamic> map) {
-    return AdminSessionModel(
+  factory CreateSessionModel.fromMap(Map<String, dynamic> map) {
+    return CreateSessionModel(
       title: map['title'] as String,
       description: map['description'] as String,
       startTime: DateTime.parse(map['startTime'] as String),
@@ -45,6 +45,6 @@ class AdminSessionModel {
 
   String toJson() => json.encode(toMap());
 
-  factory AdminSessionModel.fromJson(String source) =>
-      AdminSessionModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CreateSessionModel.fromJson(String source) =>
+      CreateSessionModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

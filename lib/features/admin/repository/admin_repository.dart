@@ -4,6 +4,7 @@ import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 import 'package:oracle_card_app/features/admin/daily_guidance/model/admin_daily_guidance_model.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.dart';
+import 'package:oracle_card_app/features/admin/sessions/models/create_sessions_model.dart';
 
 import '../meditations/model/create_meditations_model.dart';
 
@@ -19,6 +20,10 @@ abstract interface class AdminRepository {
   //##-------------------CREATE DAILY GUIDANCE-------------------------##
   FutureEither<String> createDailyGuidance({
     required AdminDailyGuidanceModel adminDailyGuidance,
+  });
+  //##-------------------CREATE SESSIONS-------------------------##
+  FutureEither<String> createSessions({
+    required CreateSessionModel createSessionM,
   });
 }
 
@@ -106,5 +111,21 @@ class AdminRepositoryImp implements AdminRepository {
       (failure) => Left(failure),
       (data) => const Right("Daily Guidance Created Successfully!"),
     );
+  }
+
+  //##-------------------CREATE SESSIONS-------------------------##
+
+  @override
+  FutureEither<String> createSessions({
+    required CreateSessionModel createSessionM,
+  }) async {
+    final response = await _apiService.post<Map>(
+      'admin/sessions',
+      data: {...createSessionM.toMap()},
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      return Right("Sessions Create Successful !!!");
+    });
   }
 }
