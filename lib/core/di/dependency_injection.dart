@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/create_deck/deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/get_admin_deck/get_admin_deck_bloc.dart';
+import 'package:oracle_card_app/features/admin/meditations/bloc/bloc/create_meditations_bloc.dart';
 import 'package:oracle_card_app/features/admin/repository/admin_repository.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
@@ -58,6 +59,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => PostJournalBloc(repo: sl()));
   sl.registerLazySingleton(() => GetGuidanceArchiveBloc(repo: sl()));
   sl.registerLazySingleton(() => RsvpSessionBloc(repo: sl()));
+  sl.registerLazySingleton(() => CreateMeditationsBloc(repo: sl()));
   sl.registerFactory(() => AudioPlayerBloc());
 
   //###---------------ADMIN BLOC---------------------###

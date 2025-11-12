@@ -78,7 +78,7 @@ class AdminRepositoryImp implements AdminRepository {
   }) async {
     FormData formData = FormData.fromMap({
       ...createMeditations.toMap(),
-      'audioUrl': await MultipartFile.fromFile(
+      'audio': await MultipartFile.fromFile(
         createMeditations.audioFile.path,
         filename: createMeditations.audioFile.path.split('/').last,
       ),
@@ -87,6 +87,7 @@ class AdminRepositoryImp implements AdminRepository {
     final response = await _apiService.post<Map>(
       'admin/meditations',
       data: formData,
+      options: Options(headers: {'Content-Type': 'multipart/form-data'}),
     );
 
     return response.fold(

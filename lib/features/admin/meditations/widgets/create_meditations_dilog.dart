@@ -2,10 +2,17 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/features/admin/meditations/bloc/bloc/create_meditations_bloc.dart';
+import 'package:oracle_card_app/features/admin/meditations/model/create_meditations_model.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
+
+import '../../../../core/widgets/custom_toast.dart';
 
 class CreateMeditationsDialog extends StatefulWidget {
   const CreateMeditationsDialog({super.key});
@@ -159,17 +166,50 @@ class _CreateMeditationsDialogState extends State<CreateMeditationsDialog> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    CustomButton(
-                      text: 'Save',
-                      // isDisabled: isLoading,
-                      // isLoading: isLoading,
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          log(_titleController.text);
-                          log(_descriptionController.text);
-                          log(_visibilityController.text);
-                          log(isActive.toString());
-                        }
+                    BlocConsumer<CreateMeditationsBloc, CreateMeditationsState>(
+                      listener: (context, state) {
+                        state.whenOrNull(
+                          loaded: (data) {
+                            CustomToast.showSuccess(
+                              'New Meditations Created Successfully !!!',
+                            );
+                            context.pop();
+                          },
+                          failure: (failure) {
+                            CustomToast.showError(failure.message);
+                          },
+                        );
+                      },
+                      builder: (context, state) {
+                        final bool isLoading = state.maybeWhen(
+                          loading: () => true,
+                          orElse: () => false,
+                        );
+                        return CustomButton(
+                          text: 'Save',
+                          isDisabled: isLoading,
+                          isLoading: isLoading,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              sl<CreateMeditationsBloc>().add(
+                                CreateMeditationsEvent.createMeditations(
+                                  CreateMeditationsModel(
+                                    title: _titleController.text,
+                                    description: _descriptionController.text,
+                                    audioFile: _audioFile!,
+                                    visibility: _visibilityController.text,
+                                    isDownloadable: isActive,
+                                  ),
+                                ),
+                              );
+                              log(_titleController.text);
+                              log(_descriptionController.text);
+                              log(_descriptionController.text);
+                              log(_audioFile!.path.toString());
+                              log(isActive.toString());
+                            }
+                          },
+                        );
                       },
                     ),
                   ],

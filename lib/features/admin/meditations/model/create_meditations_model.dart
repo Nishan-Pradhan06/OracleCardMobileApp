@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 
 class CreateMeditationsModel {
   final String title;
@@ -21,7 +20,6 @@ class CreateMeditationsModel {
     return <String, dynamic>{
       'title': title,
       'description': description,
-      'audioFile': MultipartFile.fromFile(audioFile.path),
       'visibility': visibility,
       'isDownloadable': isDownloadable,
     };
