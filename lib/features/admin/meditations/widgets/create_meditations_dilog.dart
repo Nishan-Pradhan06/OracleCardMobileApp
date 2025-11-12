@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
@@ -22,6 +23,7 @@ class _CreateMeditationsDialogState extends State<CreateMeditationsDialog> {
   final _formKey = GlobalKey<FormState>();
 
   bool isActive = true;
+  File? _audioFile;
 
   @override
   Widget build(BuildContext context) {
@@ -88,14 +90,18 @@ class _CreateMeditationsDialogState extends State<CreateMeditationsDialog> {
                   label: 'Audio',
                   leading: Icon(Icons.mic),
                   hint: 'Upload Audio',
-                  type: CustomTextFieldType.email,
-                  controller: _descriptionController,
+
+                  onPickedAudio: (File audioFile) {
+                    setState(() {
+                      _audioFile = audioFile;
+                    });
+                  },
+                  type: CustomTextFieldType.audio,
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
                   label: 'Visibility *',
                   leading: Icon(Icons.mic),
-
                   dropdownItems: ['PREMIUM', 'FREE'],
                   type: CustomTextFieldType.dropdown,
                   validator: InputValidator.validateRequired,

@@ -1,6 +1,17 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-enum CustomTextFieldType { text, email, password, number, phone, dropdown }
+enum CustomTextFieldType {
+  text,
+  email,
+  password,
+  number,
+  phone,
+  dropdown,
+  audio,
+}
 
 class CustomTextField extends StatefulWidget {
   final String? label;
@@ -25,10 +36,13 @@ class CustomTextField extends StatefulWidget {
   final bool noBorder;
   final TextStyle? hintStyle;
 
+  final Function(File)? onPickedAudio;
+
   const CustomTextField({
     super.key,
     this.label,
     this.hint,
+    this.onPickedAudio,
     this.controller,
     this.type = CustomTextFieldType.text,
     this.leading,
@@ -74,6 +88,91 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.type == CustomTextFieldType.audio) {
+      if (widget.type == CustomTextFieldType.audio) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (widget.label != null)
+              Text(widget.label!, style: Theme.of(context).textTheme.bodyLarge),
+            const SizedBox(height: 5),
+            GestureDetector(
+              onTap: () async {
+                try {
+                  FilePickerResult? result = await FilePicker.platform
+                      .pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: ['mp3', 'wav', 'm4a', 'aac'],
+                        allowMultiple: false,
+                      );
+
+                  if (result != null && result.files.single.path != null) {
+                    File audioFile = File(result.files.single.path!);
+                    widget.onPickedAudio!(audioFile);
+
+                    // ✅ show selected filename
+                    setState(() {
+                      _dropdownValue = result.files.single.name;
+                    });
+                  } else {
+                    print('No file selected');
+                  }
+                } catch (e) {
+                  print('Error picking file: $e');
+                }
+              },
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  hintText: widget.hint ?? "Select an audio file",
+                  filled: true,
+                  fillColor: widget.fillColor ?? Colors.white,
+                  contentPadding: widget.contentPadding,
+                  prefixIcon: widget.leading ?? const Icon(Icons.audiotrack),
+                  // suffixIcon: const Icon(Icons.upload_file),
+                  border: widget.noBorder
+                      ? InputBorder.none
+                      : OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius,
+                          ),
+                          borderSide: BorderSide(
+                            color: widget.borderColor ?? Colors.grey,
+                          ),
+                        ),
+                  enabledBorder: widget.noBorder
+                      ? InputBorder.none
+                      : OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius,
+                          ),
+                          borderSide: BorderSide(
+                            color: widget.borderColor ?? Colors.grey,
+                          ),
+                        ),
+                  focusedBorder: widget.noBorder
+                      ? InputBorder.none
+                      : OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius,
+                          ),
+                          borderSide: BorderSide(
+                            color: widget.borderColor ?? Colors.blue,
+                            width: 2,
+                          ),
+                        ),
+                ),
+                child: Text(
+                  _dropdownValue ?? "Tap to choose audio",
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: _dropdownValue == null ? Colors.grey : Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }
+    }
     // Dropdown type
     if (widget.type == CustomTextFieldType.dropdown) {
       return Column(
