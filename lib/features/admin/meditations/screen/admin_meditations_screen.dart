@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/admin/dashboard/widgets/custom_btn_ad.dart';
 import '../../../../core/widgets/admin_appbar.dart';
+import '../../../../router/app_routes_names.dart';
 
 class AdminMeditationsScreen extends StatelessWidget {
   const AdminMeditationsScreen({super.key});
@@ -26,7 +28,11 @@ class AdminMeditationsScreen extends StatelessWidget {
                 children: [
                   CustomBtnAdmin(
                     btnText: 'Add Meditation',
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(
+                        AppRoutesName.adminCreateMeditationsDialogRoute,
+                      );
+                    },
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
                   CustomContainer(

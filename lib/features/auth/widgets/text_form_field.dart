@@ -84,6 +84,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           const SizedBox(height: 5),
           DropdownButtonFormField<String>(
             initialValue: _dropdownValue,
+            validator: widget.validator,
             decoration: InputDecoration(
               filled: true,
               fillColor: widget.fillColor ?? Colors.white,

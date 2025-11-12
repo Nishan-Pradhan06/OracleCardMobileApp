@@ -26,4 +26,5 @@ class AppRoutesName {
   static const String adminMeditationsScreenRoute = 'adminMeditationsScreenRoute';
   static const String adminDailyGuidanceScreenRoute = 'adminDailyGuidanceScreenRoute';
   static const String adminCreateDeckDialogRoute = 'adminCreateDeckDialogRoute';
+  static const String adminCreateMeditationsDialogRoute = 'adminCreateMeditationsDialogRoute';
 }
