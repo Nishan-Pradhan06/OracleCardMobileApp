@@ -7,6 +7,7 @@ import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.da
 import 'package:oracle_card_app/features/admin/sessions/models/create_sessions_model.dart';
 
 import '../meditations/model/create_meditations_model.dart';
+import '../user_and_billing/model/get_user_model.dart';
 
 abstract interface class AdminRepository {
   //##-------------------CREATE DECK-------------------------##
@@ -25,6 +26,8 @@ abstract interface class AdminRepository {
   FutureEither<String> createSessions({
     required CreateSessionModel createSessionM,
   });
+  //##-------------------GET USERS-------------------------##
+  FutureEither<List<DataListModel>> getUsers();
 }
 
 class AdminRepositoryImp implements AdminRepository {
@@ -126,6 +129,21 @@ class AdminRepositoryImp implements AdminRepository {
 
     return response.fold((failure) => Left(failure), (data) {
       return Right("Sessions Create Successful !!!");
+    });
+  }
+
+  @override
+  FutureEither<List<DataListModel>> getUsers() async {
+    final response = await _apiService.get('admin/users');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final usersList = data['data'] as List<dynamic>;
+
+      final users = usersList.map(
+        (user) => DataListModel.fromJson(user as Map<String, dynamic>),
+      ).toList();
+
+      return Right(users);
     });
   }
 }
