@@ -28,6 +28,11 @@ abstract interface class AdminRepository {
   });
   //##-------------------GET USERS-------------------------##
   FutureEither<List<DataListModel>> getUsers();
+  //##-------------------GRANT PROMO-------------------------##
+  FutureEither<String> grantPromoCode({
+    required String promoCode,
+    required String userId,
+  });
 }
 
 class AdminRepositoryImp implements AdminRepository {
@@ -139,11 +144,26 @@ class AdminRepositoryImp implements AdminRepository {
     return response.fold((failure) => Left(failure), (data) {
       final usersList = data['data'] as List<dynamic>;
 
-      final users = usersList.map(
-        (user) => DataListModel.fromJson(user as Map<String, dynamic>),
-      ).toList();
+      final users = usersList
+          .map((user) => DataListModel.fromJson(user as Map<String, dynamic>))
+          .toList();
 
       return Right(users);
+    });
+  }
+
+  @override
+  FutureEither<String> grantPromoCode({
+    required String promoCode,
+    required String userId,
+  }) async {
+    final response = await _apiService.post<Map>(
+      '/admin/users/$userId/grant-promo',
+      data: {"code": promoCode},
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      return Right("Promo Code Grant Successful !!!");
     });
   }
 }
