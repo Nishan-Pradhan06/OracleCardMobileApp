@@ -78,11 +78,10 @@ class AdminRepositoryImp implements AdminRepository {
   }) async {
     FormData formData = FormData.fromMap({
       ...createMeditations.toMap(),
-      if (createMeditations.audioFile != null)
-        'audio': await MultipartFile.fromFile(
-          createMeditations.audioFile!.path,
-          filename: createMeditations.audioFile!.path.split('/').last,
-        ),
+      'audioUrl': await MultipartFile.fromFile(
+        createMeditations.audioFile.path,
+        filename: createMeditations.audioFile.path.split('/').last,
+      ),
     });
 
     final response = await _apiService.post<Map>(
