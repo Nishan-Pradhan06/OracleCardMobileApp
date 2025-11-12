@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oracle_card_app/common/error/failure.dart';
+import 'package:oracle_card_app/core/config/env_secrete_config.dart';
 import 'package:oracle_card_app/core/state/bloc_base_state.dart';
 
 part 'audio_player_event.dart';
@@ -58,7 +59,8 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   Future<void> _onPlay(_Play event, Emitter<AudioPlayerState> emit) async {
     emit(AudioPlayerState.loading());
     try {
-      final url = event.audioUrl.replaceAll('localhost', '192.168.1.65');
+      final url = event.audioUrl.replaceAll('localhost', EnvSecreteConfig.instance.cleanedIP,
+      );
       await _audioPlayer.play(UrlSource(url));
 
       _lastPlayerState = PlayerState.playing;
