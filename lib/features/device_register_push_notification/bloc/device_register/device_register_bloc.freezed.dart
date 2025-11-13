@@ -14,61 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DeviceRegisterEvent {
 
- DeviceRegisterModel get deviceRegisterModel;
-/// Create a copy of DeviceRegisterEvent
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$DeviceRegisterEventCopyWith<DeviceRegisterEvent> get copyWith => _$DeviceRegisterEventCopyWithImpl<DeviceRegisterEvent>(this as DeviceRegisterEvent, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceRegisterEvent&&(identical(other.deviceRegisterModel, deviceRegisterModel) || other.deviceRegisterModel == deviceRegisterModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceRegisterEvent);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,deviceRegisterModel);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DeviceRegisterEvent(deviceRegisterModel: $deviceRegisterModel)';
+  return 'DeviceRegisterEvent()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $DeviceRegisterEventCopyWith<$Res>  {
-  factory $DeviceRegisterEventCopyWith(DeviceRegisterEvent value, $Res Function(DeviceRegisterEvent) _then) = _$DeviceRegisterEventCopyWithImpl;
-@useResult
-$Res call({
- DeviceRegisterModel deviceRegisterModel
-});
-
-
-
-
-}
-/// @nodoc
-class _$DeviceRegisterEventCopyWithImpl<$Res>
-    implements $DeviceRegisterEventCopyWith<$Res> {
-  _$DeviceRegisterEventCopyWithImpl(this._self, this._then);
-
-  final DeviceRegisterEvent _self;
-  final $Res Function(DeviceRegisterEvent) _then;
-
-/// Create a copy of DeviceRegisterEvent
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? deviceRegisterModel = null,}) {
-  return _then(_self.copyWith(
-deviceRegisterModel: null == deviceRegisterModel ? _self.deviceRegisterModel : deviceRegisterModel // ignore: cast_nullable_to_non_nullable
-as DeviceRegisterModel,
-  ));
-}
-
+class $DeviceRegisterEventCopyWith<$Res>  {
+$DeviceRegisterEventCopyWith(DeviceRegisterEvent _, $Res Function(DeviceRegisterEvent) __);
 }
 
 
@@ -150,10 +119,10 @@ return deviceRegister(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( DeviceRegisterModel deviceRegisterModel)?  deviceRegister,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  deviceRegister,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DeviceRegister() when deviceRegister != null:
-return deviceRegister(_that.deviceRegisterModel);case _:
+return deviceRegister();case _:
   return orElse();
 
 }
@@ -171,10 +140,10 @@ return deviceRegister(_that.deviceRegisterModel);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( DeviceRegisterModel deviceRegisterModel)  deviceRegister,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  deviceRegister,}) {final _that = this;
 switch (_that) {
 case _DeviceRegister():
-return deviceRegister(_that.deviceRegisterModel);case _:
+return deviceRegister();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,10 +160,10 @@ return deviceRegister(_that.deviceRegisterModel);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( DeviceRegisterModel deviceRegisterModel)?  deviceRegister,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  deviceRegister,}) {final _that = this;
 switch (_that) {
 case _DeviceRegister() when deviceRegister != null:
-return deviceRegister(_that.deviceRegisterModel);case _:
+return deviceRegister();case _:
   return null;
 
 }
@@ -206,66 +175,32 @@ return deviceRegister(_that.deviceRegisterModel);case _:
 
 
 class _DeviceRegister implements DeviceRegisterEvent {
-  const _DeviceRegister(this.deviceRegisterModel);
+  const _DeviceRegister();
   
 
-@override final  DeviceRegisterModel deviceRegisterModel;
 
-/// Create a copy of DeviceRegisterEvent
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$DeviceRegisterCopyWith<_DeviceRegister> get copyWith => __$DeviceRegisterCopyWithImpl<_DeviceRegister>(this, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceRegister&&(identical(other.deviceRegisterModel, deviceRegisterModel) || other.deviceRegisterModel == deviceRegisterModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceRegister);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,deviceRegisterModel);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'DeviceRegisterEvent.deviceRegister(deviceRegisterModel: $deviceRegisterModel)';
+  return 'DeviceRegisterEvent.deviceRegister()';
 }
 
 
 }
 
-/// @nodoc
-abstract mixin class _$DeviceRegisterCopyWith<$Res> implements $DeviceRegisterEventCopyWith<$Res> {
-  factory _$DeviceRegisterCopyWith(_DeviceRegister value, $Res Function(_DeviceRegister) _then) = __$DeviceRegisterCopyWithImpl;
-@override @useResult
-$Res call({
- DeviceRegisterModel deviceRegisterModel
-});
 
 
-
-
-}
-/// @nodoc
-class __$DeviceRegisterCopyWithImpl<$Res>
-    implements _$DeviceRegisterCopyWith<$Res> {
-  __$DeviceRegisterCopyWithImpl(this._self, this._then);
-
-  final _DeviceRegister _self;
-  final $Res Function(_DeviceRegister) _then;
-
-/// Create a copy of DeviceRegisterEvent
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? deviceRegisterModel = null,}) {
-  return _then(_DeviceRegister(
-null == deviceRegisterModel ? _self.deviceRegisterModel : deviceRegisterModel // ignore: cast_nullable_to_non_nullable
-as DeviceRegisterModel,
-  ));
-}
-
-
-}
 
 // dart format on

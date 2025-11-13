@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:oracle_card_app/core/state/bloc_base_state.dart';
-import 'package:oracle_card_app/features/device_register_push_notification/model/device_model.dart';
 import 'package:oracle_card_app/features/device_register_push_notification/repository/device_register_repository.dart';
 
 part 'device_register_event.dart';
@@ -26,7 +25,7 @@ class DeviceRegisterBloc
     emit(DeviceRegisterState.loading());
 
     final result = await _deviceRegisterForPushNotificationRepository
-        .deviceRegister(deviceRegisterModel: event.deviceRegisterModel);
+        .deviceRegister();
 
     result.fold(
       (failure) => emit(DeviceRegisterState.failure(failure)),

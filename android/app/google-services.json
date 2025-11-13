@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "240563629208",
+    "project_id": "oracle-e8e45",
+    "storage_bucket": "oracle-e8e45.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240563629208:android:d364d3cce2bc508883b4ed",
+        "android_client_info": {
+          "package_name": "com.example.oracle_card_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQe7v7A9p7x-dsOzwrwRDaUOdrWhiwU10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

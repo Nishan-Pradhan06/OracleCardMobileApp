@@ -14,6 +14,8 @@ import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/auth/models/sign_up_model.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
+import 'package:oracle_card_app/features/device_register_push_notification/bloc/device_register/device_register_bloc.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../core/di/dependency_injection.dart';
 import '../../../core/helpers/time_zone_helper.dart';
 import '../../../core/widgets/custom_account_check_text.dart';
@@ -175,10 +177,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           listener: (context, state) {
                             state.whenOrNull(
                               loaded: (data) {
+                                context.goNamed(
+                                  AppRoutesName.userBottomNavBarRoute,
+                                );
                                 CustomToast.showSuccess(
                                   "Register Successful !!!",
                                 );
-                                context.pop();
+
+                                sl<DeviceRegisterBloc>().add(
+                                  DeviceRegisterEvent.deviceRegister(),
+                                );
                               },
                               failure: (failure) {
                                 CustomToast.showError(failure.message);

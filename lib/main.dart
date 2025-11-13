@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,6 +11,8 @@ import 'package:oracle_card_app/features/admin/meditations/bloc/bloc/create_medi
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
+import 'package:oracle_card_app/features/device_register_push_notification/bloc/device_register/device_register_bloc.dart';
+import 'package:oracle_card_app/features/device_register_push_notification/services/push_notification_services.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/redeem_promo_code/redeem_promo_code_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/audio_player/audio_player_bloc.dart';
@@ -43,6 +46,11 @@ void main() async {
 
   //Global SharedPreferences
   await CacheServices.instance.init();
+
+  //Firebase
+  await Firebase.initializeApp();
+
+  await PushNotificationService().init();
 
   runApp(const OracelCard());
 }
@@ -102,6 +110,7 @@ class OracelCard extends StatelessWidget {
         BlocProvider(create: (context) => sl<DeckBloc>()),
         BlocProvider(create: (context) => sl<CreateMeditationsBloc>()),
         BlocProvider(create: (context) => sl<RsvpSessionBloc>()),
+        BlocProvider(create: (context) => sl<DeviceRegisterBloc>()),
         BlocProvider(
           create: (context) =>
               sl<GetAdminDeckBloc>()..add(GetAdminDeckEvent.getAdminDeck()),

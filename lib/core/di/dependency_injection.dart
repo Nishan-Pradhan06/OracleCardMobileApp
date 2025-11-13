@@ -9,6 +9,7 @@ import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart'
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/auth/repository/auth_repository.dart';
+import 'package:oracle_card_app/features/device_register_push_notification/bloc/device_register/device_register_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/redeem_promo_code/redeem_promo_code_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/repository/payment_repository.dart';
@@ -34,6 +35,7 @@ import 'package:oracle_card_app/features/users/sessions/blocs/rsvp_session/rsvp_
 import 'package:oracle_card_app/features/users/sessions/repository/session_repository.dart';
 import 'package:retry/retry.dart';
 
+import '../../features/device_register_push_notification/repository/device_register_repository.dart';
 import '../network/dio_client.dart';
 
 final sl = GetIt.instance;
@@ -60,6 +62,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetGuidanceArchiveBloc(repo: sl()));
   sl.registerLazySingleton(() => RsvpSessionBloc(repo: sl()));
   sl.registerLazySingleton(() => CreateMeditationsBloc(repo: sl()));
+  sl.registerLazySingleton(() => DeviceRegisterBloc(repo: sl()));
   sl.registerFactory(() => AudioPlayerBloc());
 
   //###---------------ADMIN BLOC---------------------###
@@ -98,6 +101,9 @@ Future<void> setupServiceLocator() async {
   );
   sl.registerLazySingleton<AdminRepository>(
     () => AdminRepositoryImp(apiService: sl()),
+  );
+  sl.registerLazySingleton<DeviceRegisterForPushNotificationRepository>(
+    () => DeviceRegisterForPushNotificationRepositoryImpl(apiService: sl()),
   );
 
   //###---------------EXTERNAL REPOSITORY SERVICES---------------###

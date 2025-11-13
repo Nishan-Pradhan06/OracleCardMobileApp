@@ -1,13 +1,14 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 
-import '../model/device_model.dart';
 
 abstract interface class DeviceRegisterForPushNotificationRepository {
-  FutureEither<String> deviceRegister({
-    required DeviceRegisterModel deviceRegisterModel,
-  });
+  FutureEither<String> deviceRegister();
 }
 
 class DeviceRegisterForPushNotificationRepositoryImpl
@@ -19,12 +20,22 @@ class DeviceRegisterForPushNotificationRepositoryImpl
   }) : _apiService = apiService;
 
   @override
-  FutureEither<String> deviceRegister({
-    required DeviceRegisterModel deviceRegisterModel,
-  }) async {
+  FutureEither<String> deviceRegister() async {
+    final FirebaseMessaging _messaging = FirebaseMessaging.instance;
+    String? token;
+    if (Platform.isIOS) {
+      // token = await _messaging.getAPNSToken() ?? '';
+    } else if (Platform.isAndroid) {
+      token = await _messaging.getToken() ?? '';
+      log('Android device token: $token');
+    }
+
     final response = await _apiService.post<Map>(
       'device/register',
-      data: {...deviceRegisterModel.toMap()},
+      data: <String, String>{
+        'plaform': Platform.isAndroid ? 'ANDROID' : 'IOS',
+        'token': token!,
+      },
     );
 
     return response.fold((failure) => Left(failure), (data) {
