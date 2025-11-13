@@ -1,10 +1,16 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/bloc/bloc/create_daily_guidance_bloc.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/model/admin_daily_guidance_model.dart';
 
 import '../../../../core/helpers/validation_helpers.dart';
 import '../../../../core/widgets/custom_button.dart';
+import '../../../../core/widgets/custom_toast.dart';
 import '../../../auth/widgets/text_form_field.dart';
 
 class CreateDailyGuidanceDialog extends StatefulWidget {
@@ -238,17 +244,55 @@ class _CreateDailyGuidanceDialogState extends State<CreateDailyGuidanceDialog> {
                       child: const Text('Cancel'),
                     ),
                     const SizedBox(width: 12),
-                    CustomButton(
-                      text: 'Save',
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          log(_titleController.text);
-                          log(_descriptionController.text);
-                          if (_audioFile != null) log(_audioFile!.path);
-                          log(scheduleDate?.toString() ?? 'No Date Selected');
-                          log(startTime?.toString() ?? 'No Time Selected');
-                          log(_visibilityController.text);
-                        }
+                    BlocConsumer<
+                      CreateDailyGuidanceBloc,
+                      CreateDailyGuidanceState
+                    >(
+                      listener: (context, state) {
+                        state.whenOrNull(
+                          loaded: (data) {
+                            CustomToast.showSuccess(
+                              'Guidance Created Successfully !!!',
+                            );
+                            context.pop();
+                          },
+                          failure: (failure) {
+                            CustomToast.showError(failure.message);
+                          },
+                        );
+                      },
+                      builder: (context, state) {
+                        final bool isLoading = state.maybeWhen(
+                          loading: () => true,
+                          orElse: () => false,
+                        );
+                        return CustomButton(
+                          text: 'Save',
+                          isDisabled: isLoading,
+                          isLoading: isLoading,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              sl<CreateDailyGuidanceBloc>().add(
+                                CreateDailyGuidanceEvent.createDailyGuidance(
+                                  AdminDailyGuidanceModel(
+                                    title: _titleController.text,
+                                    message: _descriptionController.text,
+                                    audioUrl: _audioFile!,
+                                    visibility: _visibilityController.text,
+                                  ),
+                                ),
+                              );
+                              log(_titleController.text);
+                              log(_descriptionController.text);
+                              if (_audioFile != null) log(_audioFile!.path);
+                              log(
+                                scheduleDate?.toString() ?? 'No Date Selected',
+                              );
+                              log(startTime?.toString() ?? 'No Time Selected');
+                              log(_visibilityController.text);
+                            }
+                          },
+                        );
                       },
                     ),
                   ],

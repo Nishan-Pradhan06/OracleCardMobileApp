@@ -103,16 +103,16 @@ class AdminRepositoryImp implements AdminRepository {
   }) async {
     FormData formData = FormData.fromMap({
       ...adminDailyGuidance.toMap(),
-      if (adminDailyGuidance.audioUrl != null)
-        'audio': await MultipartFile.fromFile(
-          adminDailyGuidance.audioUrl!.path,
-          filename: adminDailyGuidance.audioUrl!.path.split('/').last,
-        ),
+      'audio': await MultipartFile.fromFile(
+        adminDailyGuidance.audioUrl.path,
+        filename: adminDailyGuidance.audioUrl.path.split('/').last,
+      ),
     });
 
     final response = await _apiService.post<Map>(
       'admin/guidance',
       data: formData,
+      options: Options(headers: {'Content-Type': 'multipart/form-data'}),
     );
 
     return response.fold(
