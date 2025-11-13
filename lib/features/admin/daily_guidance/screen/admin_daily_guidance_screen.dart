@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 
 import '../../../../core/widgets/admin_appbar.dart';
 import '../../../../core/widgets/custom_background.dart';
@@ -27,7 +29,11 @@ class AdminDailyGuidanceScreen extends StatelessWidget {
                 children: [
                   CustomBtnAdmin(
                     btnText: 'Create Guidance',
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(
+                        AppRoutesName.adminCreateDailyGuidanceDialogRoute,
+                      );
+                    },
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
                   CustomContainer(
