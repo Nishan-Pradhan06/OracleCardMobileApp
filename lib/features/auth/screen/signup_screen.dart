@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           SignUpModel(
             email: _emailController.text,
             password: _passwordController.text,
-            fullName: _fullNameController.text,
+            name: _fullNameController.text,
             timezone: _timezoneController.text,
           ),
         ),

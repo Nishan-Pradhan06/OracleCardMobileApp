@@ -1,5 +1,5 @@
 class SignUpModel {
-  final String fullName;
+  final String name;
   final String email;
   final String password;
   final String timezone;
@@ -7,7 +7,7 @@ class SignUpModel {
   SignUpModel({
     required this.email,
     required this.password,
-    required this.fullName,
+    required this.name,
     required this.timezone,
   });
 
@@ -15,7 +15,7 @@ class SignUpModel {
     return <String, dynamic>{
       'email': email,
       'password': password,
-      'firstName': fullName,
+      'name': name,
       'timezone': timezone,
     };
   }

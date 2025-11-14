@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: CustomPadding(
           child: Center(
             child: CustomContainer(
-              height: MediaQuery.sizeOf(context).height * 0.45,
+              height: MediaQuery.sizeOf(context).height * 0.50,
               child: Form(
                 key: _formKey,
                 child: Center(
