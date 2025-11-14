@@ -175,9 +175,29 @@ class AdminRepositoryImp implements AdminRepository {
     });
   }
 
+  //##-------------------CREATE CARDS-------------------------##
+
   @override
-  FutureEither<String> createCard({required CreateCardModel createCardM}) {
-    // TODO: implement createCard
-    throw UnimplementedError();
+  FutureEither<String> createCard({
+    required CreateCardModel createCardM,
+  }) async {
+    FormData formData = FormData.fromMap({
+      ...createCardM.toMap(),
+      'audio': await MultipartFile.fromFile(
+        createCardM.image.path,
+        filename: createCardM.image.path.split('/').last,
+      ),
+    });
+
+    final response = await _apiService.post<Map>(
+      'admin/cards',
+      data: formData,
+      options: Options(headers: {'Content-Type': 'multipart/form-data'}),
+    );
+
+    return response.fold(
+      (failure) => Left(failure),
+      (data) => const Right("Cards Created Successfully!"),
+    );
   }
 }
