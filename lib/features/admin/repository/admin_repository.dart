@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 import 'package:oracle_card_app/features/admin/daily_guidance/model/admin_daily_guidance_model.dart';
+import 'package:oracle_card_app/features/admin/deck_and_card/model/create_card_model.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.dart';
 import 'package:oracle_card_app/features/admin/sessions/models/create_sessions_model.dart';
 
@@ -10,10 +11,17 @@ import '../meditations/model/create_meditations_model.dart';
 import '../user_and_billing/model/get_user_model.dart';
 
 abstract interface class AdminRepository {
+  //##-----------------HOME-----SCREEN-------------------##
+
   //##-------------------CREATE DECK-------------------------##
   FutureEither<String> createDeck({required DeckCardModel deckCardModel});
+  //##-------------------CREATE Card-------------------------##
+  FutureEither<String> createCard({required CreateCardModel createCardM});
   //##-------------------GET DECK-------------------------##
   FutureEither<List<AdminDeckModel>> getAdminDeck();
+
+  //##-----------------MEDITATIONS-----SCREEN-------------------##
+
   //##-------------------CREATE MEDITATIONS-------------------------##
   FutureEither<String> createMeditations({
     required CreateMeditationsModel createMeditations,
@@ -165,5 +173,11 @@ class AdminRepositoryImp implements AdminRepository {
     return response.fold((failure) => Left(failure), (data) {
       return Right("Promo Code Grant Successful !!!");
     });
+  }
+
+  @override
+  FutureEither<String> createCard({required CreateCardModel createCardM}) {
+    // TODO: implement createCard
+    throw UnimplementedError();
   }
 }
