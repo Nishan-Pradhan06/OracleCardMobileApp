@@ -14,7 +14,6 @@ import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../dashboard/widgets/custom_btn_ad.dart';
-import 'view_metrics_screen.dart';
 
 class AdminDailyGuidanceScreen extends StatelessWidget {
   const AdminDailyGuidanceScreen({super.key});
@@ -85,6 +84,14 @@ class AdminDailyGuidanceScreen extends StatelessWidget {
                               return DailyGuidanceListAdmin(
                                 title: dailyGuidanceL.title,
                                 dateTime: formattedDate,
+                                onTap: () {
+                                  context.pushNamed(
+                                    AppRoutesName.adminGuidanceMetrics,
+                                    pathParameters: {
+                                      'id': dailyGuidanceL.id.toString(),
+                                    },
+                                  );
+                                },
                               );
                             }),
                           );
@@ -105,10 +112,12 @@ class AdminDailyGuidanceScreen extends StatelessWidget {
 class DailyGuidanceListAdmin extends StatelessWidget {
   final String title;
   final String dateTime;
+  final void Function()? onTap;
   const DailyGuidanceListAdmin({
     super.key,
     required this.title,
     required this.dateTime,
+    this.onTap,
   });
 
   @override
@@ -167,13 +176,7 @@ class DailyGuidanceListAdmin extends StatelessWidget {
               ),
               InkWell(
                 splashColor: Color(0xFF8B5CF6),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => GuidanceMetricsScreen(),
-                    ),
-                  );
-                },
+                onTap: onTap,
                 child: Container(
                   height: 25,
                   width: 75,

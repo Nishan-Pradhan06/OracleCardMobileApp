@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/bloc/guidance_metrics/guidance_metrics_bloc.dart';
 
 import '../../../../core/widgets/admin_appbar.dart';
+import '../../../../core/widgets/custom_simmer_loader.dart';
 
 class GuidanceMetricsScreen extends StatelessWidget {
-  final Map<String, dynamic> metricsData = {
-    "success": true,
-    "message": "Guidance metrics fetched",
-    "data": {"delivered": 2, "opened": 2},
-    "timestamp": "2025-11-15T05:37:08.877Z",
-  };
-
-  GuidanceMetricsScreen({super.key});
+  final int guidanceId;
+  const GuidanceMetricsScreen({super.key, required this.guidanceId});
 
   @override
   Widget build(BuildContext context) {
-    final data = metricsData['data'] as Map<String, dynamic>;
-    final delivered = data['delivered'] as int;
-    final opened = data['opened'] as int;
-
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AdminCustomAppBar(
@@ -28,56 +21,58 @@ class GuidanceMetricsScreen extends StatelessWidget {
       ),
       body: CustomBackground(
         child: CustomPadding(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Metrics Cards
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildMetricCard(
-                      icon: Icons.send_outlined,
-                      title: 'Delivered',
-                      value: delivered.toString(),
-                      color: Colors.blue,
-                      iconBackground: Colors.blue[50]!,
+          child: BlocBuilder<GuidanceMetricsBloc, GuidanceMetricsState>(
+            builder: (context, state) {
+              return state.when(
+                initial: () => const SizedBox(height: 100),
+                loading: () => ShimmerLoaderWidget(
+                  isList: false,
+                  height: 60,
+                  count: 5,
+                  spacing: 10,
+                ),
+                failure: (failure) => SizedBox(
+                  height: 100,
+                  child: Center(
+                    child: Text(
+                      'Error: ${failure.message}',
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: _buildMetricCard(
-                      icon: Icons.mark_email_read_outlined,
-                      title: 'Opened',
-                      value: opened.toString(),
-                      color: Colors.purple,
-                      iconBackground: Colors.purple[50]!,
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(height: 24),
-
-              // Timestamp
-              Container(
-                padding: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey[300]!),
                 ),
-                child: Row(
-                  children: [
-                    Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
-                    SizedBox(width: 8),
-                    Text(
-                      'Last updated: ${_formatTimestamp(metricsData['timestamp'])}',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                loaded: (data) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Metrics Cards
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildMetricCard(
+                              icon: Icons.send_outlined,
+                              title: 'Delivered',
+                              value: data.delivered.toString(),
+                              color: Colors.blue,
+                              iconBackground: Colors.blue[50]!,
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                          Expanded(
+                            child: _buildMetricCard(
+                              icon: Icons.mark_email_read_outlined,
+                              title: 'Opened',
+                              value: data.opened.toString(),
+                              color: Colors.purple,
+                              iconBackground: Colors.purple[50]!,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
@@ -136,10 +131,5 @@ class GuidanceMetricsScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _formatTimestamp(String timestamp) {
-    final dateTime = DateTime.parse(timestamp);
-    return '${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}';
   }
 }

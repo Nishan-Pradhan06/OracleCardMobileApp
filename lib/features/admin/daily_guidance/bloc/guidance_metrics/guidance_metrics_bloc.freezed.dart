@@ -206,7 +206,7 @@ return getGuidanceMetrics(_that.guidanceId);case _:
 
 
 class _GuidanceMetricsE implements GuidanceMetricsEvent {
-  const _GuidanceMetricsE(this.guidanceId);
+  const _GuidanceMetricsE({required this.guidanceId});
   
 
 @override final  int guidanceId;
@@ -260,7 +260,7 @@ class __$GuidanceMetricsECopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? guidanceId = null,}) {
   return _then(_GuidanceMetricsE(
-null == guidanceId ? _self.guidanceId : guidanceId // ignore: cast_nullable_to_non_nullable
+guidanceId: null == guidanceId ? _self.guidanceId : guidanceId // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
