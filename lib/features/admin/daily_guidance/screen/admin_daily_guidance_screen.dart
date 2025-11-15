@@ -14,6 +14,7 @@ import '../../../../core/widgets/custom_padding.dart';
 import '../../../../core/widgets/custom_refresh_indicator.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../dashboard/widgets/custom_btn_ad.dart';
+import 'view_metrics_screen.dart';
 
 class AdminDailyGuidanceScreen extends StatelessWidget {
   const AdminDailyGuidanceScreen({super.key});
@@ -166,7 +167,13 @@ class DailyGuidanceListAdmin extends StatelessWidget {
               ),
               InkWell(
                 splashColor: Color(0xFF8B5CF6),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => GuidanceMetricsScreen(),
+                    ),
+                  );
+                },
                 child: Container(
                   height: 25,
                   width: 75,
