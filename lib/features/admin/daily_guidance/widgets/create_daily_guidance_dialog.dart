@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
-import 'package:oracle_card_app/features/admin/daily_guidance/bloc/bloc/create_daily_guidance_bloc.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/bloc/create_daily_guidance/create_daily_guidance_bloc.dart';
 import 'package:oracle_card_app/features/admin/daily_guidance/model/admin_daily_guidance_model.dart';
 
 import '../../../../core/helpers/validation_helpers.dart';
