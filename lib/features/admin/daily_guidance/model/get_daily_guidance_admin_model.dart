@@ -1,15 +1,14 @@
-
 class GetDailyGuidanceAdminModel {
   final int id;
   final String title;
   final String message;
   final String scheduledAt;
   final String visibility;
-  final int audioMediaId;
+  final int? audioMediaId;
   final int createdById;
   final bool isActive;
   final String createdAt;
-  final AudioMediaModel audioMedia;
+  final AudioMediaModel? audioMedia;
 
   GetDailyGuidanceAdminModel({
     required this.id,
@@ -26,31 +25,20 @@ class GetDailyGuidanceAdminModel {
 
   factory GetDailyGuidanceAdminModel.fromJson(Map<String, dynamic> json) {
     return GetDailyGuidanceAdminModel(
-      id: json["id"],
-      title: json["title"],
-      message: json["message"],
-      scheduledAt: json["scheduledAt"],
-      visibility: json["visibility"],
+      id: json["id"] ?? 0,
+      title: json["title"] ?? "",
+      message: json["message"] ?? "",
+      scheduledAt: json["scheduledAt"] ?? "",
+      visibility: json["visibility"] ?? "",
       audioMediaId: json["audioMediaId"],
-      createdById: json["createdById"],
-      isActive: json["isActive"],
-      createdAt: json["createdAt"],
-      audioMedia: AudioMediaModel.fromJson(json["audioMedia"]),
+      createdById: json["createdById"] ?? 0,
+      isActive: json["isActive"] ?? false,
+      createdAt: json["createdAt"] ?? "",
+      audioMedia: json["audioMedia"] != null
+          ? AudioMediaModel.fromJson(json["audioMedia"])
+          : null,
     );
   }
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "message": message,
-    "scheduledAt": scheduledAt,
-    "visibility": visibility,
-    "audioMediaId": audioMediaId,
-    "createdById": createdById,
-    "isActive": isActive,
-    "createdAt": createdAt,
-    "audioMedia": audioMedia.toJson(),
-  };
 }
 
 class AudioMediaModel {
@@ -76,27 +64,16 @@ class AudioMediaModel {
     required this.createdAt,
   });
 
-  factory AudioMediaModel.fromJson(Map<String, dynamic> json) => AudioMediaModel(
-    id: json["id"],
-    type: json["type"],
-    title: json["title"],
-    description: json["description"],
-    url: json["url"],
-    durationSec: json["durationSec"],
-    visibility: json["visibility"],
-    uploadedById: json["uploadedById"],
-    createdAt: json["createdAt"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "type": type,
-    "title": title,
-    "description": description,
-    "url": url,
-    "durationSec": durationSec,
-    "visibility": visibility,
-    "uploadedById": uploadedById,
-    "createdAt": createdAt,
-  };
+  factory AudioMediaModel.fromJson(Map<String, dynamic> json) =>
+      AudioMediaModel(
+        id: json["id"] ?? 0,
+        type: json["type"] ?? "",
+        title: json["title"] ?? "",
+        description: json["description"] ?? "",
+        url: json["url"] ?? "",
+        durationSec: json["durationSec"] ?? 0,
+        visibility: json["visibility"] ?? "",
+        uploadedById: json["uploadedById"] ?? 0,
+        createdAt: json["createdAt"] ?? "",
+      );
 }

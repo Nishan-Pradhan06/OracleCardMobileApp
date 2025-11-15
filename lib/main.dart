@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oracle_card_app/core/config/env_config.dart';
 import 'package:oracle_card_app/features/admin/daily_guidance/bloc/bloc/create_daily_guidance_bloc.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/bloc/get_daily_guidance/get_daily_guidance_admin_bloc.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/create_deck/deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/get_admin_deck/get_admin_deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/meditations/bloc/create_meditations/create_meditations_bloc.dart';
@@ -122,6 +123,11 @@ class OracelCard extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               sl<GetAdminDeckBloc>()..add(GetAdminDeckEvent.getAdminDeck()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              sl<GetDailyGuidanceAdminBloc>()
+                ..add(GetDailyGuidanceAdminEvent.getDailyGuidanceAdmin()),
         ),
         BlocProvider(
           create: (context) =>
