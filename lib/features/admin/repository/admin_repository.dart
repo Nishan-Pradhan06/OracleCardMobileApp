@@ -5,6 +5,7 @@ import 'package:oracle_card_app/core/network/api_services.dart';
 import 'package:oracle_card_app/features/admin/daily_guidance/model/admin_daily_guidance_model.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/model/create_card_model.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.dart';
+import 'package:oracle_card_app/features/admin/meditations/model/get_admin_meditations_model.dart';
 import 'package:oracle_card_app/features/admin/sessions/models/create_sessions_model.dart';
 
 import '../meditations/model/create_meditations_model.dart';
@@ -26,6 +27,8 @@ abstract interface class AdminRepository {
   FutureEither<String> createMeditations({
     required CreateMeditationsModel createMeditations,
   });
+  //##-------------------GET MEDITATIONS-------------------------##
+  FutureEither<List<GetAdminMeditationModel>> getMeditations();
   //##-------------------CREATE DAILY GUIDANCE-------------------------##
   FutureEither<String> createDailyGuidance({
     required AdminDailyGuidanceModel adminDailyGuidance,
@@ -199,5 +202,23 @@ class AdminRepositoryImp implements AdminRepository {
       (failure) => Left(failure),
       (data) => const Right("Cards Created Successfully!"),
     );
+  }
+
+  //##-------------------GET MEDITATIONS-------------------------##
+  @override
+  FutureEither<List<GetAdminMeditationModel>> getMeditations() async {
+    final response = await _apiService.get('admin/meditations');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final list = data['data'] as List<dynamic>;
+
+      final meditations = list
+          .map(
+            (e) => GetAdminMeditationModel.fromJson(e as Map<String, dynamic>),
+          )
+          .toList();
+
+      return Right(meditations);
+    });
   }
 }
