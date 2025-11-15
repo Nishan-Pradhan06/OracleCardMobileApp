@@ -9,6 +9,7 @@ import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.da
 import 'package:oracle_card_app/features/admin/meditations/model/get_admin_meditations_model.dart';
 import 'package:oracle_card_app/features/admin/sessions/models/create_sessions_model.dart';
 
+import '../daily_guidance/model/guidance_metrics_model.dart';
 import '../meditations/model/create_meditations_model.dart';
 import '../user_and_billing/model/get_user_model.dart';
 
@@ -38,6 +39,10 @@ abstract interface class AdminRepository {
   });
   //##-------------------GET DAILY GUIDANCE-------------------------##
   FutureEither<List<GetDailyGuidanceAdminModel>> getDailyGuidance();
+  //##-------------------GET DAILY GUIDANCE METRICS-------------------------##
+  FutureEither<GuidanceMetrics> getDailyGuidanceMetrics({
+    required String dailyGuidanceId,
+  });
 
   //##-------------------CREATE SESSIONS-------------------------##
   FutureEither<String> createSessions({
@@ -245,4 +250,22 @@ class AdminRepositoryImp implements AdminRepository {
       return Right(dailyGuidance);
     });
   }
+
+  @override
+  FutureEither<GuidanceMetrics> getDailyGuidanceMetrics({
+    required String dailyGuidanceId,
+  }) async {
+    final response = await _apiService.get(
+      'admin/guidance/$dailyGuidanceId/metrics',
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      final metricsData = data['data'];
+
+      final metrics = GuidanceMetrics.fromJson(metricsData);
+
+      return Right(metrics);
+    });
+  }
+
 }
