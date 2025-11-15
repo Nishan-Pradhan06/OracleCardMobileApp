@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 import 'package:oracle_card_app/features/admin/daily_guidance/model/admin_daily_guidance_model.dart';
+import 'package:oracle_card_app/features/admin/daily_guidance/model/get_daily_guidance_admin_model.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/model/create_card_model.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/model/deck_model.dart';
 import 'package:oracle_card_app/features/admin/meditations/model/get_admin_meditations_model.dart';
@@ -29,10 +30,15 @@ abstract interface class AdminRepository {
   });
   //##-------------------GET MEDITATIONS-------------------------##
   FutureEither<List<GetAdminMeditationModel>> getMeditations();
+
+  //######################--DAILY GUIDANCE--###########################
   //##-------------------CREATE DAILY GUIDANCE-------------------------##
   FutureEither<String> createDailyGuidance({
     required AdminDailyGuidanceModel adminDailyGuidance,
   });
+  //##-------------------GET DAILY GUIDANCE-------------------------##
+  FutureEither<List<GetDailyGuidanceAdminModel>> getDailyGuidance();
+
   //##-------------------CREATE SESSIONS-------------------------##
   FutureEither<String> createSessions({
     required CreateSessionModel createSessionM,
@@ -219,6 +225,24 @@ class AdminRepositoryImp implements AdminRepository {
           .toList();
 
       return Right(meditations);
+    });
+  }
+
+  @override
+  FutureEither<List<GetDailyGuidanceAdminModel>> getDailyGuidance() async {
+    final response = await _apiService.get('admin/guidance');
+
+    return response.fold((failure) => Left(failure), (data) {
+      final list = data['data'] as List<dynamic>;
+
+      final dailyGuidance = list
+          .map(
+            (e) =>
+                GetDailyGuidanceAdminModel.fromJson(e as Map<String, dynamic>),
+          )
+          .toList();
+
+      return Right(dailyGuidance);
     });
   }
 }
