@@ -36,6 +36,7 @@ import 'package:oracle_card_app/features/users/sessions/blocs/rsvp_session/rsvp_
 import 'package:oracle_card_app/features/users/sessions/repository/session_repository.dart';
 import 'package:retry/retry.dart';
 
+import '../../features/admin/meditations/bloc/get_meditations_admin/get_meditations_admin_bloc.dart';
 import '../../features/device_register_push_notification/repository/device_register_repository.dart';
 import '../network/dio_client.dart';
 
@@ -70,6 +71,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => DeckBloc(repo: sl()));
   sl.registerLazySingleton(() => GetAdminDeckBloc(repo: sl()));
   sl.registerLazySingleton(() => CreateDailyGuidanceBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetMeditationsAdminBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 

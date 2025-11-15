@@ -1,13 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
+
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
-import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/admin/dashboard/widgets/custom_btn_ad.dart';
+import 'package:oracle_card_app/features/admin/meditations/bloc/get_meditations_admin/get_meditations_admin_bloc.dart';
+
+import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/admin_appbar.dart';
+import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../router/app_routes_names.dart';
+import '../widgets/meditations_list_admin.dart';
 
 class AdminMeditationsScreen extends StatelessWidget {
   const AdminMeditationsScreen({super.key});
@@ -19,7 +26,11 @@ class AdminMeditationsScreen extends StatelessWidget {
 
       body: CustomBackground(
         child: CustomRefreshIndicator(
-          onRefresh: () async {},
+          onRefresh: () async {
+            sl<GetMeditationsAdminBloc>().add(
+              GetMeditationsAdminEvent.getAdminMeditations(),
+            );
+          },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             child: CustomPadding(
@@ -35,78 +46,54 @@ class AdminMeditationsScreen extends StatelessWidget {
                     },
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
-                  CustomContainer(
-                    useIntrinsicHeight: true,
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                    child: Column(
-                      spacing: 10,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Morning Meditation',
-                              style: TextTheme.of(context).headlineLarge
-                                  ?.copyWith(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Container(
-                              height: 25,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: Color(0xFF8B5CF6).withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(16),
-                                ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Premium',
-                                  style: TextTheme.of(context).bodyMedium
-                                      ?.copyWith(
-                                        color: Color(0xFF8B5CF6),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ],
+                  BlocBuilder<
+                    GetMeditationsAdminBloc,
+                    GetMeditationsAdminState
+                  >(
+                    builder: (context, state) {
+                      return state.when(
+                        initial: () => const SizedBox(height: 100),
+                        loading: () => ShimmerLoaderWidget(
+                          isList: true,
+                          height: 80,
+                          count: 4,
+                          spacing: 10,
                         ),
-                        Row(
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset('assets/icons/schedule.svg'),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Sep 13, 2025, 08:00 AM +0545',
-                                  style: TextTheme.of(context).bodyLarge
-                                      ?.copyWith(color: Color(0xFF6B7280)),
-                                ),
-                              ],
+                        failure: (failure) => SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              'Error: ${failure.message}',
+                              style: const TextStyle(color: Colors.red),
                             ),
-                            Row(
-                              children: [
-                                SizedBox(width: 20),
-                                Icon(
-                                  Icons.timer,
-                                  size: 16,
-                                  color: Color(0xFF6B7280),
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  '45 mins',
-                                  style: TextTheme.of(context).bodyLarge
-                                      ?.copyWith(color: Color(0xFF6B7280)),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                      ],
-                    ),
+                        loaded: (data) {
+                          final reversedData = data.reversed.toList();
+                          return Column(
+                            children: List.generate(reversedData.length, (
+                              index,
+                            ) {
+                              final meditationsList = reversedData[index];
+                              final formattedDate =
+                                  DateTimeUtils.formatReadableDate(
+                                    meditationsList.media!.createdAt.toString(),
+                                  );
+                              return AdminMeditationsCard(
+                                title: meditationsList.title,
+                                visibility: meditationsList.visibility.name
+                                    .toUpperCase(),
+                                dateTime: formattedDate,
+                                durations:
+                                    meditationsList.media!.durationSec != null
+                                    ? '${meditationsList.media!.durationSec} sec'
+                                    : null,
+                              );
+                            }),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
               ),

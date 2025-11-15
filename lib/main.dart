@@ -9,6 +9,7 @@ import 'package:oracle_card_app/features/admin/daily_guidance/bloc/bloc/create_d
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/create_deck/deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/get_admin_deck/get_admin_deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/meditations/bloc/create_meditations/create_meditations_bloc.dart';
+import 'package:oracle_card_app/features/admin/meditations/bloc/get_meditations_admin/get_meditations_admin_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
@@ -113,6 +114,11 @@ class OracelCard extends StatelessWidget {
         BlocProvider(create: (context) => sl<RsvpSessionBloc>()),
         BlocProvider(create: (context) => sl<DeviceRegisterBloc>()),
         BlocProvider(create: (context) => sl<CreateDailyGuidanceBloc>()),
+        BlocProvider(
+          create: (context) =>
+              sl<GetMeditationsAdminBloc>()
+                ..add(GetMeditationsAdminEvent.getAdminMeditations()),
+        ),
         BlocProvider(
           create: (context) =>
               sl<GetAdminDeckBloc>()..add(GetAdminDeckEvent.getAdminDeck()),
