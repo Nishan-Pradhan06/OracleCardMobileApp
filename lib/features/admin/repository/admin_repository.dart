@@ -40,8 +40,8 @@ abstract interface class AdminRepository {
   //##-------------------GET DAILY GUIDANCE-------------------------##
   FutureEither<List<GetDailyGuidanceAdminModel>> getDailyGuidance();
   //##-------------------GET DAILY GUIDANCE METRICS-------------------------##
-  FutureEither<GuidanceMetrics> getDailyGuidanceMetrics({
-    required String dailyGuidanceId,
+  FutureEither<GuidanceMetricsModel> getDailyGuidanceMetrics({
+    required int dailyGuidanceId,
   });
 
   //##-------------------CREATE SESSIONS-------------------------##
@@ -252,8 +252,8 @@ class AdminRepositoryImp implements AdminRepository {
   }
 
   @override
-  FutureEither<GuidanceMetrics> getDailyGuidanceMetrics({
-    required String dailyGuidanceId,
+  FutureEither<GuidanceMetricsModel> getDailyGuidanceMetrics({
+    required int dailyGuidanceId,
   }) async {
     final response = await _apiService.get(
       'admin/guidance/$dailyGuidanceId/metrics',
@@ -262,10 +262,9 @@ class AdminRepositoryImp implements AdminRepository {
     return response.fold((failure) => Left(failure), (data) {
       final metricsData = data['data'];
 
-      final metrics = GuidanceMetrics.fromJson(metricsData);
+      final metrics = GuidanceMetricsModel.fromJson(metricsData);
 
       return Right(metrics);
     });
   }
-
 }

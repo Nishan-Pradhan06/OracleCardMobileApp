@@ -1,11 +1,11 @@
-class GuidanceMetrics {
+class GuidanceMetricsModel {
   final int delivered;
   final int opened;
 
-  GuidanceMetrics({required this.delivered, required this.opened});
+  GuidanceMetricsModel({required this.delivered, required this.opened});
 
-  factory GuidanceMetrics.fromJson(Map<String, dynamic> json) {
-    return GuidanceMetrics(
+  factory GuidanceMetricsModel.fromJson(Map<String, dynamic> json) {
+    return GuidanceMetricsModel(
       delivered: json['delivered'] ?? 0,
       opened: json['opened'] ?? 0,
     );
