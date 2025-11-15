@@ -8,7 +8,7 @@ import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/helpers/validation_helpers.dart';
 import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
-import 'package:oracle_card_app/features/admin/meditations/bloc/bloc/create_meditations_bloc.dart';
+import 'package:oracle_card_app/features/admin/meditations/bloc/create_meditations/create_meditations_bloc.dart';
 import 'package:oracle_card_app/features/admin/meditations/model/create_meditations_model.dart';
 import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 
