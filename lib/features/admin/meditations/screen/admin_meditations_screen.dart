@@ -22,7 +22,10 @@ class AdminMeditationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AdminCustomAppBar(title: 'Meditations'),
+      appBar: AdminCustomAppBar(
+        title: 'Meditations',
+        automaticallyImplyLeading: true,
+      ),
 
       body: CustomBackground(
         child: CustomRefreshIndicator(
