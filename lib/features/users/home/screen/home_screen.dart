@@ -37,10 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     sl<UserProfileBloc>().add(UserProfileEvent.getUserProfile());
 
-    sl<GetOraclePullStatusBloc>().add(
-      GetOraclePullStatusEvent.getOracleCardPullStatus(),
-    );
-
     super.initState();
   }
 
@@ -101,9 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             listener: (context, state) {
                               state.whenOrNull(
                                 loaded: (data) {
-                                  CustomToast.showSuccess(
-                                    'Pull status fetched successfully',
-                                  );
+                                  CustomToast.showSuccess("dsfsdnsd");
                                 },
                               );
                             },
