@@ -14,25 +14,32 @@ import '../meditations/model/create_meditations_model.dart';
 import '../user_and_billing/model/get_user_model.dart';
 
 abstract interface class AdminRepository {
-  //##-----------------HOME-----SCREEN-------------------##
-
+  
+  //#####################################################################
   //##-------------------CREATE DECK-------------------------##
   FutureEither<String> createDeck({required DeckCardModel deckCardModel});
   //##-------------------CREATE Card-------------------------##
   FutureEither<String> createCard({required CreateCardModel createCardM});
   //##-------------------GET DECK-------------------------##
   FutureEither<List<AdminDeckModel>> getAdminDeck();
+  //#####################################################################
 
-  //##-----------------MEDITATIONS-----SCREEN-------------------##
 
+
+
+  //#####################################################################
   //##-------------------CREATE MEDITATIONS-------------------------##
   FutureEither<String> createMeditations({
     required CreateMeditationsModel createMeditations,
   });
   //##-------------------GET MEDITATIONS-------------------------##
   FutureEither<List<GetAdminMeditationModel>> getMeditations();
+  //#####################################################################
 
-  //######################--DAILY GUIDANCE--###########################
+
+
+
+  //#####################################################################
   //##-------------------CREATE DAILY GUIDANCE-------------------------##
   FutureEither<String> createDailyGuidance({
     required AdminDailyGuidanceModel adminDailyGuidance,
@@ -43,11 +50,22 @@ abstract interface class AdminRepository {
   FutureEither<GuidanceMetricsModel> getDailyGuidanceMetrics({
     required int dailyGuidanceId,
   });
+  //#####################################################################
 
+
+
+
+  //#####################################################################
   //##-------------------CREATE SESSIONS-------------------------##
   FutureEither<String> createSessions({
     required CreateSessionModel createSessionM,
   });
+  //#####################################################################
+
+
+
+
+  //#####################################################################
   //##-------------------GET USERS-------------------------##
   FutureEither<DataListModel> getUsers();
   //##-------------------GRANT PROMO-------------------------##
@@ -55,6 +73,10 @@ abstract interface class AdminRepository {
     required String promoCode,
     required int userId,
   });
+  //##-------------------RESET PASSWORD-------------------------##
+  FutureEither<String> resetPassword({required int userId});
+  //#####################################################################
+
 }
 
 class AdminRepositoryImp implements AdminRepository {
@@ -159,6 +181,8 @@ class AdminRepositoryImp implements AdminRepository {
     });
   }
 
+  //##-------------------GET USERS-------------------------##
+
   @override
   FutureEither<DataListModel> getUsers() async {
     final response = await _apiService.get('admin/users');
@@ -172,13 +196,15 @@ class AdminRepositoryImp implements AdminRepository {
     });
   }
 
+  //##-------------------GRANT PROMOCODE-------------------------##
+
   @override
   FutureEither<String> grantPromoCode({
     required String promoCode,
     required int userId,
   }) async {
     final response = await _apiService.post<Map>(
-      '/admin/users/$userId/grant-promo',
+      'admin/users/$userId/grant-promo',
       data: {"code": promoCode},
     );
 
@@ -231,6 +257,8 @@ class AdminRepositoryImp implements AdminRepository {
     });
   }
 
+  //##-------------------GET GUIDANCE LIST-------------------------##
+
   @override
   FutureEither<List<GetDailyGuidanceAdminModel>> getDailyGuidance() async {
     final response = await _apiService.get('admin/guidance');
@@ -249,6 +277,8 @@ class AdminRepositoryImp implements AdminRepository {
     });
   }
 
+  //##-------------------GUIDANCE METRICS-------------------------##
+
   @override
   FutureEither<GuidanceMetricsModel> getDailyGuidanceMetrics({
     required int dailyGuidanceId,
@@ -263,6 +293,19 @@ class AdminRepositoryImp implements AdminRepository {
       final metrics = GuidanceMetricsModel.fromJson(metricsData);
 
       return Right(metrics);
+    });
+  }
+
+  //##-------------------RESET PASSWORDS-------------------------##
+
+  @override
+  FutureEither<String> resetPassword({required int userId}) async {
+    final response = await _apiService.post<Map>(
+      'admin/users/$userId/send-password-reset',
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      return Right("Password reset email sent");
     });
   }
 }
