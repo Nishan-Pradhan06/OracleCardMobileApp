@@ -6,7 +6,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 
-
 abstract interface class DeviceRegisterForPushNotificationRepository {
   FutureEither<String> deviceRegister();
 }
@@ -33,13 +32,13 @@ class DeviceRegisterForPushNotificationRepositoryImpl
     final response = await _apiService.post<Map>(
       'device/register',
       data: <String, String>{
-        'plaform': Platform.isAndroid ? 'ANDROID' : 'IOS',
+        'platform': Platform.isAndroid ? 'ANDROID' : 'IOS',
         'token': token!,
       },
     );
 
     return response.fold((failure) => Left(failure), (data) {
-      final deviceData = data['data'];
+      final deviceData = data['message'];
 
       return Right(deviceData);
     });

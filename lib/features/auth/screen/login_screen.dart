@@ -16,6 +16,7 @@ import 'package:oracle_card_app/features/auth/widgets/text_form_field.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 
 import '../../../core/di/dependency_injection.dart';
+import '../../device_register_push_notification/bloc/device_register/device_register_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -89,6 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               }
                               CustomToast.showSuccess("Login Successful");
+                              sl<DeviceRegisterBloc>().add(
+                                DeviceRegisterEvent.deviceRegister(),
+                              );
                             },
                             failure: (failure) {
                               CustomToast.showError(failure.message);
