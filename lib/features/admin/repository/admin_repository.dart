@@ -49,7 +49,7 @@ abstract interface class AdminRepository {
     required CreateSessionModel createSessionM,
   });
   //##-------------------GET USERS-------------------------##
-  FutureEither<List<DataListModel>> getUsers();
+  FutureEither<DataListModel> getUsers();
   //##-------------------GRANT PROMO-------------------------##
   FutureEither<String> grantPromoCode({
     required String promoCode,
@@ -160,17 +160,15 @@ class AdminRepositoryImp implements AdminRepository {
   }
 
   @override
-  FutureEither<List<DataListModel>> getUsers() async {
+  FutureEither<DataListModel> getUsers() async {
     final response = await _apiService.get('admin/users');
 
     return response.fold((failure) => Left(failure), (data) {
-      final usersList = data['data'] as List<dynamic>;
+      final json = data['data'];
 
-      final users = usersList
-          .map((user) => DataListModel.fromJson(user as Map<String, dynamic>))
-          .toList();
+      final dataList = DataListModel.fromJson(json as Map<String, dynamic>);
 
-      return Right(users);
+      return Right(dataList);
     });
   }
 

@@ -8,6 +8,7 @@ import 'package:oracle_card_app/features/admin/deck_and_card/bloc/create_deck/de
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/get_admin_deck/get_admin_deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/meditations/bloc/create_meditations/create_meditations_bloc.dart';
 import 'package:oracle_card_app/features/admin/repository/admin_repository.dart';
+import 'package:oracle_card_app/features/admin/user_and_billing/bloc/get_user/get_user_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
@@ -76,6 +77,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetMeditationsAdminBloc(repo: sl()));
   sl.registerLazySingleton(() => GetDailyGuidanceAdminBloc(repo: sl()));
   sl.registerLazySingleton(() => GuidanceMetricsBloc(repo: sl()));
+  sl.registerLazySingleton(() => GetUserBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 

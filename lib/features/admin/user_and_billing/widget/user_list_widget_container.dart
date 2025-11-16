@@ -7,7 +7,7 @@ import '../../../../core/widgets/custom_container.dart';
 class UserListWidgetContainer extends StatelessWidget {
   final String userName;
   final String email;
-  final String status;
+  final String plan;
   final String subStatus;
   final String nextBilling;
   final String pullCount;
@@ -18,7 +18,7 @@ class UserListWidgetContainer extends StatelessWidget {
     super.key,
     required this.userName,
     required this.email,
-    required this.status,
+    required this.plan,
     required this.subStatus,
     required this.nextBilling,
     required this.pullCount,
@@ -67,7 +67,7 @@ class UserListWidgetContainer extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    status,
+                    plan,
                     style: TextTheme.of(context).bodyMedium?.copyWith(
                       color: Color(0xFF8B5CF6),
                       fontWeight: FontWeight.w600,

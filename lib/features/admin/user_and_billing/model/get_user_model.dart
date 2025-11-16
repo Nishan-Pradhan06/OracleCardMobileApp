@@ -1,7 +1,4 @@
-// models.dart
 import 'dart:convert';
-
-
 
 /// Data wrapper containing items and total
 class DataListModel {
@@ -26,7 +23,7 @@ class DataListModel {
 /// User model
 class UserModel {
   final int id;
-  final String name;
+  final String? name; // Nullable
   final String email;
   final String plan;
   final SubscriptionModel subscription;
@@ -36,7 +33,7 @@ class UserModel {
 
   UserModel({
     required this.id,
-    required this.name,
+    this.name,
     required this.email,
     required this.plan,
     required this.subscription,
@@ -47,7 +44,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json['id'] as int,
-    name: json['name'] as String,
+    name: json['name'] as String?, // handle null
     email: json['email'] as String,
     plan: json['plan'] as String,
     subscription: SubscriptionModel.fromJson(
@@ -82,12 +79,13 @@ class SubscriptionModel {
 
   SubscriptionModel({required this.status, this.nextBillingDate});
 
-  factory SubscriptionModel.fromJson(Map<String, dynamic> json) => SubscriptionModel(
-    status: json['status'] as String,
-    nextBillingDate: json['nextBillingDate'] != null
-        ? DateTime.parse(json['nextBillingDate'] as String)
-        : null,
-  );
+  factory SubscriptionModel.fromJson(Map<String, dynamic> json) =>
+      SubscriptionModel(
+        status: json['status'] as String,
+        nextBillingDate: json['nextBillingDate'] != null
+            ? DateTime.parse(json['nextBillingDate'] as String)
+            : null,
+      );
 
   Map<String, dynamic> toJson() => {
     'status': status,

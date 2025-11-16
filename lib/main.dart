@@ -11,6 +11,7 @@ import 'package:oracle_card_app/features/admin/deck_and_card/bloc/create_deck/de
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/get_admin_deck/get_admin_deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/meditations/bloc/create_meditations/create_meditations_bloc.dart';
 import 'package:oracle_card_app/features/admin/meditations/bloc/get_meditations_admin/get_meditations_admin_bloc.dart';
+import 'package:oracle_card_app/features/admin/user_and_billing/bloc/get_user/get_user_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bloc.dart';
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
@@ -133,6 +134,9 @@ class OracelCard extends StatelessWidget {
           create: (context) =>
               sl<GetGuidanceArchiveBloc>()
                 ..add(GetGuidanceArchiveEvent.getGuidanceArchive()),
+        ),
+        BlocProvider(
+          create: (context) => sl<GetUserBloc>()..add(GetUserEvent.getUser()),
         ),
       ],
       child: MaterialApp.router(
