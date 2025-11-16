@@ -75,6 +75,9 @@ class AdminDasboardScreen extends StatelessWidget {
                     svgPath: 'assets/svg/users.svg',
                     title: 'Users & Billing',
                     subtitle: 'View users and billing',
+                    onTap: () {
+                      context.pushNamed(AppRoutesName.userAndBillingsRoute);
+                    },
                   ),
                   BlocConsumer<SignOutBloc, SignOutState>(
                     listener: (context, state) {

@@ -7,6 +7,7 @@ import 'package:oracle_card_app/features/admin/dashboard/screen/dashboard_screen
 import 'package:oracle_card_app/features/admin/deck_and_card/screen/deck_and_card_screen.dart';
 import 'package:oracle_card_app/features/admin/meditations/screen/admin_meditations_screen.dart';
 import 'package:oracle_card_app/features/admin/meditations/widgets/create_meditations_dilog.dart';
+import 'package:oracle_card_app/features/admin/user_and_billing/screen/user_list_screen.dart';
 import '../core/di/dependency_injection.dart';
 import '../core/helpers/dialog_page.dart';
 import '../features/admin/daily_guidance/screen/view_metrics_screen.dart';
@@ -34,6 +35,11 @@ List<GoRoute> adminAppRoutes = [
     path: AppRoutesName.adminDailyGuidanceScreenRoute.path,
     name: AppRoutesName.adminDailyGuidanceScreenRoute,
     builder: (context, state) => AdminDailyGuidanceScreen(),
+  ),
+  GoRoute(
+    path: AppRoutesName.userAndBillingsRoute.path,
+    name: AppRoutesName.userAndBillingsRoute,
+    builder: (context, state) => UserListScreen(),
   ),
   GoRoute(
     path: '/guidanceMetrics/:id',
