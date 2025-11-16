@@ -111,7 +111,7 @@ class SessionScreen extends StatelessWidget {
                                     dateText: formattedDateTime,
                                     title: session.title,
                                     description: session.description,
-                                    isButtonEnabled: isLoading,
+                                    isButtonEnabled: session.rsvp,
                                     isLoading: isLoading,
                                     onTap: () {
                                       context.pushNamed(
@@ -123,15 +123,13 @@ class SessionScreen extends StatelessWidget {
                                         },
                                       );
                                     },
-                                    rsvpButton: isLoading
-                                        ? null
-                                        : () {
-                                            sl<RsvpSessionBloc>().add(
-                                              RsvpSessionEvent.rsvpSession(
-                                                sessionId!,
-                                              ),
-                                            );
-                                          },
+                                    // rsvpButton: () {
+                                    //   sl<RsvpSessionBloc>().add(
+                                    //     RsvpSessionEvent.rsvpSession(
+                                    //       sessionId!,
+                                    //     ),
+                                    //   );
+                                    // },
                                   );
                                 },
                               );
