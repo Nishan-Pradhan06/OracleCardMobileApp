@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/admin/user_and_billing/bloc/get_user/get_user_bloc.dart';
+import 'package:oracle_card_app/features/admin/user_and_billing/bloc/reset_password/reset_password_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 
 import '../../../../core/widgets/admin_appbar.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
+import '../../../../core/widgets/custom_toast.dart';
 import '../widget/user_list_widget_container.dart';
 
 class UserListScreen extends StatelessWidget {
@@ -51,19 +54,50 @@ class UserListScreen extends StatelessWidget {
                         children: List.generate(data.items.length, (index) {
                           final userList = data.items[index];
 
-                          return UserListWidgetContainer(
-                            userName: userList.name ?? '',
-                            email: userList.email,
-                            plan: userList.plan,
-                            subStatus: userList.subscription.status,
-                            nextBilling: userList.subscription.nextBillingDate
-                                .toString(),
-                            pullCount: userList.activity.pulls.toString(),
-                            journalCount: userList.activity.journals.toString(),
-                            onPressedGrantPromo: () {
-                              context.pushNamed(
-                                AppRoutesName.grantPromoCode,
-                                pathParameters: {'id': userList.id.toString()},
+                          return BlocConsumer<
+                            ResetPasswordBloc,
+                            ResetPasswordState
+                          >(
+                            listener: (context, state) {
+                              state.whenOrNull(
+                                loaded: (data) {
+                                  CustomToast.showSuccess(
+                                    'Password reset email sent',
+                                  );
+                                },
+                                failure: (failure) {
+                                  CustomToast.showError(failure.message);
+                                },
+                              );
+                            },
+                            builder: (context, state) {
+                              return UserListWidgetContainer(
+                                userName: userList.name ?? '',
+                                email: userList.email,
+                                plan: userList.plan,
+                                subStatus: userList.subscription.status,
+                                nextBilling: userList
+                                    .subscription
+                                    .nextBillingDate
+                                    .toString(),
+                                pullCount: userList.activity.pulls.toString(),
+                                journalCount: userList.activity.journals
+                                    .toString(),
+                                onPressedGrantPromo: () {
+                                  context.pushNamed(
+                                    AppRoutesName.grantPromoCode,
+                                    pathParameters: {
+                                      'id': userList.id.toString(),
+                                    },
+                                  );
+                                },
+                                onPressedResetPassword: () {
+                                  sl<ResetPasswordBloc>().add(
+                                    ResetPasswordEvent.resetPassword(
+                                      userId: userList.id,
+                                    ),
+                                  );
+                                },
                               );
                             },
                           );
