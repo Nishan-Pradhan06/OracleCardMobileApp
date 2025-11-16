@@ -24,6 +24,9 @@ class ShimmerLoaderWidget extends StatelessWidget {
   /// Border radius for shimmer boxes
   final double borderRadius;
 
+  final Color? baseColor;
+  final Color? highlightColor;
+
   const ShimmerLoaderWidget({
     super.key,
     this.isList = false,
@@ -34,6 +37,8 @@ class ShimmerLoaderWidget extends StatelessWidget {
     this.width,
     this.spacing = 12,
     this.borderRadius = 12,
+    this.baseColor,
+    this.highlightColor,
   });
 
   @override
@@ -78,8 +83,8 @@ class ShimmerLoaderWidget extends StatelessWidget {
 
     // Shimmer effect
     return Shimmer.fromColors(
-      baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
+      baseColor: baseColor ?? Colors.grey.shade300,
+      highlightColor: highlightColor ?? Colors.grey.shade100,
       child: shimmerChild,
     );
   }

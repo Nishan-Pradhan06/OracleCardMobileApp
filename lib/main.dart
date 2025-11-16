@@ -23,7 +23,6 @@ import 'package:oracle_card_app/features/shared/payments_and_billing_subscriptio
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/redeem_promo_code/redeem_promo_code_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/audio_player/audio_player_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/get_daily_guidance/get_daily_guidance_bloc.dart';
-import 'package:oracle_card_app/features/users/home/bloc/get_oracle_pull_status_bloc/get_oracle_pull_status_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/get_today_prompt/get_today_prompt_bloc.dart';
 import 'package:oracle_card_app/features/users/journal/bloc/post_journal/post_journal_bloc.dart';
@@ -88,11 +87,6 @@ class OracelCard extends StatelessWidget {
           create: (context) =>
               sl<GetDailyGuidanceBloc>()
                 ..add(GetDailyGuidanceEvent.getDailyGuidance()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              sl<GetOraclePullStatusBloc>()
-                ..add(GetOraclePullStatusEvent.getOracleCardPullStatus()),
         ),
         BlocProvider(
           create: (context) =>
