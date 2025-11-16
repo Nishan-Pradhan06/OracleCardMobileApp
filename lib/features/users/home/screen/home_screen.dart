@@ -15,7 +15,7 @@ import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/upgrade_premium_button_widget.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../journal/bloc/get_journal_entires_list/get_journal_entires_list_bloc.dart';
-import '../../profile/bloc/user_profile_bloc.dart';
+import '../../profile/bloc/get_user_profile/user_profile_bloc.dart';
 import '../models/home_container_model.dart';
 import '../widgets/custom_card_button.dart';
 import '../../../../core/widgets/custom_container.dart';

@@ -25,6 +25,16 @@ class UserProfileModel {
       user: User.fromJson(json['user']),
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'userId': userId,
+      'timezone': timezone,
+      'bio': bio,
+      'pushEnabled': pushEnabled,
+    };
+  }
 }
 
 class User {

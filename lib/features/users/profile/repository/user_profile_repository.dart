@@ -6,6 +6,10 @@ import 'package:oracle_card_app/features/users/profile/model/user_profile_model.
 abstract interface class UserProfileRepository {
   //##-------------------GET USER PROFILE-------------------------##
   FutureEither<UserProfileModel> getUserProfile();
+  //##-------------------PATCH USER PROFILE-------------------------##
+  FutureEither<String> patchUserProfile({
+    required UserProfileModel userProfileModel,
+  });
 }
 
 class UserProfileRepositoryImpl implements UserProfileRepository {
@@ -23,6 +27,22 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
 
       final user = UserProfileModel.fromJson(userJson);
       return Right(user);
+    });
+  }
+
+  //##-------------------PATCH USER PROFILE-------------------------##
+
+  @override
+  FutureEither<String> patchUserProfile({
+    required UserProfileModel userProfileModel,
+  }) async {
+    final response = await _apiService.patch<Map>(
+      'api/v1/profile',
+      data: {...userProfileModel.toMap()},
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      return Right("Profile updated successfully");
     });
   }
 }

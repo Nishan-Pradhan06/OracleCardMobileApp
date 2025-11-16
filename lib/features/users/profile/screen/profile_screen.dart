@@ -11,7 +11,7 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
-import 'package:oracle_card_app/features/users/profile/bloc/user_profile_bloc.dart';
+import 'package:oracle_card_app/features/users/profile/bloc/get_user_profile/user_profile_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/helpers/validation_helpers.dart';
 import '../../../../core/widgets/cusotm_switch.dart';
