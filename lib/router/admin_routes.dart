@@ -13,6 +13,7 @@ import '../core/helpers/dialog_page.dart';
 import '../features/admin/daily_guidance/screen/view_metrics_screen.dart';
 import '../features/admin/daily_guidance/widgets/create_daily_guidance_dialog.dart';
 import '../features/admin/deck_and_card/widget/create_deck_dilog.dart';
+import '../features/admin/user_and_billing/widget/grant_promo_dialog.dart';
 import 'app_routes_names.dart';
 
 List<GoRoute> adminAppRoutes = [
@@ -35,6 +36,16 @@ List<GoRoute> adminAppRoutes = [
     path: AppRoutesName.adminDailyGuidanceScreenRoute.path,
     name: AppRoutesName.adminDailyGuidanceScreenRoute,
     builder: (context, state) => AdminDailyGuidanceScreen(),
+  ),
+  GoRoute(
+    path: '/grantPromoCode/:id',
+    name: AppRoutesName.grantPromoCode,
+    pageBuilder: (context, state) => DialogPage(
+      builder: (context) {
+        final userId = state.pathParameters['id'];
+        return GrantPromoDialog(userId: int.parse(userId!));
+      },
+    ),
   ),
   GoRoute(
     path: AppRoutesName.userAndBillingsRoute.path,

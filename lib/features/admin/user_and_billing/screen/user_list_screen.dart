@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oracle_card_app/core/widgets/custom_background.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/features/admin/user_and_billing/bloc/get_user/get_user_bloc.dart';
+import 'package:oracle_card_app/router/app_routes_names.dart';
 
 import '../../../../core/widgets/admin_appbar.dart';
 import '../../../../core/widgets/custom_simmer_loader.dart';
@@ -58,6 +60,12 @@ class UserListScreen extends StatelessWidget {
                                 .toString(),
                             pullCount: userList.activity.pulls.toString(),
                             journalCount: userList.activity.journals.toString(),
+                            onPressedGrantPromo: () {
+                              context.pushNamed(
+                                AppRoutesName.grantPromoCode,
+                                pathParameters: {'id': userList.id.toString()},
+                              );
+                            },
                           );
                         }),
                       );

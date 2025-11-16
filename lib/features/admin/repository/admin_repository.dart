@@ -53,7 +53,7 @@ abstract interface class AdminRepository {
   //##-------------------GRANT PROMO-------------------------##
   FutureEither<String> grantPromoCode({
     required String promoCode,
-    required String userId,
+    required int userId,
   });
 }
 
@@ -175,7 +175,7 @@ class AdminRepositoryImp implements AdminRepository {
   @override
   FutureEither<String> grantPromoCode({
     required String promoCode,
-    required String userId,
+    required int userId,
   }) async {
     final response = await _apiService.post<Map>(
       '/admin/users/$userId/grant-promo',

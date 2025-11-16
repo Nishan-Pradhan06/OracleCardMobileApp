@@ -30,4 +30,5 @@ class AppRoutesName {
   static const String adminCreateDailyGuidanceDialogRoute = 'adminCreateDailyGuidanceDialogRoute';
   static const String adminGuidanceMetrics = 'adminGuidanceMetrics';
   static const String userAndBillingsRoute = 'userAndBillingsRoute';
+  static const String grantPromoCode = 'grantPromoCode';
 }

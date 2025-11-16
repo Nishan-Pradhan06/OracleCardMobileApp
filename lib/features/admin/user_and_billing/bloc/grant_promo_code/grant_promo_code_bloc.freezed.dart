@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$GrantPromoCodeEvent {
 
- String get promoCode; String get userId;
+ String get promoCode; int get userId;
 /// Create a copy of GrantPromoCodeEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $GrantPromoCodeEventCopyWith<$Res>  {
   factory $GrantPromoCodeEventCopyWith(GrantPromoCodeEvent value, $Res Function(GrantPromoCodeEvent) _then) = _$GrantPromoCodeEventCopyWithImpl;
 @useResult
 $Res call({
- String promoCode, String userId
+ String promoCode, int userId
 });
 
 
@@ -66,7 +66,7 @@ class _$GrantPromoCodeEventCopyWithImpl<$Res>
   return _then(_self.copyWith(
 promoCode: null == promoCode ? _self.promoCode : promoCode // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,
+as int,
   ));
 }
 
@@ -151,7 +151,7 @@ return grantPromoCode(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String promoCode,  String userId)?  grantPromoCode,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String promoCode,  int userId)?  grantPromoCode,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GrantPromoCodeE() when grantPromoCode != null:
 return grantPromoCode(_that.promoCode,_that.userId);case _:
@@ -172,7 +172,7 @@ return grantPromoCode(_that.promoCode,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String promoCode,  String userId)  grantPromoCode,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String promoCode,  int userId)  grantPromoCode,}) {final _that = this;
 switch (_that) {
 case _GrantPromoCodeE():
 return grantPromoCode(_that.promoCode,_that.userId);case _:
@@ -192,7 +192,7 @@ return grantPromoCode(_that.promoCode,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String promoCode,  String userId)?  grantPromoCode,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String promoCode,  int userId)?  grantPromoCode,}) {final _that = this;
 switch (_that) {
 case _GrantPromoCodeE() when grantPromoCode != null:
 return grantPromoCode(_that.promoCode,_that.userId);case _:
@@ -211,7 +211,7 @@ class _GrantPromoCodeE implements GrantPromoCodeEvent {
   
 
 @override final  String promoCode;
-@override final  String userId;
+@override final  int userId;
 
 /// Create a copy of GrantPromoCodeEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -243,7 +243,7 @@ abstract mixin class _$GrantPromoCodeECopyWith<$Res> implements $GrantPromoCodeE
   factory _$GrantPromoCodeECopyWith(_GrantPromoCodeE value, $Res Function(_GrantPromoCodeE) _then) = __$GrantPromoCodeECopyWithImpl;
 @override @useResult
 $Res call({
- String promoCode, String userId
+ String promoCode, int userId
 });
 
 
@@ -264,7 +264,7 @@ class __$GrantPromoCodeECopyWithImpl<$Res>
   return _then(_GrantPromoCodeE(
 null == promoCode ? _self.promoCode : promoCode // ignore: cast_nullable_to_non_nullable
 as String,null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,
+as int,
   ));
 }
 
