@@ -59,7 +59,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   Future<void> _onPlay(_Play event, Emitter<AudioPlayerState> emit) async {
     emit(AudioPlayerState.loading());
     try {
-      final url = event.audioUrl.replaceAll('localhost', EnvSecreteConfig.instance.cleanedIP,
+      final url = event.audioUrl.replaceAll('localhost', EnvSecreteConfig.instance.homeIP,
       );
       await _audioPlayer.play(UrlSource(url));
 

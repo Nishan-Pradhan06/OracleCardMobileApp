@@ -12,10 +12,10 @@ class EnvSecreteConfig {
     return key;
   }
 
-  String get cleanedIP {
-    final String? key = dotenv.env['CLEANED_IP'];
+  String get homeIP {
+    final String? key = dotenv.env['LUNAR_IP'];
     if (key == null) {
-      throw 'CLEANED_IP not found';
+      throw 'HOME_IP not found';
     }
     return key;
   }
