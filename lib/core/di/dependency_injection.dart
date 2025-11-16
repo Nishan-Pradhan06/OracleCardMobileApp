@@ -8,6 +8,7 @@ import 'package:oracle_card_app/features/admin/deck_and_card/bloc/create_deck/de
 import 'package:oracle_card_app/features/admin/deck_and_card/bloc/get_admin_deck/get_admin_deck_bloc.dart';
 import 'package:oracle_card_app/features/admin/meditations/bloc/create_meditations/create_meditations_bloc.dart';
 import 'package:oracle_card_app/features/admin/repository/admin_repository.dart';
+import 'package:oracle_card_app/features/admin/sessions/bloc/bloc/create_sessions_bloc.dart';
 import 'package:oracle_card_app/features/admin/user_and_billing/bloc/get_user/get_user_bloc.dart';
 import 'package:oracle_card_app/features/admin/user_and_billing/bloc/grant_promo_code/grant_promo_code_bloc.dart';
 import 'package:oracle_card_app/features/admin/user_and_billing/bloc/reset_password/reset_password_bloc.dart';
@@ -82,6 +83,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => GetUserBloc(repo: sl()));
   sl.registerLazySingleton(() => GrantPromoCodeBloc(repo: sl()));
   sl.registerLazySingleton(() => ResetPasswordBloc(repo: sl()));
+  sl.registerLazySingleton(() => CreateSessionsBloc(repo: sl()));
 
   //###---------------CUBIT--------------------###
 

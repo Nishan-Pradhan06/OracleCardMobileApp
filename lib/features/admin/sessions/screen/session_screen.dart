@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:oracle_card_app/core/di/dependency_injection.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
+import 'package:oracle_card_app/features/admin/sessions/bloc/bloc/create_sessions_bloc.dart';
+
+import '../../../../core/helpers/time_zone_helper.dart';
+import '../../../../core/helpers/validation_helpers.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../../../../core/widgets/custom_toast.dart';
+import '../../../auth/widgets/text_form_field.dart';
+import '../models/create_sessions_model.dart';
 
 class CreateSessionDialog extends StatefulWidget {
   const CreateSessionDialog({super.key});
@@ -9,16 +20,39 @@ class CreateSessionDialog extends StatefulWidget {
 }
 
 class _CreateSessionDialogState extends State<CreateSessionDialog> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _timezoneController = TextEditingController();
+  final _zoomUrlController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  DateTime startDate = DateTime(2025, 9, 14);
-  TimeOfDay startTime = const TimeOfDay(hour: 3, minute: 6);
+  late DateTime startDate;
+  late TimeOfDay startTime;
 
-  DateTime endDate = DateTime(2025, 9, 14);
-  TimeOfDay endTime = const TimeOfDay(hour: 4, minute: 6);
+  late DateTime endDate;
+  late TimeOfDay endTime;
 
   bool premiumOnly = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// DEFAULT VALUES → Current date/time
+    final now = DateTime.now();
+
+    startDate = now;
+    startTime = TimeOfDay(hour: now.hour, minute: now.minute);
+
+    endDate = now;
+    endTime = TimeOfDay(
+      hour: now.add(const Duration(hours: 1)).hour,
+      minute: now.minute,
+    );
+
+    /// Detect current timezone
+    TimezoneHelper.setTimezone(_timezoneController);
+  }
 
   Future<void> selectDate(BuildContext context, bool isStart) async {
     final DateTime? picked = await showDatePicker(
@@ -74,277 +108,290 @@ class _CreateSessionDialogState extends State<CreateSessionDialog> {
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: SingleChildScrollView(
-        child: CustomPadding(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Create New Session',
-                    style: textTheme.titleMedium?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close, size: 20),
-                    onPressed: () => Navigator.pop(context),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // Title Field
-              Text(
-                'Title *',
-                style: textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(
-                  hintText: 'Group Meditation',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 12,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Description Field
-              Text(
-                'Description',
-                style: textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: descriptionController,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  hintText: 'A guided session...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 12,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Start Date/Time
-              Text(
-                'Start',
-                style: textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () => selectDate(context, true),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.grey[300]!),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 12,
-                          ),
-                          suffixIcon: const Icon(
-                            Icons.calendar_today,
-                            size: 18,
-                          ),
-                        ),
-                        child: Text(
-                          formatDate(startDate),
-                          style: textTheme.bodyMedium?.copyWith(fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () => selectTime(context, true),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.grey[300]!),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 12,
-                          ),
-                          suffixIcon: const Icon(Icons.access_time, size: 18),
-                        ),
-                        child: Text(
-                          formatTime(startTime),
-                          style: textTheme.bodyMedium?.copyWith(fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // End Date/Time
-              Text(
-                'End *',
-                style: textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () => selectDate(context, false),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.grey[300]!),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 12,
-                          ),
-                          suffixIcon: const Icon(
-                            Icons.calendar_today,
-                            size: 18,
-                          ),
-                        ),
-                        child: Text(
-                          formatDate(endDate),
-                          style: textTheme.bodyMedium?.copyWith(fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () => selectTime(context, false),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.grey[300]!),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 12,
-                          ),
-                          suffixIcon: const Icon(Icons.access_time, size: 18),
-                        ),
-                        child: Text(
-                          formatTime(endTime),
-                          style: textTheme.bodyMedium?.copyWith(fontSize: 14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // Timezone
-              Text(
-                'Timezone *',
-                style: textTheme.bodyMedium?.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 12,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey[300]!),
-                ),
-                child: Row(
+        child: Form(
+          key: _formKey,
+          child: CustomPadding(
+            child: Column(
+              spacing: 10,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// ------------------ HEADER ------------------
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '+0545',
-                      style: textTheme.bodyMedium?.copyWith(fontSize: 14),
+                      'Create New Session',
+                      style: textTheme.titleMedium?.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close, size: 20),
+                      onPressed: () => Navigator.pop(context),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 20),
 
-              // Premium Only Checkbox
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Premium Only',
-                    style: textTheme.bodyMedium?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                /// ------------------ TEXT FIELDS ------------------
+                CustomTextField(
+                  label: 'Title *',
+                  hint: 'Daily Insight',
+                  type: CustomTextFieldType.text,
+                  controller: _titleController,
+                  validator: InputValidator.validateRequired,
+                ),
+                CustomTextField(
+                  label: 'Description',
+                  hint: 'A guided session',
+                  type: CustomTextFieldType.text,
+                  controller: _descriptionController,
+                  maxLines: 4,
+                ),
+                CustomTextField(
+                  label: 'Zoom Url',
+                  hint: 'https://',
+                  type: CustomTextFieldType.text,
+                  controller: _zoomUrlController,
+                  maxLines: 2,
+                ),
+                CustomTextField(
+                  label: 'Timezone',
+                  readOnly: true,
+                  enabled: false,
+                  controller: _timezoneController,
+                  keyboardType: TextInputType.datetime,
+                  type: CustomTextFieldType.text,
+                ),
+
+                /// ------------------ START DATE/TIME ------------------
+                Text(
+                  'Start',
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    width: 10,
-                    height: 10,
-                    child: Checkbox(
-                      value: premiumOnly,
-                      onChanged: (value) {
-                        setState(() {
-                          premiumOnly = value ?? false;
-                        });
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => selectDate(context, true),
+                        child: InputDecorator(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
+                            suffixIcon: const Icon(
+                              Icons.calendar_today,
+                              size: 18,
+                            ),
+                          ),
+                          child: Text(
+                            formatDate(startDate),
+                            style: textTheme.bodyMedium?.copyWith(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => selectTime(context, true),
+                        child: InputDecorator(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
+                            suffixIcon: const Icon(Icons.access_time, size: 18),
+                          ),
+                          child: Text(
+                            formatTime(startTime),
+                            style: textTheme.bodyMedium?.copyWith(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                /// ------------------ END DATE/TIME ------------------
+                Text(
+                  'End *',
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => selectDate(context, false),
+                        child: InputDecorator(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
+                            suffixIcon: const Icon(
+                              Icons.calendar_today,
+                              size: 18,
+                            ),
+                          ),
+                          child: Text(
+                            formatDate(endDate),
+                            style: textTheme.bodyMedium?.copyWith(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => selectTime(context, false),
+                        child: InputDecorator(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(color: Colors.grey[300]!),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
+                            ),
+                            suffixIcon: const Icon(Icons.access_time, size: 18),
+                          ),
+                          child: Text(
+                            formatTime(endTime),
+                            style: textTheme.bodyMedium?.copyWith(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                /// ------------------ PREMIUM CHECKBOX ------------------
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Premium Only',
+                      style: textTheme.bodyMedium?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: 12,
+                      height: 12,
+                      child: Checkbox(
+                        value: premiumOnly,
+                        onChanged: (value) {
+                          setState(() {
+                            premiumOnly = value ?? false;
+                          });
+                        },
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    ),
+                  ],
+                ),
+
+                /// ------------------ ACTION BUTTONS ------------------
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    const SizedBox(width: 14),
+
+                    BlocConsumer<CreateSessionsBloc, CreateSessionsState>(
+                      listener: (context, state) {
+                        state.whenOrNull(
+                          loaded: (data) {
+                            CustomToast.showSuccess(
+                              'Session Created Successfully!',
+                            );
+                            context.pop();
+                          },
+                          failure: (failure) {
+                            CustomToast.showError(failure.message);
+                          },
+                        );
                       },
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      builder: (context, state) {
+                        final bool isLoading = state.maybeWhen(
+                          loading: () => true,
+                          orElse: () => false,
+                        );
+
+                        return CustomButton(
+                          text: 'Save',
+                          isDisabled: isLoading,
+                          isLoading: isLoading,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              final DateTime fullStart = DateTime(
+                                startDate.year,
+                                startDate.month,
+                                startDate.day,
+                                startTime.hour,
+                                startTime.minute,
+                              );
+
+                              final DateTime fullEnd = DateTime(
+                                endDate.year,
+                                endDate.month,
+                                endDate.day,
+                                endTime.hour,
+                                endTime.minute,
+                              );
+
+                              sl<CreateSessionsBloc>().add(
+                                CreateSessionsEvent.createSession(
+                                  CreateSessionModel(
+                                    title: _titleController.text.trim(),
+                                    description: _descriptionController.text
+                                        .trim(),
+                                    timezone: _timezoneController.text.trim(),
+                                    isPremiumOnly: premiumOnly,
+                                    startTime: fullStart,
+                                    endTime: fullEnd,
+                                    zoomUrl: _zoomUrlController.text.trim(),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        );
+                      },
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -353,8 +400,10 @@ class _CreateSessionDialogState extends State<CreateSessionDialog> {
 
   @override
   void dispose() {
-    titleController.dispose();
-    descriptionController.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _timezoneController.dispose();
+    _zoomUrlController.dispose();
     super.dispose();
   }
 }
