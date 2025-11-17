@@ -11,6 +11,7 @@ import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
 import 'package:oracle_card_app/core/widgets/custom_toast.dart';
 import 'package:oracle_card_app/features/auth/blocs/sign_out/sign_out_bloc.dart';
+import 'package:oracle_card_app/features/users/profile/bloc/bloc/patch_user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/get_user_profile/user_profile_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import '../../../../core/helpers/validation_helpers.dart';
@@ -18,6 +19,7 @@ import '../../../../core/widgets/cusotm_switch.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../auth/widgets/text_form_field.dart';
 import '../../home/widgets/notification_widget.dart';
+import '../model/update_profile_model.dart';
 import '../widgets/profile_simmer_loader.dart';
 import '../widgets/profile_widget.dart';
 
@@ -80,214 +82,273 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _emailController.text = profileData.user.email;
                       _timezoneController.text = profileData.timezone ?? '';
 
-                      return Column(
-                        spacing: 20,
-                        children: [
-                          ProfileAvatar(
-                            imagePath:
-                                'https://avatars.githubusercontent.com/u/105001135?v=4',
-                            userName: 'My Profile',
-                            onCameraTap: () {},
-                          ),
+                      return BlocConsumer<
+                        PatchUserProfileBloc,
+                        PatchUserProfileState
+                      >(
+                        listener: (context, state) {
+                          state.whenOrNull(
+                            loaded: (data) {
+                              CustomToast.showSuccess(
+                                "Profile updated successfully",
+                              );
+                            },
+                            failure: (failure) {
+                              CustomToast.showError(failure.message);
+                            },
+                          );
+                        },
+                        builder: (context, state) {
+                          // final bool isLoading = state.maybeWhen(
+                          //   loading: () => true,
+                          //   orElse: () => false,
+                          // );
+                          return Column(
+                            spacing: 20,
+                            children: [
+                              ProfileAvatar(
+                                imagePath:
+                                    'https://avatars.githubusercontent.com/u/105001135?v=4',
+                                userName: 'My Profile',
+                                onCameraTap: () {},
+                              ),
 
-                          CustomContainer(
-                            useIntrinsicHeight: true,
-                            child: Column(
-                              spacing: 10,
-                              children: [
-                                CustomTextField(
-                                  label: 'Name',
-                                  controller: _nameController,
-                                  readOnly: !isEditField,
-                                  borderColor: Color(0xFFE0E0E0),
-                                  trailing: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isEditField = !isEditField;
-                                      });
-                                    },
-                                    icon: SvgPicture.asset(
-                                      'assets/icons/edit.svg',
-                                    ),
-                                  ),
-                                  type: CustomTextFieldType.text,
-                                  validator: InputValidator.validateName,
-                                ),
-                                CustomTextField(
-                                  label: 'Email',
-                                  controller: _emailController,
-                                  readOnly: true,
-                                  enabled: false,
-                                  borderColor: Color(0xFFE0E0E0),
-                                  trailing: IconButton(
-                                    onPressed: () {},
-                                    icon: SvgPicture.asset(
-                                      'assets/icons/lock.svg',
-                                    ),
-                                  ),
-                                  type: CustomTextFieldType.text,
-                                  validator: InputValidator.validateEmail,
-                                ),
-                                CustomTextField(
-                                  label: 'Timezone',
-                                  controller: _timezoneController,
-                                  borderColor: Color(0xFFE0E0E0),
-                                  type: CustomTextFieldType.text,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          CustomContainer(
-                            useIntrinsicHeight: true,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Preferences',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                              CustomContainer(
+                                useIntrinsicHeight: true,
+                                child: Column(
+                                  spacing: 10,
                                   children: [
-                                    Text(
-                                      'Push Notifications',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.titleMedium,
+                                    CustomTextField(
+                                      label: 'Name',
+                                      controller: _nameController,
+                                      enabled: isEditField,
+                                      readOnly: !isEditField,
+                                      borderColor: Color(0xFFE0E0E0),
+                                      trailing: IconButton(
+                                        onPressed: () {
+                                          if (!isEditField) {
+                                            // Start editing
+                                            setState(() {
+                                              isEditField = true;
+                                            });
+                                          } else {
+                                            // Save update
+                                            sl<PatchUserProfileBloc>().add(
+                                              PatchUserProfileEvent.patchUserProfile(
+                                                userProfileModel:
+                                                    PatchUserProfle(
+                                                      name: _nameController.text
+                                                          .trim(),
+                                                    ),
+                                              ),
+                                            );
+
+                                            setState(() {
+                                              isEditField = false;
+                                            });
+                                          }
+                                        },
+                                        icon: isEditField
+                                            ? Icon(
+                                                Icons.check,
+                                                color: Colors.green,
+                                                size: 26,
+                                              )
+                                            : SvgPicture.asset(
+                                                'assets/icons/edit.svg',
+                                              ),
+                                      ),
+                                      type: CustomTextFieldType.text,
+                                      validator: InputValidator.validateName,
                                     ),
-                                    CustomSwitch(
-                                      value: isSwitchedPushNotification,
-                                      onChanged: (val) {
-                                        setState(() {
-                                          isSwitchedPushNotification = val;
-                                        });
-                                      },
+                                    CustomTextField(
+                                      label: 'Email',
+                                      controller: _emailController,
+                                      readOnly: true,
+                                      enabled: false,
+                                      borderColor: Color(0xFFE0E0E0),
+                                      trailing: IconButton(
+                                        onPressed: () {},
+                                        icon: SvgPicture.asset(
+                                          'assets/icons/lock.svg',
+                                        ),
+                                      ),
+                                      type: CustomTextFieldType.text,
+                                      validator: InputValidator.validateEmail,
+                                    ),
+                                    CustomTextField(
+                                      label: 'Timezone',
+                                      readOnly: true,
+                                      enabled: false,
+                                      controller: _timezoneController,
+                                      borderColor: Color(0xFFE0E0E0),
+                                      type: CustomTextFieldType.text,
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          CustomContainer(
-                            useIntrinsicHeight: true,
-                            child: Column(
-                              spacing: 10,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              ),
 
-                              children: [
-                                Text(
-                                  'Billing',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                              CustomContainer(
+                                useIntrinsicHeight: true,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    Text(
+                                      'Preferences',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 24,
+                                          ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Current Plan',
+                                          'Push Notifications',
                                           style: Theme.of(
                                             context,
                                           ).textTheme.titleMedium,
                                         ),
-                                        Text(
-                                          profileData.user.plan,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge
-                                              ?.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
+                                        CustomSwitch(
+                                          value: isSwitchedPushNotification,
+                                          onChanged: (val) {
+                                            setState(() {
+                                              isSwitchedPushNotification = val;
+                                            });
+
+                                            sl<PatchUserProfileBloc>().add(
+                                              PatchUserProfileEvent.patchUserProfile(
+                                                userProfileModel:
+                                                    PatchUserProfle(
+                                                      pushEnabled: val,
+                                                    ),
                                               ),
+                                            );
+                                          },
                                         ),
                                       ],
                                     ),
+                                  ],
+                                ),
+                              ),
+                              CustomContainer(
+                                useIntrinsicHeight: true,
+                                child: Column(
+                                  spacing: 10,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
 
-                                    CustomButton(
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color(0xFFFF7E5F),
-                                          Color(0xFFFFB347),
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      ),
-                                      leadingIcon: SvgPicture.asset(
-                                        'assets/icons/king.svg',
-                                      ),
-                                      text: 'Upgrade to Premium',
-                                      onPressed:
-                                          // profileData.user.plan == 'FREE'?
-                                          () {
-                                            context.pushNamed(
-                                              AppRoutesName
-                                                  .billingDetailsScreen,
-                                            );
-                                          },
-                                      // : null,
+                                  children: [
+                                    Text(
+                                      'Billing',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 24,
+                                          ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Current Plan',
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.titleMedium,
+                                            ),
+                                            Text(
+                                              profileData.user.plan,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge
+                                                  ?.copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        CustomButton(
+                                          gradient: const LinearGradient(
+                                            colors: [
+                                              Color(0xFFFF7E5F),
+                                              Color(0xFFFFB347),
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          leadingIcon: SvgPicture.asset(
+                                            'assets/icons/king.svg',
+                                          ),
+                                          text: 'Upgrade to Premium',
+                                          onPressed:
+                                              // profileData.user.plan == 'FREE'?
+                                              () {
+                                                context.pushNamed(
+                                                  AppRoutesName
+                                                      .billingDetailsScreen,
+                                                );
+                                              },
+                                          // : null,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          BlocConsumer<SignOutBloc, SignOutState>(
-                            listener: (context, state) {
-                              state.whenOrNull(
-                                loaded: (data) {
-                                  context.goNamed(
-                                    AppRoutesName.loginScreenRoute,
-                                  );
-                                  CustomToast.showSuccess(
-                                    'Signout Successfully!!!',
+                              ),
+                              BlocConsumer<SignOutBloc, SignOutState>(
+                                listener: (context, state) {
+                                  state.whenOrNull(
+                                    loaded: (data) {
+                                      context.goNamed(
+                                        AppRoutesName.loginScreenRoute,
+                                      );
+                                      CustomToast.showSuccess(
+                                        'Signout Successfully!!!',
+                                      );
+                                    },
+                                    failure: (failure) {
+                                      CustomToast.showError(failure.message);
+                                    },
                                   );
                                 },
-                                failure: (failure) {
-                                  CustomToast.showError(failure.message);
+                                builder: (context, state) {
+                                  final bool isLoading = state.maybeWhen(
+                                    loading: () => true,
+                                    orElse: () => false,
+                                  );
+                                  return CustomButton(
+                                    isLoading: isLoading,
+                                    isDisabled: isLoading,
+                                    text: 'SignOut',
+                                    onPressed: isLoading
+                                        ? null
+                                        : () {
+                                            sl<SignOutBloc>().add(
+                                              SignOutEvent.signOut(),
+                                            );
+                                          },
+                                    leadingIcon: Icon(
+                                      Icons.exit_to_app_outlined,
+                                      color: Colors.white,
+                                    ),
+                                  );
                                 },
-                              );
-                            },
-                            builder: (context, state) {
-                              final bool isLoading = state.maybeWhen(
-                                loading: () => true,
-                                orElse: () => false,
-                              );
-                              return CustomButton(
-                                isLoading: isLoading,
-                                isDisabled: isLoading,
-                                text: 'SignOut',
-                                onPressed: isLoading
-                                    ? null
-                                    : () {
-                                        sl<SignOutBloc>().add(
-                                          SignOutEvent.signOut(),
-                                        );
-                                      },
-                                leadingIcon: Icon(
-                                  Icons.exit_to_app_outlined,
-                                  color: Colors.white,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                              ),
+                            ],
+                          );
+                        },
                       );
                     },
                   );

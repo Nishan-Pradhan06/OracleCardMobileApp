@@ -3,12 +3,14 @@ import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
 import 'package:oracle_card_app/features/users/profile/model/user_profile_model.dart';
 
+import '../model/update_profile_model.dart';
+
 abstract interface class UserProfileRepository {
   //##-------------------GET USER PROFILE-------------------------##
   FutureEither<UserProfileModel> getUserProfile();
   //##-------------------PATCH USER PROFILE-------------------------##
   FutureEither<String> patchUserProfile({
-    required UserProfileModel userProfileModel,
+    required PatchUserProfle userProfileModel,
   });
 }
 
@@ -34,10 +36,10 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
 
   @override
   FutureEither<String> patchUserProfile({
-    required UserProfileModel userProfileModel,
+    required PatchUserProfle userProfileModel,
   }) async {
     final response = await _apiService.patch<Map>(
-      'api/v1/profile',
+      'profile',
       data: {...userProfileModel.toMap()},
     );
 

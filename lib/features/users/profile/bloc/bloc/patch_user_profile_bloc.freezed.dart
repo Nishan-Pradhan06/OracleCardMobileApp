@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PatchUserProfileEvent {
 
- UserProfileModel get userProfileModel;
+ PatchUserProfle get userProfileModel;
 /// Create a copy of PatchUserProfileEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $PatchUserProfileEventCopyWith<$Res>  {
   factory $PatchUserProfileEventCopyWith(PatchUserProfileEvent value, $Res Function(PatchUserProfileEvent) _then) = _$PatchUserProfileEventCopyWithImpl;
 @useResult
 $Res call({
- UserProfileModel userProfileModel
+ PatchUserProfle userProfileModel
 });
 
 
@@ -65,7 +65,7 @@ class _$PatchUserProfileEventCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? userProfileModel = null,}) {
   return _then(_self.copyWith(
 userProfileModel: null == userProfileModel ? _self.userProfileModel : userProfileModel // ignore: cast_nullable_to_non_nullable
-as UserProfileModel,
+as PatchUserProfle,
   ));
 }
 
@@ -150,7 +150,7 @@ return patchUserProfile(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( UserProfileModel userProfileModel)?  patchUserProfile,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( PatchUserProfle userProfileModel)?  patchUserProfile,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PatchUserProfileE() when patchUserProfile != null:
 return patchUserProfile(_that.userProfileModel);case _:
@@ -171,7 +171,7 @@ return patchUserProfile(_that.userProfileModel);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( UserProfileModel userProfileModel)  patchUserProfile,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( PatchUserProfle userProfileModel)  patchUserProfile,}) {final _that = this;
 switch (_that) {
 case _PatchUserProfileE():
 return patchUserProfile(_that.userProfileModel);case _:
@@ -191,7 +191,7 @@ return patchUserProfile(_that.userProfileModel);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( UserProfileModel userProfileModel)?  patchUserProfile,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( PatchUserProfle userProfileModel)?  patchUserProfile,}) {final _that = this;
 switch (_that) {
 case _PatchUserProfileE() when patchUserProfile != null:
 return patchUserProfile(_that.userProfileModel);case _:
@@ -209,7 +209,7 @@ class _PatchUserProfileE implements PatchUserProfileEvent {
   const _PatchUserProfileE({required this.userProfileModel});
   
 
-@override final  UserProfileModel userProfileModel;
+@override final  PatchUserProfle userProfileModel;
 
 /// Create a copy of PatchUserProfileEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -241,7 +241,7 @@ abstract mixin class _$PatchUserProfileECopyWith<$Res> implements $PatchUserProf
   factory _$PatchUserProfileECopyWith(_PatchUserProfileE value, $Res Function(_PatchUserProfileE) _then) = __$PatchUserProfileECopyWithImpl;
 @override @useResult
 $Res call({
- UserProfileModel userProfileModel
+ PatchUserProfle userProfileModel
 });
 
 
@@ -261,7 +261,7 @@ class __$PatchUserProfileECopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? userProfileModel = null,}) {
   return _then(_PatchUserProfileE(
 userProfileModel: null == userProfileModel ? _self.userProfileModel : userProfileModel // ignore: cast_nullable_to_non_nullable
-as UserProfileModel,
+as PatchUserProfle,
   ));
 }
 

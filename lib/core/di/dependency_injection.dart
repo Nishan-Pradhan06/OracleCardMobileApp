@@ -35,6 +35,7 @@ import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_
 import 'package:oracle_card_app/features/users/library/repository/meditations_repository.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/repository/notification_repository.dart';
+import 'package:oracle_card_app/features/users/profile/bloc/bloc/patch_user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/get_user_profile/user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/repository/user_profile_repository.dart';
 import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_session/get_upcomming_session_bloc.dart';
@@ -56,6 +57,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => UserSignUpBloc(repo: sl()));
   sl.registerLazySingleton(() => SignOutBloc(repo: sl()));
   sl.registerLazySingleton(() => UserProfileBloc(repo: sl()));
+  sl.registerLazySingleton(() => PatchUserProfileBloc(repo: sl()));
   sl.registerLazySingleton(() => GetNotificationsBloc(repo: sl()));
   sl.registerLazySingleton(() => GetTodayPromptBloc(repo: sl()));
   sl.registerLazySingleton(() => GetDailyGuidanceBloc(repo: sl()));
