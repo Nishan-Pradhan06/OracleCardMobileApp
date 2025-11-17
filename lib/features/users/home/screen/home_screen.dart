@@ -95,11 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             GetOraclePullStatusState
                           >(
                             listener: (context, state) {
-                              state.whenOrNull(
-                                loaded: (data) {
-                                  CustomToast.showSuccess("dsfsdnsd");
-                                },
-                              );
+                              state.whenOrNull(loaded: (data) {});
                             },
                             builder: (context, state) {
                               return state.when(
@@ -151,6 +147,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ? () {
                                             sl<GetOraclePullStatusBloc>().add(
                                               GetOraclePullStatusEvent.getOracleCardPullStatus(),
+                                            );
+                                            CustomToast.showSuccess(
+                                              "Pull status fetched successfully",
                                             );
                                           }
                                         : null,
