@@ -121,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     CustomTextField(
                                       label: 'Name',
                                       controller: _nameController,
-                                      enabled: isEditField,
+                                      // enabled: isEditField,
                                       readOnly: !isEditField,
                                       borderColor: Color(0xFFE0E0E0),
                                       trailing: IconButton(
@@ -151,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         icon: isEditField
                                             ? Icon(
                                                 Icons.check,
-                                                color: Colors.green,
+                                                color: Colors.blue,
                                                 size: 26,
                                               )
                                             : SvgPicture.asset(
