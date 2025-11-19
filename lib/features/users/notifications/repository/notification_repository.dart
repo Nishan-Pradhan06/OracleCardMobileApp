@@ -1,3 +1,4 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:oracle_card_app/common/typedef/either_type.dart';
 import 'package:oracle_card_app/core/network/api_services.dart';
@@ -6,6 +7,7 @@ import '../models/notification_model.dart';
 
 abstract interface class NotificationRepository {
   FutureEither<NotificationModel> notificationInbox();
+  FutureEither<String> readNotification(int notificationId);
 }
 
 class NotificationRepositoryImpl implements NotificationRepository {
@@ -22,6 +24,17 @@ class NotificationRepositoryImpl implements NotificationRepository {
       final model = data['data'];
       final notification = NotificationModel.fromMap(model);
       return Right(notification);
+    });
+  }
+
+  @override
+  FutureEither<String> readNotification(int notificationId) async {
+    final response = await _apiService.post(
+      'notifications/$notificationId/open',
+    );
+
+    return response.fold((failure) => Left(failure), (data) {
+      return Right(data['message']);
     });
   }
 }
