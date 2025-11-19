@@ -20,6 +20,7 @@ import 'package:oracle_card_app/features/auth/blocs/user_sign_in/user_sign_in_bl
 import 'package:oracle_card_app/features/auth/blocs/user_sign_up/user_sign_up_bloc.dart';
 import 'package:oracle_card_app/features/device_register_push_notification/bloc/device_register/device_register_bloc.dart';
 import 'package:oracle_card_app/features/device_register_push_notification/services/push_notification_services.dart';
+import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_billing_plans/get_billing_plans_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/redeem_promo_code/redeem_promo_code_bloc.dart';
 import 'package:oracle_card_app/features/users/home/bloc/audio_player/audio_player_bloc.dart';
@@ -126,6 +127,11 @@ class OracelCard extends StatelessWidget {
         BlocProvider(create: (context) => sl<CreateSessionsBloc>()),
         BlocProvider(create: (context) => sl<PatchUserProfileBloc>()),
         BlocProvider(create: (context) => sl<ReadNotificationBloc>()),
+        BlocProvider(
+          create: (context) =>
+              sl<GetBillingPlansBloc>()
+                ..add(GetBillingPlansEvent.getBillingPlan()),
+        ),
         BlocProvider(
           create: (context) =>
               sl<GetMeditationsAdminBloc>()

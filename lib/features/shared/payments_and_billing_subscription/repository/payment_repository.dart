@@ -48,7 +48,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
     final response = await _apiService.get('billing/plans');
 
     return response.fold((failure) => Left(failure), (data) {
-      final plansJson = data['data'] as List<dynamic>;
+      final plansJson = data['data']['plans'] as List<dynamic>;
 
       final billingPlans = plansJson
           .map(

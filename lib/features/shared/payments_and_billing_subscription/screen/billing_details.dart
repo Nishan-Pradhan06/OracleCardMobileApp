@@ -9,11 +9,13 @@ import 'package:oracle_card_app/core/widgets/custom_button.dart';
 import 'package:oracle_card_app/core/widgets/custom_container.dart';
 import 'package:oracle_card_app/core/widgets/custom_padding.dart';
 import 'package:oracle_card_app/core/widgets/custom_refresh_indicator.dart';
+import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_billing_plans/get_billing_plans_bloc.dart';
 import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/bloc/get_payment_history/get_payment_history_bloc.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/credit_card_masked_widget.dart';
+import '../../../../core/widgets/custom_simmer_loader.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../../users/home/widgets/notification_widget.dart';
 import '../widgets/pricing_widget.dart';
@@ -48,34 +50,53 @@ class BillingDetailsScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   UserPlanTypeWidget(
-                    freePlan: Column(
-                      children: [
-                        PricingCard(
-                          index: 0,
-                          selectedIndex: 0,
-                          planName: "Monthly",
-                          price: "\$9.99",
-                          interval: "/month",
-                          trialDays: "7 days free trial",
-                          showPopularBadge: false,
-                          savingsText: null,
-                          monthlyEquivalent: null,
-                          onTap: () {},
-                        ),
-                        PricingCard(
-                          index: 1,
-                          selectedIndex: 1,
-                          planName: "Yearly",
-                          price: "\$79.99",
-                          interval: "/year",
-                          trialDays: "14 days free trial",
-                          showPopularBadge: true,
-                          savingsText: "SAVE 33%",
-                          monthlyEquivalent:
-                              "\$6.67/month when billed annually",
-                          onTap: () {},
-                        ),
-                      ],
+                    freePlan: BlocBuilder<GetBillingPlansBloc, GetBillingPlansState>(
+                      builder: (context, state) {
+                        return state.when(
+                          initial: () => const SizedBox(height: 100),
+                          loading: () => const SizedBox(
+                            height: 45,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 15.0),
+                              child: ShimmerLoaderWidget(
+                                height: 45,
+                                baseColor: Color(0xFF6790ff),
+                                highlightColor: Color(0xFF4da0ff),
+                              ),
+                            ),
+                          ),
+                          failure: (failure) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15.0),
+                            child: ShimmerLoaderWidget(
+                              height: 45,
+                              baseColor: Color(0xFF6790ff),
+                              highlightColor: Color(0xFF4da0ff),
+                            ),
+                          ),
+                          loaded: (data) {
+                            return Column(
+                              children: List.generate(data.length, (index) {
+                                final plans = data[index];
+
+                                return PricingCard(
+                                  index: data.length,
+                                  selectedIndex: 0,
+                                  planName: plans.name,
+                                  price:
+                                      "\$${(plans.priceCents / 100).toStringAsFixed(2)}",
+                                  interval: plans.interval,
+                                  trialDays:
+                                      "${plans.freeTrialDays} days free trial",
+                                  showPopularBadge: plans.name == 'Yearly'
+                                      ? true
+                                      : false,
+                                  onTap: () {},
+                                );
+                              }),
+                            );
+                          },
+                        );
+                      },
                     ),
                     paidPlan: manageSubscription(context),
                   ),

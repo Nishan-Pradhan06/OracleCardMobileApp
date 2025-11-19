@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final String? imagePath;
@@ -41,23 +41,24 @@ class ProfileAvatar extends StatelessWidget {
                   ],
                 ),
                 child: ClipOval(
-                  child: imagePath != null && imagePath!.isNotEmpty
-                      ? CachedNetworkImage(
-                          imageUrl: imagePath!,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => const Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => const Icon(
-                            Icons.person,
-                            size: 50,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.person, size: 50, color: Colors.white),
+                  child: SvgPicture.asset(imagePath ?? ''),
+                  //  imagePath != null && imagePath!.isNotEmpty
+                  // ? CachedNetworkImage(
+                  //     imageUrl: imagePath!,
+                  //     fit: BoxFit.cover,
+                  //     placeholder: (context, url) => const Center(
+                  //       child: CircularProgressIndicator(
+                  //         strokeWidth: 2,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     errorWidget: (context, url, error) => const Icon(
+                  //       Icons.person,
+                  //       size: 50,
+                  //       color: Colors.white,
+                  //     ),
+                  //   )
+                  // : const Icon(Icons.person, size: 50, color: Colors.white),
                 ),
               ),
               // Positioned(
