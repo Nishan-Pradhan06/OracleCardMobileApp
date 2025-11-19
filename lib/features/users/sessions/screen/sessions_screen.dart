@@ -23,7 +23,7 @@ class SessionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int? sessionId;
+    int? _sessionId;
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Sessions',
@@ -78,7 +78,7 @@ class SessionScreen extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final session = upCommingSessionData.items[index];
-                              sessionId = session.id;
+                              _sessionId = session.id;
                               final formattedDateTime =
                                   DateTimeUtils.formatShortDate(
                                     session.startTime.toString(),
@@ -123,13 +123,13 @@ class SessionScreen extends StatelessWidget {
                                         },
                                       );
                                     },
-                                    // rsvpButton: () {
-                                    //   sl<RsvpSessionBloc>().add(
-                                    //     RsvpSessionEvent.rsvpSession(
-                                    //       sessionId!,
-                                    //     ),
-                                    //   );
-                                    // },
+                                    rsvpButton: () {
+                                      sl<RsvpSessionBloc>().add(
+                                        RsvpSessionEvent.rsvpSession(
+                                          _sessionId!,
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
                               );
@@ -139,7 +139,6 @@ class SessionScreen extends StatelessWidget {
                       );
                     },
                   ),
-
                   const UserPlanTypeWidget(
                     freePlan: UpgradePremiumButtonWidget(),
                     paidPlan: SizedBox.shrink(),

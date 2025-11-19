@@ -63,7 +63,9 @@ List<GoRoute> userAppRoutes = [
       return BlocProvider.value(
         value: sl<GetJournalByIdBloc>()
           ..add(
-            GetJournalByIdEvent.getJournalById(journalId: int.parse(journalId!)),
+            GetJournalByIdEvent.getJournalById(
+              journalId: int.parse(journalId!),
+            ),
           ),
         child: JournalDetailsScreen(journalId: int.parse(journalId)),
       );
@@ -101,21 +103,18 @@ List<GoRoute> userAppRoutes = [
     path: AppRoutesName.sessionsDetailsScreenScreenRoute.path,
     name: AppRoutesName.sessionsDetailsScreenScreenRoute,
     builder: (context, state) {
-      final extra = state.extra as Map<String, dynamic>;
+      // final extra = state.extra as Map<String, dynamic>;
 
-      return SessionsDetailsScreen(
-        title: extra['title'],
-        dateTime: extra['dateTime'],
-      );
+      return SessionsDetailsScreen();
     },
   ),
   GoRoute(
     path: AppRoutesName.joinSessionScreenAppRoutes.path,
     name: AppRoutesName.joinSessionScreenAppRoutes,
     builder: (context, state) {
-      final extra = state.extra as Map<String, dynamic>;
+      // final extra = state.extra as Map<String, dynamic>;
 
-      return JoinSessionScreen(title: extra['title']);
+      return JoinSessionScreen();
     },
   ),
 

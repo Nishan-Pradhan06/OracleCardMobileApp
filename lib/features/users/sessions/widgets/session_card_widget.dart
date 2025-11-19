@@ -7,7 +7,7 @@ class SessionsCardWidget extends StatelessWidget {
   final String title;
   final String description;
   final bool isButtonEnabled;
-  // final VoidCallback? rsvpButton;
+  final VoidCallback? rsvpButton;
   final VoidCallback? onTap;
   final bool? isLoading;
 
@@ -17,7 +17,7 @@ class SessionsCardWidget extends StatelessWidget {
     required this.title,
     required this.description,
     this.isButtonEnabled = true,
-    // this.rsvpButton,
+    this.rsvpButton,
     this.onTap,
     this.isLoading = false,
   });
@@ -68,7 +68,7 @@ class SessionsCardWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 12,
               isDisabled: !isButtonEnabled,
-              // onPressed: isButtonEnabled ? rsvpButton ?? () {} : () {},
+              onPressed: isButtonEnabled ? rsvpButton ?? () {} : () {},
             ),
           ),
         ],
