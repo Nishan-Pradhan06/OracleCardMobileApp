@@ -150,3 +150,427 @@ void main() {
 //     );
 //   }
 // }
+
+
+// import 'package:flutter/material.dart';
+// import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/models/payment_plan_model.dart';
+
+// class PricingPlansScreen extends StatefulWidget {
+//   const PricingPlansScreen({Key? key}) : super(key: key);
+
+//   @override
+//   State<PricingPlansScreen> createState() => _PricingPlansScreenState();
+// }
+
+// class _PricingPlansScreenState extends State<PricingPlansScreen> {
+//   bool isYearly = false;
+
+//   final List<PaymentPlanModel> plans = [
+//     PaymentPlanModel(
+//       id: 4,
+//       name: "Monthly",
+//       interval: "MONTH",
+//       priceCents: 999,
+//       currency: "USD",
+//       freeTrialDays: 7,
+//       isActive: true,
+//     ),
+//     PaymentPlanModel(
+//       id: 5,
+//       name: "Yearly",
+//       interval: "YEAR",
+//       priceCents: 7999,
+//       currency: "USD",
+//       freeTrialDays: 14,
+//       isActive: true,
+//     ),
+//   ];
+
+//   final List<String> features = [
+//     "Unlimited access to all features",
+//     "Priority customer support",
+//     "Advanced analytics dashboard",
+//     "Team collaboration tools",
+//     "API access included",
+//     "Regular feature updates",
+//   ];
+
+//   int getSavingsPercent() {
+//     final monthly = plans.firstWhere((p) => p.interval == 'MONTH');
+//     final yearly = plans.firstWhere((p) => p.interval == 'YEAR');
+//     final savings =
+//         ((monthly.priceCents - (yearly.priceCents / 12)) /
+//         monthly.priceCents *
+//         100);
+//     return savings.round();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.grey[50],
+//       body: SafeArea(
+//         child: SingleChildScrollView(
+//           padding: const EdgeInsets.all(24.0),
+//           child: Column(
+//             children: [
+//               const SizedBox(height: 20),
+
+//               // Header
+//               Container(
+//                 padding: const EdgeInsets.symmetric(
+//                   horizontal: 16,
+//                   vertical: 8,
+//                 ),
+//                 decoration: BoxDecoration(
+//                   color: Colors.indigo[50],
+//                   borderRadius: BorderRadius.circular(20),
+//                 ),
+//                 child: const Row(
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     Icon(Icons.auto_awesome, size: 16, color: Colors.indigo),
+//                     SizedBox(width: 6),
+//                     Text(
+//                       'Simple, transparent pricing',
+//                       style: TextStyle(
+//                         color: Colors.indigo,
+//                         fontWeight: FontWeight.w600,
+//                         fontSize: 13,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+
+//               const SizedBox(height: 20),
+
+//               const Text(
+//                 'Choose Your Plan',
+//                 style: TextStyle(
+//                   fontSize: 32,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.black87,
+//                 ),
+//               ),
+
+//               const SizedBox(height: 12),
+
+//               Text(
+//                 'Start with a free trial, then pick the\nplan that works best for you',
+//                 textAlign: TextAlign.center,
+//                 style: TextStyle(
+//                   fontSize: 16,
+//                   color: Colors.grey[600],
+//                   height: 1.5,
+//                 ),
+//               ),
+
+//               const SizedBox(height: 32),
+
+//               // Billing Toggle
+//               Container(
+//                 padding: const EdgeInsets.all(4),
+//                 decoration: BoxDecoration(
+//                   color: Colors.grey[200],
+//                   borderRadius: BorderRadius.circular(12),
+//                 ),
+//                 child: Row(
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     _buildToggleButton('Monthly', !isYearly),
+//                     _buildToggleButton('Yearly', isYearly),
+//                   ],
+//                 ),
+//               ),
+
+//               if (isYearly) ...[
+//                 const SizedBox(height: 8),
+//                 Container(
+//                   padding: const EdgeInsets.symmetric(
+//                     horizontal: 12,
+//                     vertical: 6,
+//                   ),
+//                   decoration: BoxDecoration(
+//                     color: Colors.green[50],
+//                     borderRadius: BorderRadius.circular(20),
+//                   ),
+//                   child: Text(
+//                     'Save ${getSavingsPercent()}%',
+//                     style: const TextStyle(
+//                       color: Colors.green,
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 13,
+//                     ),
+//                   ),
+//                 ),
+//               ],
+
+//               const SizedBox(height: 32),
+
+//               // Plan Cards
+//               ...plans.map((plan) {
+//                 final isSelected =
+//                     (isYearly && plan.interval == 'YEAR') ||
+//                     (!isYearly && plan.interval == 'MONTH');
+//                 return Padding(
+//                   padding: const EdgeInsets.only(bottom: 16),
+//                   child: _buildPlanCard(plan, isSelected),
+//                 );
+//               }).toList(),
+
+//               const SizedBox(height: 20),
+
+//               Text(
+//                 'All plans include a free trial. No credit card required.',
+//                 textAlign: TextAlign.center,
+//                 style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildToggleButton(String text, bool isSelected) {
+//     return GestureDetector(
+//       onTap: () {
+//         setState(() {
+//           isYearly = text == 'Yearly';
+//         });
+//       },
+//       child: Container(
+//         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+//         decoration: BoxDecoration(
+//           color: isSelected ? Colors.white : Colors.transparent,
+//           borderRadius: BorderRadius.circular(10),
+//           boxShadow: isSelected
+//               ? [
+//                   BoxShadow(
+//                     color: Colors.black.withOpacity(0.1),
+//                     blurRadius: 8,
+//                     offset: const Offset(0, 2),
+//                   ),
+//                 ]
+//               : [],
+//         ),
+//         child: Text(
+//           text,
+//           style: TextStyle(
+//             fontSize: 15,
+//             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+//             color: isSelected ? Colors.black87 : Colors.grey[600],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildPlanCard(PaymentPlanModel plan, bool isSelected) {
+//     final isYearlyPlan = plan.interval == 'YEAR';
+
+//     return Container(
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(20),
+//         border: Border.all(
+//           color: isSelected ? Colors.indigo : Colors.grey[200]!,
+//           width: isSelected ? 2 : 1,
+//         ),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.black.withOpacity(0.05),
+//             blurRadius: 10,
+//             offset: const Offset(0, 4),
+//           ),
+//         ],
+//       ),
+//       child: Column(
+//         children: [
+//           if (isYearlyPlan)
+//             Container(
+//               width: double.infinity,
+//               padding: const EdgeInsets.symmetric(vertical: 8),
+//               decoration: BoxDecoration(
+//                 gradient: const LinearGradient(
+//                   colors: [Colors.indigo, Colors.purple],
+//                 ),
+//                 borderRadius: const BorderRadius.only(
+//                   topLeft: Radius.circular(20),
+//                   topRight: Radius.circular(20),
+//                 ),
+//               ),
+//               child: const Text(
+//                 'Best Value',
+//                 textAlign: TextAlign.center,
+//                 style: TextStyle(
+//                   color: Colors.white,
+//                   fontWeight: FontWeight.bold,
+//                   fontSize: 13,
+//                 ),
+//               ),
+//             ),
+
+//           Padding(
+//             padding: const EdgeInsets.all(24.0),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   plan.name,
+//                   style: const TextStyle(
+//                     fontSize: 24,
+//                     fontWeight: FontWeight.bold,
+//                     color: Colors.black87,
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 12),
+
+//                 Row(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     const Text(
+//                       '\$',
+//                       style: TextStyle(
+//                         fontSize: 24,
+//                         fontWeight: FontWeight.bold,
+//                         color: Colors.black87,
+//                       ),
+//                     ),
+//                     Text(
+//                       plan.monthlyPrice.toStringAsFixed(2),
+//                       style: const TextStyle(
+//                         fontSize: 48,
+//                         fontWeight: FontWeight.bold,
+//                         color: Colors.black87,
+//                         height: 1,
+//                       ),
+//                     ),
+//                     const SizedBox(width: 4),
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 8),
+//                       child: Text(
+//                         '/month',
+//                         style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+
+//                 if (isYearlyPlan) ...[
+//                   const SizedBox(height: 8),
+//                   Text(
+//                     '\$${plan.price.toStringAsFixed(2)} billed annually',
+//                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+//                   ),
+//                 ],
+
+//                 const SizedBox(height: 16),
+
+//                 Container(
+//                   width: double.infinity,
+//                   padding: const EdgeInsets.all(16),
+//                   decoration: BoxDecoration(
+//                     color: Colors.indigo[50],
+//                     borderRadius: BorderRadius.circular(12),
+//                   ),
+//                   child: Text(
+//                     '🎉 ${plan.freeTrialDays}-day free trial included',
+//                     textAlign: TextAlign.center,
+//                     style: const TextStyle(
+//                       color: Colors.indigo,
+//                       fontWeight: FontWeight.w600,
+//                       fontSize: 14,
+//                     ),
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 20),
+
+//                 SizedBox(
+//                   width: double.infinity,
+//                   child: ElevatedButton(
+//                     onPressed: () {},
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: isSelected
+//                           ? Colors.indigo
+//                           : Colors.grey[300],
+//                       foregroundColor: isSelected
+//                           ? Colors.white
+//                           : Colors.grey[700],
+//                       padding: const EdgeInsets.symmetric(vertical: 16),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(12),
+//                       ),
+//                       elevation: isSelected ? 2 : 0,
+//                     ),
+//                     child: const Text(
+//                       'Start Free Trial',
+//                       style: TextStyle(
+//                         fontSize: 16,
+//                         fontWeight: FontWeight.w600,
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 24),
+
+//                 Text(
+//                   'WHAT\'S INCLUDED:',
+//                   style: TextStyle(
+//                     fontSize: 12,
+//                     fontWeight: FontWeight.bold,
+//                     color: Colors.grey[700],
+//                     letterSpacing: 0.5,
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 16),
+
+//                 ...features
+//                     .map(
+//                       (feature) => Padding(
+//                         padding: const EdgeInsets.only(bottom: 12),
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Container(
+//                               width: 20,
+//                               height: 20,
+//                               decoration: BoxDecoration(
+//                                 color: Colors.indigo[50],
+//                                 shape: BoxShape.circle,
+//                               ),
+//                               child: const Icon(
+//                                 Icons.check,
+//                                 size: 14,
+//                                 color: Colors.indigo,
+//                               ),
+//                             ),
+//                             const SizedBox(width: 12),
+//                             Expanded(
+//                               child: Text(
+//                                 feature,
+//                                 style: TextStyle(
+//                                   fontSize: 15,
+//                                   color: Colors.grey[700],
+//                                   height: 1.4,
+//                                 ),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     )
+//                     .toList(),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

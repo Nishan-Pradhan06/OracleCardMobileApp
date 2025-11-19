@@ -15,7 +15,8 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../core/utils/date_time_utils.dart';
 import '../../../../core/widgets/credit_card_masked_widget.dart';
 import '../../../../core/widgets/user_plan_type_widget.dart';
-import '../../home/widgets/notification_widget.dart';
+import '../../../users/home/widgets/notification_widget.dart';
+import '../widgets/pricing_widget.dart';
 
 class BillingDetailsScreen extends StatelessWidget {
   const BillingDetailsScreen({super.key});
@@ -46,7 +47,39 @@ class BillingDetailsScreen extends StatelessWidget {
                     'Billing',
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
-                  manageSubscription(context),
+                  UserPlanTypeWidget(
+                    freePlan: Column(
+                      children: [
+                        PricingCard(
+                          index: 0,
+                          selectedIndex: 0,
+                          planName: "Monthly",
+                          price: "\$9.99",
+                          interval: "/month",
+                          trialDays: "7 days free trial",
+                          showPopularBadge: false,
+                          savingsText: null,
+                          monthlyEquivalent: null,
+                          onTap: () {},
+                        ),
+                        PricingCard(
+                          index: 1,
+                          selectedIndex: 1,
+                          planName: "Yearly",
+                          price: "\$79.99",
+                          interval: "/year",
+                          trialDays: "14 days free trial",
+                          showPopularBadge: true,
+                          savingsText: "SAVE 33%",
+                          monthlyEquivalent:
+                              "\$6.67/month when billed annually",
+                          onTap: () {},
+                        ),
+                      ],
+                    ),
+                    paidPlan: manageSubscription(context),
+                  ),
+
                   paymentMethod(context),
                   CustomContainer(
                     useIntrinsicHeight: true,

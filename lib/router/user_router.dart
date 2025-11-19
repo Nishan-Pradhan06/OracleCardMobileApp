@@ -12,7 +12,7 @@ import 'package:oracle_card_app/features/users/library/screen/guidance_archive_s
 import 'package:oracle_card_app/features/users/library/screen/guidance_details_screen.dart';
 import 'package:oracle_card_app/features/users/library/screen/meditations_screen.dart';
 import 'package:oracle_card_app/features/users/notifications/screens/notifications_screen.dart';
-import 'package:oracle_card_app/features/users/profile/screen/billing_details.dart';
+import 'package:oracle_card_app/features/shared/payments_and_billing_subscription/screen/billing_details.dart';
 import 'package:oracle_card_app/features/users/profile/screen/buy_premium_screen.dart';
 import 'package:oracle_card_app/features/users/sessions/screen/sessions_details_screen.dart';
 import 'package:oracle_card_app/router/app_routes_names.dart';
