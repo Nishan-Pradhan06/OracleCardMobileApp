@@ -1,4 +1,4 @@
-class PaymentPlanModel {
+class BillingPlanModel {
   final int id;
   final String name;
   final String interval;
@@ -6,8 +6,9 @@ class PaymentPlanModel {
   final String currency;
   final int freeTrialDays;
   final bool isActive;
+  final String externalPriceId;
 
-  PaymentPlanModel({
+  BillingPlanModel({
     required this.id,
     required this.name,
     required this.interval,
@@ -15,12 +16,32 @@ class PaymentPlanModel {
     required this.currency,
     required this.freeTrialDays,
     required this.isActive,
+    required this.externalPriceId,
   });
 
-  double get price => priceCents / 100;
-  
-  double get monthlyPrice {
-    if (interval == 'MONTH') return price;
-    return price / 12;
+  factory BillingPlanModel.fromJson(Map<String, dynamic> json) {
+    return BillingPlanModel(
+      id: json['id'],
+      name: json['name'],
+      interval: json['interval'],
+      priceCents: json['priceCents'],
+      currency: json['currency'],
+      freeTrialDays: json['freeTrialDays'],
+      isActive: json['isActive'],
+      externalPriceId: json['externalPriceId'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'interval': interval,
+      'priceCents': priceCents,
+      'currency': currency,
+      'freeTrialDays': freeTrialDays,
+      'isActive': isActive,
+      'externalPriceId': externalPriceId,
+    };
   }
 }
