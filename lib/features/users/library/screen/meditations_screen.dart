@@ -12,30 +12,8 @@ import '../../../../core/widgets/user_plan_type_widget.dart';
 import '../../home/bloc/audio_player/audio_player_bloc.dart';
 import '../widgets/meditation_card.dart';
 
-class MeditationsScreen extends StatefulWidget {
+class MeditationsScreen extends StatelessWidget {
   const MeditationsScreen({super.key});
-
-  @override
-  State<MeditationsScreen> createState() => _MeditationsScreenState();
-}
-
-class _MeditationsScreenState extends State<MeditationsScreen> {
-  late AudioPlayerBloc _audioPlayerBloc;
-  final String audioUrl = 'assets/audio.mp3';
-
-  @override
-  void initState() {
-    super.initState();
-    // create bloc instance (if you use DI factory, replace this with sl<AudioPlayerBloc>())
-    _audioPlayerBloc = AudioPlayerBloc();
-  }
-
-  @override
-  void dispose() {
-    // don't close if it's provided by DI; if created here and you want to close, uncomment:
-    // _audioPlayerBloc.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,13 +58,14 @@ class _MeditationsScreenState extends State<MeditationsScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final entry = meditationsData.items[index];
+                              final audioPlay = sl<AudioPlayerBloc>();
 
                               return MeditatoinsCardWidget(
                                 title: entry.title,
                                 timer: '${entry.durationSec.toString()} sec',
                                 svgUrl: 'assets/icons/meditation_icon_1.svg',
                                 isLock: entry.locked,
-                                bloc: _audioPlayerBloc,
+                                bloc: audioPlay,
                                 audioUrl: entry.streamUrl!,
                               );
                             },
