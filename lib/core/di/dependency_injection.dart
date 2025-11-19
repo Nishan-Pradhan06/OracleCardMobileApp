@@ -34,6 +34,7 @@ import 'package:oracle_card_app/features/users/library/bloc/get_guidance_archive
 import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_meditations_bloc.dart';
 import 'package:oracle_card_app/features/users/library/repository/meditations_repository.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
+import 'package:oracle_card_app/features/users/notifications/bloc/read_notification/read_notification_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/repository/notification_repository.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/bloc/patch_user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/get_user_profile/user_profile_bloc.dart';
@@ -73,6 +74,7 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton(() => RsvpSessionBloc(repo: sl()));
   sl.registerLazySingleton(() => CreateMeditationsBloc(repo: sl()));
   sl.registerLazySingleton(() => DeviceRegisterBloc(repo: sl()));
+  sl.registerLazySingleton(() => ReadNotificationBloc(repo: sl()));
   sl.registerFactory(() => AudioPlayerBloc());
 
   //###---------------ADMIN BLOC---------------------###

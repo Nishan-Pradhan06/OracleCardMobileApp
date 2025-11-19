@@ -31,6 +31,7 @@ import 'package:oracle_card_app/features/users/journal/bloc/post_journal/post_jo
 import 'package:oracle_card_app/features/users/library/bloc/get_guidance_archive/get_guidance_archive_bloc.dart';
 import 'package:oracle_card_app/features/users/library/bloc/get_meditations/get_meditations_bloc.dart';
 import 'package:oracle_card_app/features/users/notifications/bloc/get_notifications/get_notifications_bloc.dart';
+import 'package:oracle_card_app/features/users/notifications/bloc/read_notification/read_notification_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/bloc/patch_user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/profile/bloc/get_user_profile/user_profile_bloc.dart';
 import 'package:oracle_card_app/features/users/sessions/blocs/get_upcomming_session/get_upcomming_session_bloc.dart';
@@ -124,6 +125,7 @@ class OracelCard extends StatelessWidget {
         BlocProvider(create: (context) => sl<ResetPasswordBloc>()),
         BlocProvider(create: (context) => sl<CreateSessionsBloc>()),
         BlocProvider(create: (context) => sl<PatchUserProfileBloc>()),
+        BlocProvider(create: (context) => sl<ReadNotificationBloc>()),
         BlocProvider(
           create: (context) =>
               sl<GetMeditationsAdminBloc>()
