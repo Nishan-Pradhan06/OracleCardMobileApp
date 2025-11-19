@@ -107,8 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             spacing: 20,
                             children: [
                               ProfileAvatar(
-                                imagePath:
-                                    'https://avatars.githubusercontent.com/u/105001135?v=4',
+                                imagePath: 'assets/images/profile.svg',
                                 userName: 'My Profile',
                                 onCameraTap: () {},
                               ),

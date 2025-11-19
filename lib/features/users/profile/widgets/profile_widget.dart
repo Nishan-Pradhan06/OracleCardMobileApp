@@ -60,34 +60,34 @@ class ProfileAvatar extends StatelessWidget {
                       : const Icon(Icons.person, size: 50, color: Colors.white),
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                right: 4,
-                child: GestureDetector(
-                  onTap: onCameraTap,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.3),
-                          blurRadius: 6,
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                    child: const CircleAvatar(
-                      radius: 14,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 14,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   bottom: 0,
+              //   right: 4,
+              //   child: GestureDetector(
+              //     onTap: onCameraTap,
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         shape: BoxShape.circle,
+              //         boxShadow: [
+              //           BoxShadow(
+              //             color: Colors.black.withValues(alpha: 0.3),
+              //             blurRadius: 6,
+              //             offset: const Offset(2, 2),
+              //           ),
+              //         ],
+              //       ),
+              //       child: const CircleAvatar(
+              //         radius: 14,
+              //         backgroundColor: Colors.white,
+              //         child: Icon(
+              //           Icons.camera_alt,
+              //           size: 14,
+              //           color: Colors.black,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 10),
